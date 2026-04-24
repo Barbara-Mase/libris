@@ -2,22 +2,25 @@
 
 class User {
     //ajouter registration_date
-    public function __construct(private int $id, private string $username, private string $password)
+    public function __construct(private int $id, private string $username, private string $email, private string $password)
     {
     }
 
     /**
      * @return int
      */
-    public function getId()
-    {
+    public function getId() : int {
         return $this->id;
     }
 
-    public function getUsername() {
+    public function getUsername() : string {
         return $this->username;
     }
-    public function getPassword() {
+
+    public function getEmail() : string {
+        return $this->email;
+    }
+    public function getPassword() : string {
         return $this->password;
     }
 
@@ -31,6 +34,14 @@ class User {
 
     public function setUsername($username) {
         $this->username = $username;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 
     public function setPassword($password) {
