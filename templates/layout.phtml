@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <link href="./assets/css/style.css" rel="stylesheet" />
+    <title>Libris</title>
+</head>
+<body>
+<header class="header">
+    <div class="header-container">
+        <div class="header-top">
+            <img class="logo-libris" alt="Logo de libris" src="./img/logo/logo-libris.webp"/>
+            <h1>Libris</h1>
+            <div class="header-top-left">
+                <img class="switch-dark-mode" alt="switch dark mode" src=""/>
+                <img class="menu-compte" alt="Lien vers le menu du compte" src=""/>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <menu>
+                <li class="menu-link"><a>Home</a></li>
+                <li class="menu-link"><a>Categories</a></li>
+                <li class="menu-link"><a>Popular</a></li>
+            </menu>
+            <div class="search-engine-container">
+                <form action="" method="POST" id="form">
+                    <label for="search">Rechercher par mots clés</label>
+                    <input type="text" id="search" name="search" required>
+                    <button type="submit">Rechercher</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</header>
+<?php
+require  "templates/$template.phtml";
+?>
+<script type="application/javascript" src="src/api/search_engine.js"></script>
+
+</body>
+</html>

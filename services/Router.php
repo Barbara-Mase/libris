@@ -10,22 +10,31 @@ class Router {
     public function handleRequest(array $get) : void {
         if(isset($get['route'])){
             if($get['route'] === 'home'){
-                echo "Home";
+                $hm = new HomeController();
+                $hm->home();
             }
             else if($get['route'] === 'category'){
                 echo "Category";
-
-            } else if ($get['route'] === 'list') {
+            }
+            else if ($get['route'] === 'list') {
                 echo "List";
             }
-           else if($get['route'] === "profile") {
+            else if($get['route'] === "profile") {
                 $uc = new UserController();
-                $uc->showUser();
-            } else {
+                $uc->details(intval($get['id']));
+            } else if ($get['route'] === "create-user") {
+                $uc = new UserController();
+                $uc->create();
+            } else if ($get['route'] === "check-create-user") {
+                $uc = new UserController();
+                $uc->checkCreate();
+            }
+            else {
                 echo "Cette page n existe pas";
             }
         } else {
-            echo "Aucune route spécifié";
+            $hm = new HomeController();
+            $hm->home();
         }
 
     }

@@ -1,8 +1,11 @@
 <?php
 
 class User {
+
+    private ? int $id;
+    private DateTime $createdAt;
     //ajouter registration_date
-    public function __construct(private int $id, private string $username, private string $email, private string $password)
+    public function __construct(private string $username, private string $email, private string $password, private string $intro)
     {
     }
 
@@ -25,14 +28,27 @@ class User {
     }
 
     /**
+     * @return string
+     */
+    public function getIntro(): string
+    {
+        return $this->intro;
+    }
+
+    public function getCreatedAt() : DateTime {
+        return $this->registration_date;
+    }
+
+    /**
      * @param int $id
      */
-    public function setId($id)
+    public function setId(string $id) : void
     {
         $this->id = $id;
     }
 
-    public function setUsername($username) {
+    public function setUsername(string $username) : void
+    {
         $this->username = $username;
     }
 
@@ -44,7 +60,16 @@ class User {
         $this->email = $email;
     }
 
-    public function setPassword($password) {
+    public function setPassword(string $password) : void
+    {
         $this->password = $password;
+    }
+    public function setIntro(string $intro) : void
+    {
+        $this->intro = $intro;
+    }
+
+    public function setCreatedAt(DateTime $createdAt) : void {
+        $this->createdAt = $createdAt;
     }
 }

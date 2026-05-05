@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+    font-family : 'K2D';
+    src: local(fonts/K2D-Regular.ttf);
+}
+
+/** **/
+
+* {
+    font-family: 'K2D';
+    margin: 0;
+    padding: 0;
+}
+
+
+/* HEADER*/
+
+.logo-libris {
+    width: 50px;
+    height: 50px;
+}
+
+h1 {
+    color: #F6E06E;
+    font-family: "Expletus Sans";
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    background-color: #0D0B2B;
+}
+
+
+.header-bottom {
+    display: flex;
+    justify-content: space-between;
+    background-color: #321278;
+    color: white;
+}
+
+menu {
+    display: flex;
+
+}
+
+li, a {
+    list-style: none;
+    text-decoration: none;
+    padding: 5px;
+}
+
+
+
+
+
+.book-card {
+    border : solid black 2px;
+    width: 200px;
+}
+
+.result-container {
+    width: 100%;
+    border: solid black 2px;
+    display : flex;
+    flex-direction : row;
+    flex-wrap: wrap;
+}

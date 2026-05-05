@@ -1,31 +1,126 @@
 <?php
 
-
-class UserManager extends AbstractManager
-{
-
-    public function __construct()
-    {
+class UserManager extends AbstractManager {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function findOne(int $id): ?User
-    {
+    //Est ce que j'ai besoin d'un findAll ?
+/*    public function findAll() : array {
 
-        $query = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+        $query = $this->db->prepare("SELECT * FROM users");
 
-        $params = [
-            "id" => $id
+        $query->execute();
+
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        $users = [];
+
+        foreach($results as $result) {
+            $user = new User(
+                $result["email"],
+                $result["password"],
+                $result["first_name"],
+                $result["last_name"],
+                $result["id"]);
+            $users[] = $user;
+        }
+        return $users;
+    }*/
+
+    public function findOne(int $id) : ?User {
+        $query = $this->db->prepare('SELECT * FROM users WHERE id = :id');
+        $parameters = [
+            'id' => $id
         ];
+        $query->execute($parameters);
 
-        $query->execute($params);
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            return $user = new User($result["id"], $result["username"], $result["email"], $result["password"]);
-        } else {
+        if($result)
+        {
+            $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
+            return $user;
+        }
+        else
+        {
             return null;
         }
     }
 
+
+
+
+    public function findByEmail(string $email) : ? User {
+        $query = $this->db->prepare('SELECT * FROM users WHERE email = :email');
+        $parameters = [
+            ':email' => $email
+        ];
+        $query->execute($parameters);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if($result)
+        {
+            $user = new User($result['id'], $result['username'], $result['email'], $result['password'], $result["intro"], $result["registration_date"]);
+            return $user;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function create(User $user) : bool {
+        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro) VALUES (:username, :email, :password, :intro)");
+
+
+        $parameters = [
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'first_name' => $user->getIntro(),
+        ];
+
+        $query->execute($parameters);
+
+        $user->setCreatedAt(new DateTime());
+        if($this->db->lastInsertId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //A FINIR
+    public function update(User $user) : bool
+    {
+        $query = $this->db->prepare("UPDATE users 
+                                    SET username = :username, email = :email, password = :password, intro = :intro
+                                    WHERE id = :id");
+
+        $parameters = [
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'first_name' => $user->getIntro()
+        ];
+
+
+        $query->execute($parameters);
+
+        return $this->db->lastInsertId();
+    }
+
+    public function delete(int $id) : bool {
+
+        $query = $this->db->prepare("DELETE FROM users WHERE id = :id");
+
+        $parameters = [
+            "id" => $id
+        ];
+
+        $query->execute($parameters);
+
+        return true;
+    }
 }

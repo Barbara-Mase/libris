@@ -1,0 +1,14 @@
+
+
+<main>
+        <div class="Utilisateur">
+            <?php if(isset($user)) { ?>
+                <p><?php echo $user->getUsername() ?></p>
+                <php><?=$user->getIntro()?></php>
+            <?php }
+            else { ?>
+            <p>Utilisateur introuvable</p>
+           <?php }?>
+
+        </div>
+</main>
