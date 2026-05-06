@@ -1,0 +1,9 @@
+<?php if(isset($book)) { ?>
+    <article>
+        <h1><?= $book->getTitle()?></h1>
+    <p><?= $book->getAuthor()?></p>
+        <p><?= $book->getPublicationYear()?></p>
+    </article>
+    <?php } else { ?>
+        <p>Ressource introuvable</p>
+    <?php } ?>

@@ -1,9 +1,10 @@
 <?php
 
-class Book{
+class Book {
     private ?int $id = NULL;
 
-    public function __construct(private string $title, private string $author, private string $cover_id) {
+
+    public function __construct(private string $book_key, private string $title, private string $author, private int $publish_year, private ?string $cover_id) {
 
     }
 
@@ -15,6 +16,19 @@ class Book{
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBookKey(): string
+    {
+        return $this->book_key;
+    }
+
+    public function setBookKey(string $book_key): void
+    {
+        $this->book_key = $book_key;
     }
 
     public function getTitle(): string
@@ -37,12 +51,27 @@ class Book{
         $this->author = $author;
     }
 
-    public function getCoverId(): string
+    /**
+     * @return int
+     */
+    public function getPublishYear(): int
+    {
+        return $this->publish_year;
+    }
+
+    /**
+     * @param int $publication_date
+     */
+    public function setPublishYear(int $publication_year): void
+    {
+        $this->publish_date = $publish_year;
+    }
+    public function getCoverId(): ?string
     {
         return $this->cover_id;
     }
 
-    public function setCoverId(string $cover_id): void
+    public function setCoverId(?string $cover_id): void
     {
         $this->cover_id = $cover_id;
     }

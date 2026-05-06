@@ -17,7 +17,33 @@ class Router {
                 echo "Category";
             }
             else if ($get['route'] === 'list') {
-                echo "List";
+                $blc = new BookListController();
+                $blc->detailList(1);
+            }
+            else if ($get['route'] === 'create-list') {
+                echo "Create List";
+            }
+            else if ($get['route'] === 'add-book-list') {
+                echo "Add Book List";
+            }
+            else if ($get['route'] === 'delete-book-list') {
+                echo "Delete Book List";
+            }
+            else if ($get['route'] === 'edit-book-list') {
+                echo "Edit Book List";
+            }
+            else if($get["route"] === 'detail-book') {
+                $bc = new BookController();
+                $bc->detailBook(intval($get["id"]));
+            }
+            else if($get["route"] === 'create-book') {
+            }
+            else if ($get["route"] === 'check-create-book') {
+                $bc = new BookController();
+                $bc->checkCreate();
+            }
+            else if ($get["route"] === 'delete-book') {
+                echo "Delete Book";
             }
             else if($get['route'] === "profile") {
                 $uc = new UserController();
