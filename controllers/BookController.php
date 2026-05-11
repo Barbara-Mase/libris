@@ -19,16 +19,15 @@ class BookController extends AbstractController {
     public function checkCreate() : void
 
     {
+        $_SESSION["errors"] = [];
 
-        //Ajouter une condition pour vérifier si la clé est déjà présente ou non en BDD
-        $book = new Book($_POST['key'], $_POST["title"], $_POST["author"], $_POST["publish_year"], $_POST["cover_id"]);
-        //$book = new Book('key_example', 'La passion des croquettes', 'Cajou', '2003', '0101');
         $bm = new BookManager();
-        $bm->createBook($book);
-        var_dump($book);
+        $book = $bm->findByKey($_POST['key']);
 
-
-
+        if($book === null) {
+            $newBook = new Book($_POST['key'], $_POST["title"], $_POST["author"], $_POST["publish_year"], $_POST["cover_id"]);
+            $bm->createBook($newBook);
+        }
 
     }
 }

@@ -46,4 +46,17 @@ class BookListManager extends AbstractManager {
             }
             return $lists;
     }
+
+    public function createList(int $id) : bool {
+
+        $query = $this->db->prepare('INSERT INTO `list`');
+
+        $query->execute();
+
+        if($this->db->lastInsertId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

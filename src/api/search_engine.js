@@ -21,7 +21,9 @@ window.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json()) // fetch me renvoie une Promise, j'utilise .json() pour faire l'équivalent d'un JSON.parse()
             .then(data => {
 
+                //mettre un id pour vérifier si elle existe déjà et l'enlever à la prochaine requête
                 let resultContainer = document.createElement('section');
+
                 //Pour chaque élément de l'objet renvoyé par l'api
                 for (let i = 0; i < data.docs.length; i++) {
 
@@ -76,6 +78,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     addButton.dataset.title = string_bookTitle;
                     addButton.dataset.author = string_author;
                     addButton.dataset.publishYear = string_publish_year;
+                    //Stocker le cover_id ou l'url ?
                     addButton.dataset.coverId = cover_id;
                     addButton.dataset.bookKey = key;
                     let addText = document.createTextNode("Ajouter");
@@ -110,11 +113,12 @@ window.addEventListener("DOMContentLoaded", () => {
                             method: 'POST',
                             body: formData
                         })
-                            //Etape 7. On attends que l'appel PHP nous retourne une réponse et on extrait son contenu sous forme de texte (ça peut être d'autres formats (JSON par exemple) selon ce que vous retourne 'l'url appelée)
+
+                            //vérifier l'info récupéré via ce response via response.ok par exemple
+                            //mettre la gestion d'erreur ici
                             .then(response => response.text())
-                            //Etape 8. Une fois la réponse de ce que m'a retourné le PHP traité j'utilise ces données côté JS. Là en l'occurence j'insère sous forme de balise html dans la balise main ce que j'ai reçu (le echo de l'étape 6)
                             .then(data => {
-                                //document.getElementById('result').innerHTML = data;
+
                             })
                             .catch(error => {
                                 console.error('Erreur lors du fetch:', error);

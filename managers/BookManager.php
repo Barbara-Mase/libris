@@ -29,7 +29,8 @@ class BookManager extends AbstractManager {
 
     }
 
-    public function findOne(int $id) : ?Book {
+
+    public function findById(int $id) : ?Book {
 
         $query = $this->db->prepare('SELECT * FROM books WHERE id = :id');
 
@@ -39,10 +40,31 @@ class BookManager extends AbstractManager {
         $query->execute($parameters);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
-        var_dump($result);
+
         if($result)
         {
             $book = new Book($result['title'], $result['author'], $result['publication_year'], $result['cover_id']);
+            return $book;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public function findByKey(string $key) : ?Book {
+
+        $query = $this->db->prepare('SELECT * FROM books WHERE book_key = :book_key');
+
+        $parameters = [
+            'book_key' => $key
+        ];
+
+        $result = $query->execute($parameters);
+
+        if($result)
+        {
+            $book = new Book($result['key'], $result['title'], $result['author'], $result['publication_year'], $result['cover_id']);
             return $book;
         }
         else
