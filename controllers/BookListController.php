@@ -9,7 +9,7 @@ class BookListController extends AbstractController
 
     public function showList(int $id) : void {
 
-        // récupéré la liste relative à l'utilisateur
+        // récupère la liste relative à l'utilisateur
         $blm = new BookListManager();
         $list = $blm->findOne($id);
 
