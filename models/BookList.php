@@ -2,47 +2,33 @@
 
 class BookList
 {
-    private ?int $id;
-  public function __construct(private string $title, private int $user_id, private array $book_ids) {
+    private ?int $book_list_id;
+  public function __construct(private string $title) {
 
   }
 
-    public function getId(): int
+    /**
+     * @return int|null
+     */
+    public function getBookListId(): ?int
     {
-        return $this->id;
+        return $this->book_list_id;
     }
 
-    public function setId(int $id): void
+    /**
+     * @param int|null $book_list_id
+     */
+    public function setBookListId(?int $book_list_id): void
     {
-        $this->id = $id;
+        $this->book_list_id = $book_list_id;
     }
 
-    public function getTitle(): string
-    {
-        return $this->title;
+    public function getTitle(): string {
+      return $this->title;
     }
 
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function getUserId(): int
-    {
-      return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    public function getBookIds(): array {
-      return $this->book_ids;
-    }
-
-    public function setBookIds(array $book_ids): void {
-      $this->book_ids = $book_ids;
+    public function setTitle(string $title): void {
+      $this->title = $title;
     }
 
 

@@ -30,12 +30,12 @@ class BookManager extends AbstractManager {
     }
 
 
-    public function findById(int $id) : ?Book {
+    public function findById(int $book_id) : ?Book {
 
-        $query = $this->db->prepare('SELECT * FROM books WHERE id = :id');
+        $query = $this->db->prepare('SELECT * FROM books WHERE book_id = :book_id');
 
         $parameters = [
-            'id' => $id
+            'book_id' => $book_id
         ];
         $query->execute($parameters);
 
@@ -58,7 +58,7 @@ class BookManager extends AbstractManager {
         $query = $this->db->prepare('SELECT * FROM books WHERE book_key = :book_key');
 
         $parameters = [
-            'book_key' => $key
+            'book_key' => $book_key
         ];
 
         $query->execute($parameters);

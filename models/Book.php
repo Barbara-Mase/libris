@@ -1,21 +1,27 @@
 <?php
 
 class Book {
-    private ?int $id = NULL;
+    private ?int $book_id = NULL;
 
 
     public function __construct(private string $book_key, private string $title, private string $author, private int $publish_year, private ?string $cover_id) {
 
     }
 
-    public function getId(): ?int
+    /**
+     * @return int|null
+     */
+    public function getBookId(): ?int
     {
-        return $this->id;
+        return $this->book_id;
     }
 
-    public function setId(?int $id): void
+    /**
+     * @param int|null $book_id
+     */
+    public function setBookId(?int $book_id): void
     {
-        $this->id = $id;
+        $this->book_id = $book_id;
     }
 
     /**

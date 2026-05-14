@@ -19,23 +19,43 @@ class BookListController extends AbstractController
 
     }
 
-    public function getBooks(int $id) : array {
+//    public function getBooks(int $id) : array
+//    {
+//
+//        $bm = new BookManager();
+//        $book = $bm->findById($id);
+//
+//        $blm = new BookListManager();
+//
+//        $list = $blm->findOne($id);
+//
+//        /*if(isset($list)) {
+//            $list [] = $book;
+//            return $list;
+//        } else {
+//            $list = new BookList();
+//            $blm->create($list);
+//        }*/
+//
+//    }
 
-        $bm = new BookManager();
-        $book = $bm->findById($id);
+public function addBookList() : void {
 
-        $blm = new BookListManager();
+        //$bm = new BookManager();
 
-        $list = $blm->findOne($id);
+        //$list = $blm->findOne($book_list_id);
+        //$book = $bm->findByKey($book_key);
 
-        /*if(isset($list)) {
-            $list [] = $book;
-            return $list;
-        } else {
-            $list = new BookList();
-            $blm->create($list);
-        }*/
+        //if($book) {
+            $blm = new BookListManager();
+            $blm->addBook(8, 1);
+//        } else {
+//            $bc = new BookController();
+//            $bc->checkCr
+        echo 'fonction du controller';
 
 
-    }
+
+
+}
 }
