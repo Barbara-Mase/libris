@@ -30,7 +30,10 @@ class AuthController extends AbstractController {
 
             //if ($user === null) {
                 $user = new User($_POST["username"], $_POST["email"], $_POST["password"], $_POST["intro"]);
-                $ret = $um->create($user);
+                $date = new DateTimeImmutable();
+                $user->setRegistrationDate($date);
+                $um->create($user);
+
 
                 $this->render('home', []);
 

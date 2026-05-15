@@ -34,6 +34,7 @@ class Router {
             else if ($get['route'] === 'edit-book-list') {
                 echo "Edit Book List";
             }
+            //Gestion de l'affiche et des requête des livres par le bookController
             else if($get["route"] === 'detail-book') {
                 $bc = new BookController();
                 $bc->detailBook(intval($get["id"]));
@@ -47,6 +48,7 @@ class Router {
             else if ($get["route"] === 'delete-book') {
                 echo "Delete Book";
             }
+            //Gestion des utilisateurs
             else if ($get["route"] === 'registration') {
                 $ac = new AuthController();
                 $ac->showRegistrationForm();
@@ -61,9 +63,11 @@ class Router {
                 $uc = new AuthController();
                 $uc->checkCreateUser();
             }
+            //si le chemin n'existe pas, affichage d'une erreur
             else {
                 echo "Cette page n existe pas";
             }
+        // Si aucun chemin n'est spécifié, on redirige vers "home"
         } else {
             $hm = new HomeController();
             $hm->home();

@@ -1,9 +1,7 @@
 <?php
 
 class UserManager extends AbstractManager {
-    public function __construct() {
-        parent::__construct();
-    }
+
 
     //Est ce que j'ai besoin d'un findAll ?
 /*    public function findAll() : array {
@@ -49,7 +47,6 @@ class UserManager extends AbstractManager {
 
 
 
-
     public function findByEmail(string $email) : ? User {
         $query = $this->db->prepare('SELECT * FROM users WHERE email = :email');
         $parameters = [
@@ -71,7 +68,7 @@ class UserManager extends AbstractManager {
     }
 
     public function create(User $user) : bool {
-        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro) VALUES (:username, :email, :password, :intro)");
+        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date) VALUES (:username, :email, :password, :intro, :registration_date)");
 
 
         $parameters = [
@@ -79,11 +76,12 @@ class UserManager extends AbstractManager {
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
+            'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s')
         ];
+
 
         $query->execute($parameters);
 
-        $user->setCreatedAt(new DateTime());
         if($this->db->lastInsertId()) {
             return true;
         } else {
