@@ -25,7 +25,7 @@ class UserManager extends AbstractManager {
         return $users;
     }*/
 
-    public function findOne(int $id) : ?User {
+    public function findById(int $id) : ?User {
         $query = $this->db->prepare('SELECT * FROM users WHERE id = :id');
         $parameters = [
             'id' => $id
@@ -37,6 +37,7 @@ class UserManager extends AbstractManager {
         if($result)
         {
             $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
+            $user->setId($result['id']);
             return $user;
         }
         else
@@ -50,7 +51,7 @@ class UserManager extends AbstractManager {
     public function findByEmail(string $email) : ? User {
         $query = $this->db->prepare('SELECT * FROM users WHERE email = :email');
         $parameters = [
-            ':email' => $email
+            'email' => $email
         ];
         $query->execute($parameters);
 
@@ -58,7 +59,10 @@ class UserManager extends AbstractManager {
 
         if($result)
         {
-            $user = new User($result['id'], $result['username'], $result['email'], $result['password'], $result["intro"], $result["registration_date"]);
+            $user = new User($result['username'], $result['email'], $result['password'], $result["intro"], $result["id"]);
+            $format = 'Y-m-d H:i:s';
+            $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
+            $user->setRegistrationDate($registration_date);
             return $user;
         }
         else
@@ -100,7 +104,8 @@ class UserManager extends AbstractManager {
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
-            'first_name' => $user->getIntro()
+            'intro' => $user->getIntro(),
+            'id' => $user->getId()
         ];
 
 

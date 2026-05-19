@@ -19,10 +19,10 @@ class UserController extends AbstractController {
 //        ]);
 //    }
 
-    public function details(int $id) : void
+    public function profile(int $id) : void
     {
         $um = new UserManager();
-        $user = $um->findOne($id);
+        $user = $um->findById($id);
 
 
         // attention à twig
@@ -36,7 +36,7 @@ class UserController extends AbstractController {
     public function update(int $id) : void
     {
         $um = new UserManager();
-        $user = $um->findOne($id);
+        $user = $um->findById($id);
 
         // attention à twig
         if(!empty($_SESSION["errors"]))
@@ -66,7 +66,7 @@ class UserController extends AbstractController {
         if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["first_name"]) && !empty($_POST["last_name"]))
         {
             $um = new UserManager();
-            $user = $um->findOne($id);
+            $user = $um->findById($id);
             if(!empty($user)) {
                 $user = new User($_POST["email"], $_POST["password"], $_POST["first_name"], $_POST["last_name"]);
                 $user->setId($_POST["id"]);
@@ -90,7 +90,7 @@ class UserController extends AbstractController {
 
 
 
-    public function delete(int $id) : void
+    public function deleteUser(int $id) : void
     {
         $um = new UserManager();
         $um->delete($id);

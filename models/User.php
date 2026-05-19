@@ -2,11 +2,10 @@
 
 class User {
 
-    private ? int $id;
     // DateTimeUmmitable ne peut pas être modifié
-    private DateTimeImmutable $registration_date;
+    private DateTime $registration_date;
     //ajouter registration_date
-    public function __construct(private string $username, private string $email, private string $password, private string $intro)
+    public function __construct(private string $username, private string $email, private string $password, private string $intro, private ?int $id = null)
     {
     }
 
@@ -59,11 +58,11 @@ class User {
         $this->intro = $intro;
     }
 
-    public function getRegistrationDate() : DateTimeImmutable {
+    public function getRegistrationDate() : DateTime {
         return $this->registration_date;
     }
 
-    public function setRegistrationDate(DateTimeImmutable $registration_date) : void {
+    public function setRegistrationDate(DateTime $registration_date) : void {
         $this->registration_date = $registration_date;
     }
 }
