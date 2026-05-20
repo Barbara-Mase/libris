@@ -50,9 +50,13 @@ li, a {
     padding: 5px;
 }
 
+.ul-drop-down-menu li {
+    color: #F6E06E;
+    list-style: none;
+}
 
 
-
+/**MAIN**/
 
 .book-card {
     border : solid black 2px;

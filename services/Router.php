@@ -61,7 +61,6 @@ class Router {
                 if(!empty($get["id"])) {
                     $this->uc->profile(intval($get['id']));
                 }
-
             }
             else if ($get['route'] === "create-user") {
                 $this->ac->createUser();
@@ -85,6 +84,8 @@ class Router {
                     $this->ac->login();
             } else if ($get['route'] === "check-login") {
                 $this->ac->checkLogin();
+            } else if ($get['route'] === "logout") {
+                $this->ac->logout();
             }
             //si le chemin n'existe pas, affichage d'une erreur
             else {

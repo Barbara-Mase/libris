@@ -9,11 +9,11 @@ class AuthController extends AbstractController
         if (!empty($_SESSION["errors"])) {
             $errors = $_SESSION["errors"];
             unset($_SESSION["errors"]);
-            $this->render('registration', [
+            $this->render('create-user', [
                 "errors" => $errors
             ]);
         } else {
-            $this->render('registration', [
+            $this->render('create-user', [
 
             ]);
         }
@@ -136,6 +136,7 @@ class AuthController extends AbstractController
         if(!empty($user)) {
             if($user->getPassword() === $_POST["password-login"]) {
                 $_SESSION["errors"] = [];
+                //problème avec la session, incomplete_class_object (voir objet désérialisé)
                 $_SESSION["user"] = $user;
 
                 echo "Welcome " . $_SESSION["user"]->getUsername();
@@ -144,7 +145,6 @@ class AuthController extends AbstractController
             else {
                 $_SESSION["errors"] = [];
                 $_SESSION["errors"]["password"] = "Wrong password";
-                echo "Wrong password";
             }
         } else {
             $_SESSION["errors"] = [];
@@ -155,4 +155,6 @@ class AuthController extends AbstractController
     public function logout(): void {
         unset($_SESSION["user"]);
     }
+
+
 }

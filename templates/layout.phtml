@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,12 +16,30 @@
             <h1>Libris</h1>
             <div class="header-top-left">
                 <img class="switch-dark-mode" alt="switch dark mode" src=""/>
+                <a href="index.php?route=login">Login</a>
+                <a href="index.php?route=logout">Logout</a>
                 <img class="menu-compte" alt="Lien vers le menu du compte" src=""/>
+                <!-- menu déroulant : vers le profil, vers les paramètres du compte, vers la liste)-->
+                <div class="div-drop-down-menu">
+                    <ul class="ul-drop-down-menu">
+                        <li><a href="index.php?route=profile&id=<?php
+                        if(isset($_SESSION['user'])) {
+                            echo $_SESSION['user']->getId();
+                        } else {
+                            $_SESSION['errors'] = [];
+                            $_SESSION['errors']['login'] = 'Veuillez vous connecter pour continuer';
+                        }
+                        ?>
+                        ">Profile</a></li>
+                        <li><a href="index.php?route=settings">Settings</a></li>
+                        <li><a href="index.php?route=bookmarks">Bookmarks</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="header-bottom">
             <menu>
-                <li class="menu-link"><a>Home</a></li>
+                <li class="menu-link"><a href="home.phtml">Home</a></li>
                 <li class="menu-link"><a>Categories</a></li>
                 <li class="menu-link"><a>Popular</a></li>
             </menu>
@@ -32,7 +52,6 @@
             </div>
         </div>
     </div>
-
 </header>
 <?php
 require  "templates/$template.phtml";
