@@ -1,5 +1,10 @@
 <h2>Update profile</h2>
 <form method="post" action="index.php?route=check-update-user&id=<?= $user->getId() ?>">
+    <?php if(isset($errors)) {
+        foreach ($errors as $error) {
+            ?> <p><?= $error ?></p>
+        <?php }
+    }?>
     <fieldset class="fieldset input-fieldset">
         <label class="label">Username</label>
         <!-- Vérifier la value et décider si on peut changer le nom d'utilisateur ou non (readonly)-->

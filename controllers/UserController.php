@@ -21,14 +21,34 @@ class UserController extends AbstractController {
 
     public function profile(int $id) : void
     {
+        $_SESSION["errors"] = [];
         $um = new UserManager();
         $user = $um->findById($id);
 
+         if ($user) {
+             $userId = $user->getId();
+             if (!empty($_SESSION['user'])) {
+                 $sessionId = $_SESSION["user"]->getId();
+                 //on vérifie que l'id de l'utilisateur dans l'URL correspond à l'id de l'utilisateur connecté ($_SESSION)
+                 if ($userId === $sessionId) {
+                     unset($_SESSION["errors"]);
+                     $this->render('user', [
+                         'user' => $user
+                     ]);
+                 } else {
+                     $_SESSION["errors"][] = "Access denied";
+                     header("location: index.php?home");
+                 }
+             } else {
+                 $_SESSION["errors"][] = "Access denied";
+             }
+         } else {
+             $_SESSION["errors"][] = "User not found";
+             header("location: index.php?home");
+         }
 
-        // attention à twig
-        $this->render('user', [
-            'user' => $user
-        ]);
+
+
     }
 
 

@@ -1,4 +1,9 @@
 <form class="form-login form" method="post" action="index.php?route=check-login">
+    <?php if(isset($errors)) {
+        foreach ($errors as $error) {
+            ?> <p><?= $error ?></p>
+        <?php }
+    }?>
     <label>Email</label>
     <input type="email" class="form-input" name="email-login" id="email-login" required>
     <label>Password</label>

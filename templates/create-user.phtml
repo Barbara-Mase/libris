@@ -1,4 +1,10 @@
 <form class="form registration-form" method="POST" action="index.php?route=check-create-user">
+    <?php if (isset($errors)) {
+        foreach($errors as $error) { ?>
+            <p><?= $error ?></p>
+    <?php
+        }
+    }?>
     <fieldset class="fieldset input-fieldset">
         <label class="label">Username</label>
         <input type="text" name="username" id="username" class="form-input" required>
