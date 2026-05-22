@@ -62,6 +62,9 @@ class Router {
                     $this->uc->profile(intval($get['id']));
                 }
             }
+            else if ($get['route'] === "users-list") {
+                $this->uc->list();
+            }
             else if ($get['route'] === "create-user") {
                 $this->ac->createUser();
             }

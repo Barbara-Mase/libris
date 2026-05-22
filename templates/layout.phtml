@@ -22,24 +22,23 @@
                 <!-- menu déroulant : vers le profil, vers les paramètres du compte, vers la liste)-->
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
-                        <li><a href="index.php?route=profile&id=<?php
-                        if(isset($_SESSION['user'])) {
-                            echo $_SESSION['user']->getId();
-                        } else {
-                            $_SESSION['errors'] = [];
-                            $_SESSION['errors']['login'] = 'Veuillez vous connecter pour continuer';
-                        }
-                        ?>
-                        ">Profile</a></li>
-                        <li><a href="index.php?route=settings">Settings</a></li>
+                        <li>
+                            <?php if (!empty($_SESSION['user'])) { ?>
+                                <a href="index.php?route=profile&id=<?php echo $_SESSION['user']->getId(); ?>">Profile</a>
+                            <?php } else { ?>
+                                <a href="index.php?route=login">Profile</a>
+                            <?php } ?>
+                        </li>
+                        <li><a href="index.php?route=update-user">Settings</a></li>
                         <li><a href="index.php?route=bookmarks">Bookmarks</a></li>
+                        <li><a href="index.php?route=users-list">Users list</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="header-bottom">
             <menu>
-                <li class="menu-link"><a href="home.phtml">Home</a></li>
+                <li class="menu-link"><a href="index.php?routehome">Home</a></li>
                 <li class="menu-link"><a>Categories</a></li>
                 <li class="menu-link"><a>Popular</a></li>
             </menu>

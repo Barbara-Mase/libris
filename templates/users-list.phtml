@@ -1,0 +1,20 @@
+<main>
+    <div class="user-list-container">
+        <ul class="user-list">
+        <?php
+        if (isset($users)) {
+            foreach ($users as $user) { ?>
+                <li class="user-list-username"><?php echo $user->getUsername(); ?></li>
+                    <ul>
+                        <li class="user-list-registered">Registerer since <?php $date = $user->getRegistrationDate();
+                            $stringDate = $date->format('Y-m-d');
+                            echo $stringDate;?></li>
+                        <li class="user-list-intro"><?php echo $user->getIntro()?></li>
+                    <li><button><a href=index.php?route=profile&id=<?php echo $user->getId()?>">Profile</a></button></li>
+                    </ul>
+                </li>
+                <?php }
+        } ?>
+        </ul>
+    </div>
+</main>

@@ -97,7 +97,6 @@ class AuthController extends AbstractController
         if (!empty($_POST["username"] && $_POST["email"] && $_POST["password"] && $_POST["confirm-password"] && $_POST["intro"])) {
 
             if ($_POST["password"] === $_POST["confirm-password"]) {
-                //Vérifier si l'email appartient déjà à un autre utilisateur
                 $existingUser = $um->findByEmail($_POST["email"]);
 
                 if ($existingUser === null) {
@@ -137,49 +136,54 @@ class AuthController extends AbstractController
 
     public function login() : void
     {
-        $_SESSION["errors"] = [];
-
-        if (!empty($_SESSION['user'])) {
-            $_SESSION['errors']['loggedin'] = "You are already logged in";
-            $errors = $_SESSION["errors"];
-            unset($_SESSION['errors']);
-            echo 'Vous êtes déjà connecté(e)';
-            $this->render('login', [
-                "errors" => $errors
-            ]);
-        } else {
-            $this->render('login', []);
+        if (empty($_SESSION["user"])) {
+            $_SESSION["errors"] = [];
+            $_SESSION["errors"]['login'] = 'Login to continue';
+            if (!empty($_SESSION["errors"])) {
+                $errors = $_SESSION["errors"];
+                unset($_SESSION["errors"]);
+                $this->render('login', [
+                    "errors" => $errors
+                ]);
+            } else {
+                $this->render('login', [
+                ]);
+            }
         }
 
-        //ajouter alerte condition 'déjà connecté'
     }
 
     public function checkLogin(): void {
 
         $um = new UserManager();
-        $user = $um->findByEmail($_POST["email-login"]);
 
-        if(!empty($user)) {
-            if ($user->getPassword() === $_POST["password-login"]) {
-                $_SESSION["user"] = $user;
-                header("Location: index.php?route=profile&id=" . $_SESSION["user"]->getId());
-                echo "Welcome " . $_SESSION["user"]->getUsername();
-            }
-            else {
+        if (empty($_SESSION["user"])) {
+            $user = $um->findByEmail($_POST["email-login"]);
+            if (!empty($user)) {
+                if ($user->getPassword() === $_POST["password-login"]) {
+                    $_SESSION["user"] = $user;
+                    header("Location: index.php?route=profile&id=" . $_SESSION["user"]->getId());
+                    echo "Welcome " . $_SESSION["user"]->getUsername();
+                } else {
+                    $_SESSION["errors"] = [];
+                    $_SESSION["errors"]["password"] = "Wrong password";
+                    header("Location: index.php?route=login");
+                }
+            } else {
                 $_SESSION["errors"] = [];
-                $_SESSION["errors"]["password"] = "Wrong password";
+                $_SESSION["errors"]["email"] = "Wrong email";
                 header("Location: index.php?route=login");
             }
         } else {
-            $_SESSION["errors"] = [];
-            $_SESSION["errors"]["email"] = "Wrong email";
+            $_SESSION['errors']['logged_in'] = "You are already logged in";
             header("Location: index.php?route=login");
         }
     }
 
     public function logout(): void {
         unset($_SESSION["user"]);
-        echo 'Vous êtes déconnecté';
+        header("Location: index.php?route=login");
+        echo "You have been logged out";
     }
 
 

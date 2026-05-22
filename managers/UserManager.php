@@ -2,11 +2,9 @@
 
 class UserManager extends AbstractManager {
 
+    public function findAll() : array {
 
-    //Est ce que j'ai besoin d'un findAll ?
-/*    public function findAll() : array {
-
-        $query = $this->db->prepare("SELECT * FROM users");
+        $query = $this->db->prepare("SELECT * FROM users ORDER BY username");
 
         $query->execute();
 
@@ -14,16 +12,17 @@ class UserManager extends AbstractManager {
         $users = [];
 
         foreach($results as $result) {
-            $user = new User(
-                $result["email"],
-                $result["password"],
-                $result["first_name"],
-                $result["last_name"],
-                $result["id"]);
+            $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
+            $id = intval($result['id']);
+            $user->setId($id);
+            $format = 'Y-m-d H:i:s';
+            $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
+            $user->setRegistrationDate($registration_date);
             $users[] = $user;
         }
+
         return $users;
-    }*/
+    }
 
     public function findById(int $id) : ?User {
         $query = $this->db->prepare('SELECT * FROM users WHERE id = :id');
@@ -37,6 +36,9 @@ class UserManager extends AbstractManager {
         if($result)
         {
             $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
+            $format = 'Y-m-d H:i:s';
+            $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
+            $user->setRegistrationDate($registration_date);
             $user->setId($result['id']);
             return $user;
         }
