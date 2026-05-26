@@ -4,6 +4,7 @@
             ?> <p><?= $error ?></p>
         <?php }
     }?>
+    <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
     <label>Email</label>
     <input type="email" class="form-input" name="email-login" id="email-login" required>
     <label>Password</label>

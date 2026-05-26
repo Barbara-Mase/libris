@@ -23,43 +23,73 @@ class AuthController extends AbstractController
         $_SESSION["errors"] = [];
 
         // tous les champs sont remplis
-        if (!empty($_POST["username"]) && !empty($_POST["email"]) && !empty($_POST["password"] && !empty($_POST["confirm-password"]))) {
-            // les deux mots de passe correspondent
-            if ($_POST["password"] === $_POST["confirm-password"]) {
+        if (!empty($_POST["username"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm-password"] && !empty($_POST["intro"])))
+        {
+            $tokenManager = new CSRFTokenManager();
+            if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token']))
+            {
+                // les deux mots de passe correspondent
+                if ($_POST["password"] === $_POST["confirm-password"])
+                {
+                    //Impose au moint 1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécials et 12 caractères minimum
+                    $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/';
 
-                $um = new UserManager();
-                //cherche l'utilisateur par l'email
-                $user = $um->findByEmail($_POST["email"]);
+                    if (preg_match($password_pattern, $_POST["password"]))
+                    {
+                        $um = new UserManager();
+                        $user = $um->findByEmail($_POST["email"]);
 
-                //Si l'utilisateur n'existe pas
-                if ($user === null) {
-                    $user = new User($_POST["username"], $_POST["email"], $_POST["password"], $_POST["intro"]);
-                    $date = new DateTime();
-                    $user->setRegistrationDate($date);
-                    $newUser = $um->create($user);
-                    //penser à régler la timezone
+                        //Si l'utilisateur n'existe pas
+                        if ($user === null)
+                        {
+                            $username = htmlspecialchars($_POST["username"]);
+                            $email = htmlspecialchars($_POST["email"]);
+                            $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+                            $intro = htmlspecialchars($_POST["intro"]);
+                            $user = new User($username, $email, $password, $intro);
+                            $date = new DateTime();
+                            $user->setRegistrationDate($date);
+                            $newUser = $um->create($user);
+                            //penser à régler la timezone
 
-                    if ($newUser) {
-                        unset($_SESSION["errors"]);
-                        header("Location: index.php?route=login");
-                        //ajouter alerte précisant que l'user a été créer
-                    } else {
-                        $_SESSION["errors"][] = "Error writing to database";
-                        header("Location: index.php?route=create-user");
+                            if ($newUser)
+                            {
+                                unset($_SESSION["errors"]);
+                                $this->redirect("index.php?route=login");
+                                //ajouter alerte précisant que l'user a été créer
+                            }
+                            else
+                            {
+                                $_SESSION["errors"]["register"] = "Error writing to database";
+                                $this->redirect("index.php?route=create-user");
+                            }
+                        } else
+                        {
+                            $_SESSION["errors"]["register"] = "This email is already registered";
+                            $this->redirect("index.php?route=create-user");
+                        }
+                    } else
+                    {
+                        $_SESSION["errors"]["register"] = "Password is not strong enough";
+                        $this->redirect("index.php?route=create-user");
                     }
-                } else {
-                    $_SESSION["errors"][] = "This email is already registered";
-                    header("Location: index.php?route=create-user");
                 }
-
-            } else {
-                $_SESSION["errors"][] = "Passwords do not match";
-                header("Location: index.php?route=create-user");
+                else
+                {
+                    $_SESSION["errors"]["register"] = "Passwords do not match";
+                    $this->redirect("index.php?route=create-user");
+                }
             }
-
-        } else {
-            $_SESSION["errors"][] = "At least one field is empty";
-            header("Location: index.php?route=create-user");
+            else
+            {
+                $_SESSION["errors"]["CSRF_token"] = "Invalid CSRF token";
+                $this->redirect("index.php?route=create_user");
+            }
+        }
+        else
+        {
+            $_SESSION["errors"]["register"] = "Missing fields";
+            $this->redirect("index.php?route=create-user");
         }
     }
 
@@ -91,39 +121,87 @@ class AuthController extends AbstractController
     public function checkUpdateUser(int $id): void
     {
         $_SESSION["errors"] = [];
-
         $um = new UserManager();
 
-        if (!empty($_POST["username"] && $_POST["email"] && $_POST["password"] && $_POST["confirm-password"] && $_POST["intro"])) {
+        if (!empty($_POST["username"] && $_POST["email"] && $_POST["password"] && $_POST["confirm-password"] && $_POST["intro"]))
+        {
+            $tokenManager = new CSRFTokenManager();
+            if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token']))
+            {
+                if (!empty($_SESSION['user']))
+                {
+                    $session_user_id = $_SESSION['user']->getId();
+                    if ($session_user_id === $id)
+                    {
+                        //va provoquer une erreur en base de données puisque son email sera déjà enregistré -> j'ai mis l'email en readonly
+                        //$user_email = $_POST["email"];
+                        //$existing_email = $um->findByEmail($user_email);
+                        //if ($existing_email === null)
+                        //{
+                            $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/';
 
-            if ($_POST["password"] === $_POST["confirm-password"]) {
-                $existingUser = $um->findByEmail($_POST["email"]);
+                            if (preg_match($password_pattern, $_POST["password"]))
+                            {
+                                if ($_POST["password"] === $_POST["confirm-password"])
+                                {
+                                    $username = htmlspecialchars($_POST["username"]);
+                                    $email = htmlspecialchars($_POST["email"]);
+                                    $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+                                    $intro = htmlspecialchars($_POST["intro"]);
+                                    $updated_user = new User($username, $email, $password, $intro);
+                                    $updated_user->setId($id);
+                                    $ret = $um->update($updated_user);
 
-                if ($existingUser === null) {
-                    $user = new User($_POST["username"], $_POST["email"], $_POST["password"], $_POST["intro"]);
-                    $user->setId($id);
-                    $userUpdate = $um->update($user);
+                                    if ($ret)
+                                    {
+                                        unset($_SESSION["errors"]);
+                                        $this->redirect("index.php?route=login");
+                                    }
+                                    else
+                                    {
+                                        $_SESSION["errors"]["register"] = "Error writing to database";
+                                        $this->redirect("index.php?route=update-user=" .$id);
+                                    }
+                                }
+                                else
+                                {
+                                    $_SESSION["errors"]["password"] = "Passwords do not match";
+                                    $this->redirect("index.php?route=update-user=" . $id);
+                                }
 
-                    if ($userUpdate) {
-                        unset($_SESSION["errors"]);
-                        header("Location: index.php?route=home");
-                        //ajouter une alerte qui dit que la modification a été prise en compte
-
+                            } else {
+                                $_SESSION["errors"]["password"] = "Password is not strong enough";
+                                $this->redirect("index.php?route=update-user=" . $id);
+                            }
+                        //}
+                        //else
+                        //{
+                              //$_SESSION["errors"]["register"] = "This email is already registered";
+                            //$this->redirect("Location: index.php?route=update-user");
+                        //}
                     } else {
-                        $_SESSION["errors"][] = "Error writing to database";
-                        header("Location: index.php?route=update-user&id=$id");
+                        $_SESSION["errors"]["register"] = "Access denied";
+                        $this->redirect("index.php?route=home");
+
                     }
-                } else {
-                    $_SESSION["errors"][] = "This email is already registered";
-                    header("Location: index.php?route=update-user&id=$id");
                 }
-            } else {
-                $_SESSION["errors"][] = "Passwords do not match";
-                header("Location: index.php?route=update-user&id=$id");
+                else
+                {
+                    $_SESSION["errors"][] = "You must be logged in to update user";
+                    $this->redirect("index.php?route=login");
+                }
             }
-        } else {
-            $_SESSION["errors"][] = "At least one field is empty";
-            header("Location: index.php?route=update-user&id=$id");
+            else
+            {
+                $_SESSION["errors"]["CSRF_token"] = "Invalid CSRF token";
+                $this->redirect("index.php?route=update_user&id=" . $id);
+            }
+
+        }
+        else
+        {
+            $_SESSION["errors"][] = "Missing fields";
+            $this->redirect("index.php?route=update-user&id=" . $id);
         }
     }
 
@@ -131,11 +209,13 @@ class AuthController extends AbstractController
     {
         $um = new UserManager();
         $um->delete($id);
-        header("Location: index.php?route=list-users");
+        $this->redirect("index.php?route=list-users");
     }
 
     public function login() : void
     {
+        $tokenManager = new CSRFTokenManager();
+        $_SESSION['csrf_token'] = $tokenManager->generateCSRFToken();
         if (empty($_SESSION["user"])) {
             $_SESSION["errors"] = [];
             $_SESSION["errors"]['login'] = 'Login to continue';
@@ -153,38 +233,63 @@ class AuthController extends AbstractController
 
     }
 
-    public function checkLogin(): void {
+    public function checkLogin(): void
+    {
+        $_SESSION["errors"] = [];
 
-        $um = new UserManager();
+        if (isset($_POST["email-login"]) && isset($_POST["password-login"]))
+        {
+            $tokenManager = new CSRFTokenManager();
+            if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
 
-        if (empty($_SESSION["user"])) {
-            $user = $um->findByEmail($_POST["email-login"]);
-            if (!empty($user)) {
-                if ($user->getPassword() === $_POST["password-login"]) {
-                    $_SESSION["user"] = $user;
-                    header("Location: index.php?route=profile&id=" . $_SESSION["user"]->getId());
-                    echo "Welcome " . $_SESSION["user"]->getUsername();
-                } else {
-                    $_SESSION["errors"] = [];
-                    $_SESSION["errors"]["password"] = "Wrong password";
-                    header("Location: index.php?route=login");
+                if (empty($_SESSION["user_id"]))
+                {
+                    $um = new UserManager();
+                    $user = $um->findByEmail($_POST["email-login"]);
+
+                    if (!empty($user))
+                    {
+                        if (password_verify($_POST["password-login"], $user->getPassword()))
+                        {
+                            $_SESSION["user_id"] = $user->getId();
+                            $this->redirect("index.php?route=profile&id=" . $_SESSION["user_id"]);
+                        }
+                        else
+                        {
+                            //L'erreur est vague pour qu'un pirate ne puisse pas déterminer d'où elle vient
+                            $_SESSION["errors"]["login"] = "Invalid email or password";
+                            $this->redirect("index.php?route=login");
+                        }
+                    }
+                    else
+                    {
+                        $_SESSION["errors"]["login"] = "Invalid email or password";
+                        $this->redirect("index.php?route=login");
+                    }
                 }
-            } else {
-                $_SESSION["errors"] = [];
-                $_SESSION["errors"]["email"] = "Wrong email";
-                header("Location: index.php?route=login");
+                else
+                {
+                    $_SESSION["errors"]['login'] = "You are already logged in";
+                    $this->redirect("index.php?route=home");
+                }
             }
-        } else {
-            $_SESSION['errors']['logged_in'] = "You are already logged in";
-            header("Location: index.php?route=login");
+            else
+            {
+                $_SESSION["errors"] = "Invalid CSRF token";
+                $this->redirect("index.php?route=login");
+
+            }
+        }
+        else
+        {
+            $_SESSION["errors"]["login"] = "Missing fields";
+            $this->redirect("index.php?route=login");
         }
     }
 
     public function logout(): void {
         unset($_SESSION["user"]);
-        header("Location: index.php?route=login");
-        echo "You have been logged out";
+        $this->redirect("index.php?route=home");
     }
-
 
 }

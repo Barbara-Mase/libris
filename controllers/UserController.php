@@ -29,18 +29,18 @@ class UserController extends AbstractController {
          if ($user) {
              $userId = $user->getId();
              //Il faut être connecté pour accéder au profil
-             if (!empty($_SESSION['user'])) {
+             if (!empty($_SESSION['user_id'])) {
                      unset($_SESSION["errors"]);
                      $this->render('user', [
                          'user' => $user
                      ]);
              } else {
                  $_SESSION["errors"][] = "Access denied";
-                 header("Location: index.php?route=home");
+                 $this->redirect("index.php?route=home");
              }
          } else {
              $_SESSION["errors"][] = "User not found";
-             header("location: index.php?home");
+             $this->redirect("index.php?home");
          }
     }
 
