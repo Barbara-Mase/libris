@@ -20,77 +20,96 @@ class AuthController extends AbstractController
 
     public function checkCreateUser(): void
     {
+        //Ajouter validation de l'email avec !filter_var($email, FILTER_VALIDATE_EMAIL)
+
+        //ajouter les exit
         $_SESSION["errors"] = [];
 
         // tous les champs sont remplis
-        if (!empty($_POST["username"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm-password"] && !empty($_POST["intro"])))
-        {
-            $tokenManager = new CSRFTokenManager();
-            if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token']))
+        if (empty($_SESSION["user_id"])) {
+
+            if (!empty($_POST["username"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm-password"] && !empty($_POST["intro"])))
             {
-                // les deux mots de passe correspondent
-                if ($_POST["password"] === $_POST["confirm-password"])
+                $tokenManager = new CSRFTokenManager();
+
+                if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token']))
                 {
-                    //Impose au moint 1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécials et 12 caractères minimum
-                    $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/';
-
-                    if (preg_match($password_pattern, $_POST["password"]))
+                    // les deux mots de passe correspondent
+                    if ($_POST["password"] === $_POST["confirm-password"])
                     {
-                        $um = new UserManager();
-                        $user = $um->findByEmail($_POST["email"]);
+                        //Impose au moint 1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécials et 12 caractères minimum
+                        $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/';
 
-                        //Si l'utilisateur n'existe pas
-                        if ($user === null)
+                        if (preg_match($password_pattern, $_POST["password"]))
                         {
-                            $username = htmlspecialchars($_POST["username"]);
-                            $email = htmlspecialchars($_POST["email"]);
-                            $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-                            $intro = htmlspecialchars($_POST["intro"]);
-                            $user = new User($username, $email, $password, $intro);
-                            $date = new DateTime();
-                            $user->setRegistrationDate($date);
-                            $newUser = $um->create($user);
-                            //penser à régler la timezone
+                            $um = new UserManager();
+                            $user = $um->findByEmail($_POST["email"]);
 
-                            if ($newUser)
+                            //Si l'utilisateur n'existe pas
+                            if ($user === null)
                             {
-                                unset($_SESSION["errors"]);
-                                $this->redirect("index.php?route=login");
-                                //ajouter alerte précisant que l'user a été créer
-                            }
-                            else
+                                if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+
+                                    $username = htmlspecialchars($_POST["username"]);
+                                    $email = htmlspecialchars($_POST["email"]);
+                                    $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+                                    $intro = htmlspecialchars($_POST["intro"]);
+                                    $user = new User($username, $email, $password, $intro);
+                                    $date = new DateTime();
+                                    $user->setRegistrationDate($date);
+                                    $newUser = $um->create($user);
+                                    //penser à régler la timezone
+                                    if ($newUser)
+                                    {
+                                        unset($_SESSION["errors"]);
+                                        $this->redirect("index.php?route=login");
+                                        //ajouter alerte précisant que l'user a été créé
+                                    }
+                                    else
+                                    {
+                                        $_SESSION["errors"]["register"] = "Error writing to database";
+                                        $this->redirect("index.php?route=create-user");
+                                    }
+                                } else {
+                                    $_SESSION["errors"]["email"] = "Invalid email";
+                                    $this->redirect("index.php?route=create-user");
+                                }
+
+                            } else
                             {
-                                $_SESSION["errors"]["register"] = "Error writing to database";
+                                $_SESSION["errors"]["register"] = "This email is already registered";
                                 $this->redirect("index.php?route=create-user");
                             }
                         } else
                         {
-                            $_SESSION["errors"]["register"] = "This email is already registered";
+                            $_SESSION["errors"]["register"] = "Password is not strong enough";
                             $this->redirect("index.php?route=create-user");
                         }
-                    } else
+                    }
+                    else
                     {
-                        $_SESSION["errors"]["register"] = "Password is not strong enough";
+                        $_SESSION["errors"]["register"] = "Passwords do not match";
                         $this->redirect("index.php?route=create-user");
                     }
                 }
                 else
                 {
-                    $_SESSION["errors"]["register"] = "Passwords do not match";
-                    $this->redirect("index.php?route=create-user");
+                    $_SESSION["errors"]["CSRF_token"] = "Invalid CSRF token";
+                    $this->redirect("index.php?route=create_user");
                 }
             }
             else
             {
-                $_SESSION["errors"]["CSRF_token"] = "Invalid CSRF token";
-                $this->redirect("index.php?route=create_user");
+                $_SESSION["errors"]["register"] = "Missing fields";
+                $this->redirect("index.php?route=create-user");
             }
-        }
-        else
-        {
-            $_SESSION["errors"]["register"] = "Missing fields";
+
+        } else {
+            $_SESSION["errors"]["create-user"] = "You need to be logged out to create an account.";
             $this->redirect("index.php?route=create-user");
+            exit;
         }
+
     }
 
     public function updateUser(int $id): void
@@ -214,21 +233,15 @@ class AuthController extends AbstractController
 
     public function login() : void
     {
-        $tokenManager = new CSRFTokenManager();
-        $_SESSION['csrf_token'] = $tokenManager->generateCSRFToken();
-        if (empty($_SESSION["user"])) {
-            $_SESSION["errors"] = [];
-            $_SESSION["errors"]['login'] = 'Login to continue';
-            if (!empty($_SESSION["errors"])) {
-                $errors = $_SESSION["errors"];
-                unset($_SESSION["errors"]);
-                $this->render('login', [
-                    "errors" => $errors
-                ]);
-            } else {
-                $this->render('login', [
-                ]);
-            }
+
+        if (!empty($_SESSION["errors"])) {
+            $errors = $_SESSION["errors"];
+            unset($_SESSION["errors"]);
+            $this->render('login', [
+                "errors" => $errors
+            ]);
+        } else {
+            $this->render('login', []);
         }
 
     }
@@ -237,6 +250,7 @@ class AuthController extends AbstractController
     {
         $_SESSION["errors"] = [];
 
+        //La première condition n'est pas vérifié. Quand il manque un champs, seule l'erreur "Invalid email or password" est affichée
         if (isset($_POST["email-login"]) && isset($_POST["password-login"]))
         {
             $tokenManager = new CSRFTokenManager();
@@ -247,8 +261,10 @@ class AuthController extends AbstractController
                     $um = new UserManager();
                     $user = $um->findByEmail($_POST["email-login"]);
 
-                    if (!empty($user))
+                    if ($user !== null)
                     {
+                        //Est ce que password_verify() ne fonctionne pas car il prend en paramètre un hash ?
+                        //if ($_POST["password-login"] === $user->getPassword())
                         if (password_verify($_POST["password-login"], $user->getPassword()))
                         {
                             $_SESSION["user_id"] = $user->getId();
@@ -288,7 +304,7 @@ class AuthController extends AbstractController
     }
 
     public function logout(): void {
-        unset($_SESSION["user"]);
+        unset($_SESSION["user_id"]);
         $this->redirect("index.php?route=home");
     }
 

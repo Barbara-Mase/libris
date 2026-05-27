@@ -28,7 +28,9 @@ h1 {
 .header-top {
     display: flex;
     justify-content: space-between;
-    background-color: #0D0B2B;
+    /*background-color: #0D0B2B;*/
+    background-color: whitesmoke;
+
 }
 
 

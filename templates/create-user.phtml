@@ -6,6 +6,7 @@
         }
     }?>
     <fieldset class="fieldset input-fieldset">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
         <label class="label">Username</label>
         <input type="text" name="username" id="username" class="form-input" required>
         <label class="label">Email</label>
