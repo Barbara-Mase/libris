@@ -7,6 +7,7 @@
     }?>
     <fieldset class="fieldset input-fieldset">
         <label class="label">Username</label>
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
         <!-- Vérifier la value et décider si on peut changer le nom d'utilisateur ou non (readonly)-->
         <input type="text" name="username" value="<?php echo $user->getUsername(); ?>" required/>
         <label class="label">Password</label>

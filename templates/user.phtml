@@ -9,6 +9,12 @@
             else { ?>
             <p>Utilisateur introuvable</p>
            <?php }?>
+            <?php if(isset($_SESSION['user_id'])) {
+                if($user->getId() == $_SESSION['user_id']) { ?>
+                    <button class="button-update-profile"><a href="index.php?route=update-user&id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
+               <?php }
+                } ?>
+
 
         </div>
 </main>

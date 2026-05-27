@@ -86,9 +86,9 @@ class UserManager extends AbstractManager {
         ];
 
 
-        $query->execute($parameters);
+        $ret = $query->execute($parameters);
 
-        if($this->db->lastInsertId()) {
+        if($ret) {
             return true;
         } else {
             return false;
@@ -111,9 +111,13 @@ class UserManager extends AbstractManager {
         ];
 
 
-        $query->execute($parameters);
+        $ret = $query->execute($parameters);
 
-        return $this->db->lastInsertId();
+        if($ret) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function delete(int $id) : bool {

@@ -23,8 +23,8 @@
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
                         <li>
-                            <?php if (!empty($_SESSION['user'])) { ?>
-                                <a href="index.php?route=profile&id=<?php echo $_SESSION['user']->getId(); ?>">Profile</a>
+                            <?php if (!empty($_SESSION['user_id'])) { ?>
+                                <a href="index.php?route=profile&id=<?php echo $_SESSION['user_id']?>">Profile</a>
                             <?php } else { ?>
                                 <a href="index.php?route=profile">Profile</a>
                             <?php } ?>
