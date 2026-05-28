@@ -13,7 +13,7 @@ class UserManager extends AbstractManager {
 
         foreach($results as $result) {
             $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
-            $id = intval($result['id']);
+            $id = intval($result['user_id']);
             $user->setId($id);
             $format = 'Y-m-d H:i:s';
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
@@ -24,10 +24,10 @@ class UserManager extends AbstractManager {
         return $users;
     }
 
-    public function findById(int $id) : ?User {
-        $query = $this->db->prepare('SELECT * FROM users WHERE id = :id');
+    public function findById(int $user_id) : ?User {
+        $query = $this->db->prepare('SELECT * FROM users WHERE user_id = :user_id');
         $parameters = [
-            'id' => $id
+            'user_id' => $user_id
         ];
         $query->execute($parameters);
 
@@ -39,7 +39,7 @@ class UserManager extends AbstractManager {
             $format = 'Y-m-d H:i:s';
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setRegistrationDate($registration_date);
-            $user->setId($result['id']);
+            $user->setId($result['user_id']);
             return $user;
         }
         else
@@ -61,7 +61,7 @@ class UserManager extends AbstractManager {
 
         if($result)
         {
-            $user = new User($result['username'], $result['email'], $result['password'], $result["intro"], $result["id"]);
+            $user = new User($result['username'], $result['email'], $result['password'], $result["intro"], $result["user_id"]);
             $format = 'Y-m-d H:i:s';
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setRegistrationDate($registration_date);
@@ -100,14 +100,14 @@ class UserManager extends AbstractManager {
     {
         $query = $this->db->prepare("UPDATE users 
                                     SET username = :username, email = :email, password = :password, intro = :intro
-                                    WHERE id = :id");
+                                    WHERE user_id = :user_id");
 
         $parameters = [
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
-            'id' => $user->getId()
+            'user_id' => $user->getId()
         ];
 
 

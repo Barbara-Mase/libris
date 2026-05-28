@@ -58,9 +58,7 @@ class Router {
             }
             //Gestion des utilisateurs
             else if($get['route'] === "profile") {
-                if(!empty($get["id"])) {
                     $this->uc->profile(intval($get['id']));
-                }
             }
             else if ($get['route'] === "users-list") {
                 $this->uc->list();

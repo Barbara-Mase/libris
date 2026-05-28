@@ -28,9 +28,7 @@ h1 {
 .header-top {
     display: flex;
     justify-content: space-between;
-    /*background-color: #0D0B2B;*/
-    background-color: whitesmoke;
-
+    background-color: #0D0B2B;
 }
 
 
@@ -52,16 +50,18 @@ li, a {
     padding: 5px;
 }
 
-.ul-drop-down-menu li {
+.ul-drop-down-menu li a {
     color: #F6E06E;
     list-style: none;
 }
+
 .login-logout {
     color: #F6E06E;
 }
 
 
 /**MAIN**/
+
 
 .book-card {
     border : solid black 2px;

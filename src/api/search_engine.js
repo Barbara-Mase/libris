@@ -1,11 +1,11 @@
 
 window.addEventListener("DOMContentLoaded", () => {
 
-        //sélection du formulaire par l'id
-        let form = document.getElementById('form');
+    //sélection du formulaire par l'id
+    let form = document.getElementById('form');
 
-        //écoute du formulaire
-        form.addEventListener("submit", (event) => {
+    //écoute du formulaire
+    form.addEventListener("submit", (event) => {
         event.preventDefault()
 
         //Création de l'url et de ses paramètres de recherche
@@ -38,19 +38,19 @@ window.addEventListener("DOMContentLoaded", () => {
                     bookArticle.appendChild(img);
 
                     //s'il existe une couverture
-                     if(cover_id) {
-                         //on créé la requête à l'API
-                         let url_cover = "https://covers.openlibrary.org/b/id/" + cover_id + "-M.jpg";
+                    if (cover_id) {
+                        //on créé la requête à l'API
+                        let url_cover = "https://covers.openlibrary.org/b/id/" + cover_id + "-M.jpg";
 
-                         fetch(url_cover)
-                             .then(response => response.blob())
+                        fetch(url_cover)
+                            .then(response => response.blob())
 
-                             //réviser blob
-                             .then(blob => {
-                                 img.src = URL.createObjectURL(blob);
-                             })
-                             .catch(error => console.error("Error fetching dynamic image:", error));
-                     }
+                            //réviser blob
+                            .then(blob => {
+                                img.src = URL.createObjectURL(blob);
+                            })
+                            .catch(error => console.error("Error fetching dynamic image:", error));
+                    }
 
                     let h2 = document.createElement("h2");
                     let p_author = document.createElement("p")
@@ -71,69 +71,78 @@ window.addEventListener("DOMContentLoaded", () => {
                     bookArticle.appendChild(p_author);
                     p_date.appendChild(publish_year);
                     bookArticle.appendChild(p_date);
+                    //Ajout de tout le container BookArticle dans appendChild
+                    resultContainer.appendChild(bookArticle)
 
 
+                    //création du bouton "ajouter"
                     let addButton = document.createElement("button");
+                    //class du bouton
                     addButton.classList.add("addButton");
+                    //Datasets pour récupérer la valeur
                     addButton.dataset.title = string_bookTitle;
                     addButton.dataset.author = string_author;
                     addButton.dataset.publishYear = string_publish_year;
                     //Stocker le cover_id ou l'url ?
                     addButton.dataset.coverId = cover_id;
                     addButton.dataset.bookKey = key;
-                    let addText = document.createTextNode("Ajouter");
+                    //Création du texte dans le bouton
+                    let addText = document.createTextNode("Voir plus");
+                    //Ajout du texte
                     addButton.appendChild(addText);
+                    //Ajout du bouton dans le container du livre
                     bookArticle.appendChild(addButton);
-                    resultContainer.appendChild(bookArticle);
+                    //Ajout de la classe du container de résultat de la recherche
                     resultContainer.classList.add("result-container");
+                    //Ajout dans le body du container de résultat
                     document.body.appendChild(resultContainer);
 
                 }
 
+
+
+                //Listener sur le bouton d'ajout du livre
                 let buttonListeners = document.querySelectorAll('.addButton');
 
-                // Attention getElementByClassName renvoie un tableau
+                // Attention querySelectorAll renvoie un tableau
                 for (let buttonListener of buttonListeners) {
 
                     buttonListener.addEventListener('click', (event) => {
 
-                        //création du formData
-                        const formData = new FormData();
+                    //création du formData
+                    const formData = new FormData();
 
-                        //Ajout dans le formData des infos récupérées depuis l'API
-                        formData.append("title", event.target.dataset.title);
-                        formData.append("author", event.target.dataset.author);
-                        formData.append('publish_year', event.target.dataset.publishYear);
-                        formData.append("cover_id", event.target.dataset.coverId);
-                        formData.append("key", event.target.dataset.bookKey);
+                    //Ajout dans le formData des infos récupérées depuis l'API
+                    formData.append("title", event.target.dataset.title);
+                    formData.append("author", event.target.dataset.author);
+                    formData.append('publish_year', event.target.dataset.publishYear);
+                    formData.append("cover_id", event.target.dataset.coverId);
+                    formData.append("key", event.target.dataset.bookKey);
 
-                        console.log(formData);
+                    console.log(formData);
 
-                        fetch("index.php?route=check-create-book", {
-                            method: 'POST',
-                            body: formData
+                    //fetch du formdata qui est envoyé dans la fonction check-create-book
+                    fetch("index.php?route=check-create-book", {
+                        method: 'POST',
+                        body: formData
+                    })
+
+                        //vérifier l'info récupéré via ce response via response.ok par exemple
+                        //mettre la gestion d'erreur ici
+                        .then(response => response.text())
+                        .then(data => {
+
                         })
-
-                            //vérifier l'info récupéré via ce response via response.ok par exemple
-                            //mettre la gestion d'erreur ici
-                            .then(response => response.text())
-                            .then(data => {
-
-                            })
-                            .catch(error => {
-                                console.error('Erreur lors du fetch:', error);
-                            });
-                    });
+                        .catch(error => {
+                            console.error('Erreur lors du fetch:', error);
+                        });
+                });
 
                 }
 
-            })
+    })
 
-            .catch(err => console.error(err));
+    .catch(err => console.error(err));
 
-   })
-
-
-
-
-});
+            });
+    });

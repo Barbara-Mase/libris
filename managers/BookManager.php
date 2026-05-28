@@ -43,7 +43,7 @@ class BookManager extends AbstractManager {
 
         if($result)
         {
-            $book = new Book($result['title'], $result['author'], $result['publication_year'], $result['cover_id']);
+            $book = new Book($result['book_key'], $result['title'], $result['author'], $result['publish_year'], $result['cover_id']);
             return $book;
         }
         else
@@ -52,7 +52,7 @@ class BookManager extends AbstractManager {
         }
     }
 
-    public function findByKey(string $key) : bool
+    public function findByKey(string $book_key) : bool
     {
 
         $query = $this->db->prepare('SELECT * FROM books WHERE book_key = :book_key');
@@ -75,5 +75,54 @@ class BookManager extends AbstractManager {
         }
     }
 
+    public function addBookUser(int $book_id, int $user_id) : bool {
+
+        $query = $this->db->prepare("INSERT INTO books (book_id, user_id) VALUES (:book_id, :user_id)");
+
+        $parameters = [
+            'book_id' => $book_id,
+            'user_id' => $user_id
+        ];
+        $result = $query->execute($parameters);
+
+
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //a completer
+    //public function removeBookUser(int $book_id, int $user_id) : bool {}
+
+    //à compléter
+    //public function removeBook(int $book_id) : bool {}
+
+    public function findBookUsers(int $user_id) : ?array {
+
+        $query = $this->db->prepare('SELECT book_id FROM books_users WHERE user_id = :user_id');
+
+        $parameters = [
+            'user_id' => $user_id
+        ];
+
+        $query->execute($parameters);
+
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            return null;
+        }
+
+        $list = [];
+
+        foreach($result as $row) {
+            $list[] = $row['book_id'];
+            return $list;
+        }
+
+        return $list;
+    }
 
 }

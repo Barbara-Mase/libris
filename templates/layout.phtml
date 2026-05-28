@@ -23,13 +23,10 @@
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
                         <li>
-                            <?php if (!empty($_SESSION['user_id'])) { ?>
-                                <a href="index.php?route=profile&id=<?php echo $_SESSION['user_id']?>">Profile</a>
-                            <?php } else { ?>
-                                <a href="index.php?route=profile">Profile</a>
-                            <?php } ?>
+                            <a href="index.php?route=profile&id=<?php if (isset($_SESSION['user_id'])) {
+                                echo $_SESSION['user_id'];
+                            } ?>">Profile</a>
                         </li>
-                        <li><a href="index.php?route=update-user">Settings</a></li>
                         <li><a href="index.php?route=bookmarks">Bookmarks</a></li>
                         <li><a href="index.php?route=users-list">Users list</a></li>
                     </ul>

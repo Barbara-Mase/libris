@@ -24,24 +24,30 @@ class UserController extends AbstractController {
 
         $_SESSION["errors"] = [];
         $um = new UserManager();
-        $user = $um->findById($id);
 
-         if ($user) {
-             $userId = $user->getId();
-             //Il faut être connecté pour accéder au profil
-             if (!empty($_SESSION['user_id'])) {
-                     unset($_SESSION["errors"]);
-                     $this->render('user', [
-                         'user' => $user
-                     ]);
-             } else {
-                 $_SESSION["errors"][] = "Access denied";
-                 $this->redirect("index.php?route=home");
-             }
-         } else {
-             $_SESSION["errors"][] = "User not found";
-             $this->redirect("index.php?home");
-         }
+        if ($id) {
+            $user = $um->findById($id);
+
+            if ($user) {
+                unset($_SESSION["errors"]);
+                $this->render('user', [
+                    'user' => $user
+                ]);
+            } else {
+                $_SESSION["errors"]["access_denied"] = "User not found";
+                $errors = $_SESSION["errors"];
+                $this->render('home', [
+                    'errors' => $errors
+                ]);
+            }
+        } else {
+            $_SESSION["errors"]["access_denied"] = "You must be logged in to view this page.";
+            $errors = $_SESSION["errors"];
+                $this->render('home', [
+                'errors' => $errors
+            ]);
+        }
+
     }
 
 }
