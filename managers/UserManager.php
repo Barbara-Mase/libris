@@ -74,6 +74,7 @@ class UserManager extends AbstractManager {
     }
 
     public function create(User $user) : bool {
+
         $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date) VALUES (:username, :email, :password, :intro, :registration_date)");
 
 
@@ -84,7 +85,6 @@ class UserManager extends AbstractManager {
             'intro' => $user->getIntro(),
             'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s')
         ];
-
 
         $ret = $query->execute($parameters);
 

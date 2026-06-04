@@ -8,32 +8,67 @@ class BookController extends AbstractController {
 
     public function detailBook(int $id) : void {
 
+        $_SESSION['errors'] = [];
         $bm = new BookManager();
         $book = $bm->findById($id);
 
-        $this->render('book', [
-            'book' => $book
-        ]);
-    }
-
-    public function checkCreate() : void
-
-    {
-        $_SESSION["errors"] = [];
-
-        $bm = new BookManager();
-        $book = $bm->findByKey($_POST['key']);
-
-        if($book === false) {
-            $newBook = new Book($_POST['key'], $_POST["title"], $_POST["author"], $_POST["publish_year"], $_POST["cover_id"]);
-            $bm->createBook($newBook);
-            //Remplacer par l'id du livre cliqué (test ici)
-            //Ne fonctionne pas
-            $this->redirect("index.php?route=detail-book&id=8");
+        if($book) {
+            $this->render('book', [
+                'book' => $book
+            ]);
         } else {
-            //Mettre les erreurs ici
-            echo "Ce livre existe déjà en base de données";
+            $_SESSION["errors"]["book"] = "Book not found";
+            $errors = $_SESSION["errors"];
+            $this->render('home', [
+                'errors' => $errors
+            ]);
         }
 
     }
+
+
+    //à ajouter : une vérification des erreurs potentiels
+    public function checkCreate() : void
+
+    {
+
+        //Vérifier si le livre existe en bdd
+        $bm = new BookManager();
+        $book = $bm->findByKey($_POST['key']);
+
+
+        //s'il n'existe pas on le créer
+        if(!$book) {
+            $newBook = new Book($_POST['key'], $_POST["title"], $_POST["author"], $_POST["publish_year"], $_POST["cover_id"]);
+            //on assigne le nouveau a une variable book, le livre est retourné par la fonction create
+            $book = $bm->createBook($newBook);
+        }
+
+        //On récupère l'id du livre qu'on envoie à javascript via un json_encode()
+        $book_id = $book->getId();
+        echo json_encode($book_id);
+
+
+
+
+    }
+
+    //en chantier
+    public function addToList() : void {
+
+        $bm = new BookManager();
+        $book = $bm->findById($_POST["book_id"]);
+
+        if($_SESSION['user_id']){
+            $user_id = $_SESSION['user_id'];
+        }
+
+        if($book) {
+            $book_id = $book->getId();
+        }
+        $bm->addBookUser($book_id, $user_id);
+
+    }
+
+
 }

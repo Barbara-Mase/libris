@@ -21,6 +21,11 @@ window.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json()) // fetch me renvoie une Promise, j'utilise .json() pour faire l'équivalent d'un JSON.parse()
             .then(data => {
 
+                let oldContainer = document.querySelector('.result-container');
+                if (oldContainer) {
+                    oldContainer.remove();
+                }
+
                 //mettre un id pour vérifier si elle existe déjà et l'enlever à la prochaine requête
                 let resultContainer = document.createElement('section');
 
@@ -74,7 +79,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     //Ajout de tout le container BookArticle dans appendChild
                     resultContainer.appendChild(bookArticle)
 
-
                     //création du bouton "ajouter"
                     let addButton = document.createElement("button");
                     //class du bouton
@@ -97,52 +101,48 @@ window.addEventListener("DOMContentLoaded", () => {
                     //Ajout dans le body du container de résultat
                     document.body.appendChild(resultContainer);
 
-                }
+                    addButton.addEventListener('click', (event) => {
 
+                        //création du formData
+                        const formData = new FormData();
 
+                        //Ajout dans le formData des infos récupérées depuis l'API
+                        formData.append("title", event.target.dataset.title);
+                        formData.append("author", event.target.dataset.author);
+                        formData.append('publish_year', event.target.dataset.publishYear);
+                        formData.append("cover_id", event.target.dataset.coverId);
+                        formData.append("key", event.target.dataset.bookKey);
 
-                //Listener sur le bouton d'ajout du livre
-                let buttonListeners = document.querySelectorAll('.addButton');
+                        console.log(formData);
 
-                // Attention querySelectorAll renvoie un tableau
-                for (let buttonListener of buttonListeners) {
-
-                    buttonListener.addEventListener('click', (event) => {
-
-                    //création du formData
-                    const formData = new FormData();
-
-                    //Ajout dans le formData des infos récupérées depuis l'API
-                    formData.append("title", event.target.dataset.title);
-                    formData.append("author", event.target.dataset.author);
-                    formData.append('publish_year', event.target.dataset.publishYear);
-                    formData.append("cover_id", event.target.dataset.coverId);
-                    formData.append("key", event.target.dataset.bookKey);
-
-                    console.log(formData);
-
-                    //fetch du formdata qui est envoyé dans la fonction check-create-book
-                    fetch("index.php?route=check-create-book", {
-                        method: 'POST',
-                        body: formData
-                    })
-
-                        //vérifier l'info récupéré via ce response via response.ok par exemple
-                        //mettre la gestion d'erreur ici
-                        .then(response => response.text())
-                        .then(data => {
-
+                        fetch("index.php?route=check-create-book", {
+                            method: 'POST',
+                            body: formData,
                         })
-                        .catch(error => {
-                            console.error('Erreur lors du fetch:', error);
-                        });
-                });
+                            //Etape 7. On attends que l'appel PHP nous retourne une réponse et on extrait son contenu sous forme de texte (ça peut être d'autres formats (JSON par exemple) selon ce que vous retourne 'l'url appelée)
 
+                            //vérifier l'info récupéré via ce response via response.ok par exemple
+                            //mettre la gestion d'erreur ici
+
+                            .then(response => response.text())
+
+                            //empêche l'enregistrement en bdd
+                            .then( data => {
+                                console.log(data);
+                                id = data
+                                window.location.assign('index.php?route=detail-book&id=' + id);
+                            })
+                            .catch(error => {
+                                console.error('Erreur lors du fetch:', error);
+
+                            });
+
+                        bookArticle.appendChild(addButton);
+                        resultContainer.appendChild(bookArticle);
+                    })
                 }
-
-    })
-
-    .catch(err => console.error(err));
-
-            });
+                document.body.appendChild(resultContainer);
+            })
+            .catch(err => console.error(err));
     });
+});

@@ -11,7 +11,7 @@ class Book {
     /**
      * @return int|null
      */
-    public function getBookId(): ?int
+    public function getId(): ?int
     {
         return $this->book_id;
     }
@@ -27,12 +27,12 @@ class Book {
     /**
      * @return string
      */
-    public function getBookKey(): string
+    public function getKey(): string
     {
         return $this->book_key;
     }
 
-    public function setBookKey(string $book_key): void
+    public function setKey(string $book_key): void
     {
         $this->book_key = $book_key;
     }

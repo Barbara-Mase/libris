@@ -34,9 +34,8 @@ class Router {
             else if ($get['route'] === 'create-list') {
                 echo "Create List";
             }
-            else if ($get['route'] === 'add-book-list') {
-                $this->blc->addBookList();
-                echo 'passage du router';
+            else if ($get['route'] === 'add-to-list') {
+                $this->bc->addToList();
             }
             else if ($get['route'] === 'delete-book-list') {
                 echo "Delete Book List";
@@ -48,7 +47,7 @@ class Router {
             else if($get["route"] === 'detail-book') {
                 $this->bc->detailBook(intval($get["id"]));
             }
-            else if($get["route"] === 'create-book') {
+            else if ($get["route"] === 'create-book') {
             }
             else if ($get["route"] === 'check-create-book') {
                 $this->bc->checkCreate();
