@@ -16,12 +16,30 @@ window.addEventListener("DOMContentLoaded", () => {
             })
             .catch(error => console.error("Error fetching dynamic image:", error));
     }
-     let containerBookCover = document.getElementsByClassName("container-book-cover");
+     let divBookCover = document.getElementsByClassName("div-book-cover");
 
-    for (let container of containerBookCover) {
-        container.appendChild(coverImg);
+    for (let div of divBookCover) {
+        div.appendChild(coverImg);
     }
 
-    let
+    let addButton = document.getElementsByClassName("button-add-to-list");
+
+    for(let button of addButton) {
+
+        button.addEventListener("click", (event) => {
+
+            fetch("index.php?route=add-to-list")
+                .then(response => response.text)
+                .then(data => {
+                    console.log(data)
+
+                })
+                .catch(error => {
+
+                })
+        })
+    }
+
+
 
 })

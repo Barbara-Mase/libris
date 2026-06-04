@@ -75,3 +75,28 @@ li, a {
     flex-direction : row;
     flex-wrap: wrap;
 }
+
+/** PAGE BOOK-DETAIL */
+
+.container-book-detail {
+    display: flex;
+    width: 800px;
+    margin: auto;
+    margin-top: 50px;
+
+}
+
+.div-info-add {
+    background-color: #0D0B2B;
+    color: #F6E06E;
+    width: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+#cover-id {
+    display: none;
+}

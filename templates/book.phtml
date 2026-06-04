@@ -5,17 +5,23 @@
         <?php
     }
 }?>
-        <section>
+        <section class="container-book-detail">
             <?php if(isset($book)) { ?>
-                <div class="container-book-cover">
+                <div class="div-book-cover">
+                    <!--Ne pas oublier de cacher la div avec l'id du livre -->
                     <div id="cover-id"><?= $book->getCoverId()?></div>
                 </div>
-            <div class="container-book-info">
-                <h1><?= $book->getTitle()?></h1>
-                <p><?= $book->getAuthor()?></p>
-                <p><?= $book->getPublishYear()?></p>
+            <div class="div-info-add">
+                <div class="div-book-info">
+                    <h2 class="detail-book-title"><?= $book->getTitle()?></h2>
+                    <p class="detail-book-author"><?= $book->getAuthor()?></p>
+                    <p class="detail-book-year"><?= $book->getPublishYear()?></p>
+                </div>
+                <div class="div-add-button">
+                    <button class="button-add-to-list" type="submit">Add to list</button>
+                </div>
             </div>
-                <button type="submit">Add to list</button>
+
             <?php } else {?>
             <p>Book Unfound</p>
             <?php }?>

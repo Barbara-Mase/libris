@@ -16,6 +16,7 @@ class BookController extends AbstractController {
             $this->render('book', [
                 'book' => $book
             ]);
+            $_SESSION["book_id"] = $id;
         } else {
             $_SESSION["errors"]["book"] = "Book not found";
             $errors = $_SESSION["errors"];
@@ -56,19 +57,25 @@ class BookController extends AbstractController {
     //en chantier
     public function addToList() : void {
 
+        $_SESSION['errors'] = [];
         $bm = new BookManager();
-        $book = $bm->findById($_POST["book_id"]);
 
-        if($_SESSION['user_id']){
+        if ($_SESSION['user_id']) {
             $user_id = $_SESSION['user_id'];
+            if($_SESSION['book_id']) {
+                $book_id = $_SESSION['book_id'];
+                $bm->addBookUser($book_id, $user_id);
+            } else {
+                $_SESSION["errors"]["book"] = "Book not found";
+                //décider où rediriger
+                $this->redirect("route=home");
+            }
+        } else {
+            $_SESSION["errors"]["book"] = "You must be logged in to add a book";
+            //décider où rediriger
+            $this->redirect("route=home");
         }
-
-        if($book) {
-            $book_id = $book->getId();
-        }
-        $bm->addBookUser($book_id, $user_id);
 
     }
-
 
 }
