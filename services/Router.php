@@ -16,6 +16,7 @@ class Router {
         $this->bc = new BookController();
         $this->uc = new UserController();
         $this->ac = new AuthController();
+        $this->cc = new CommentController();
     }
 
 
@@ -54,6 +55,8 @@ class Router {
             }
             else if ($get["route"] === 'delete-book') {
                 echo "Delete Book";
+            } else if ($get["route"] === 'comment') {
+                $this->cc->comment(intval($get["id"]));
             }
             //Gestion des utilisateurs
             else if($get['route'] === "profile") {

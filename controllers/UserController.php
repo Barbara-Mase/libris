@@ -30,48 +30,42 @@ class UserController extends AbstractController {
             $user = $um->findById($id);
             if ($user) {
                 unset($_SESSION["errors"]);
-                /*$this->render('user', [
-                    'user' => $user
-                ]);*/
             } else {
                 $_SESSION["errors"]["access_denied"] = "User not found";
                 $errors = $_SESSION["errors"];
-                $this->render('home', [
-                    'errors' => $errors
+                $this->render('user', [
+                    'errors' => $errors,
                 ]);
+                return;
             }
         } else {
             $_SESSION["errors"]["access_denied"] = "You must be logged in to view this page.";
             $errors = $_SESSION["errors"];
-                $this->render('home', [
-                'errors' => $errors
+            $this->render('user', [
+                'errors' => $errors,
             ]);
+            return;
         }
 
         $bm = new BookManager();
         //bookIdList est un tableau de tableau donc on boucle deux fois
         $bookIdList = $bm->findBookUsers($id);
+        $booksList = [];
 
         if ($bookIdList) {
-            foreach ($bookIdList as $arrayBookId)
-            {
+            foreach ($bookIdList as $arrayBookId) {
                 foreach ($arrayBookId as $bookId) {
                     $book = $bm->findById($bookId);
                     $booksList[] = $book;
                 }
             }
-        } else {
-            $_SESSION["errors"]["list"] = "No book yet in list";
         }
 
         //s'il n'y a pas d'erreur, on envoie tout à la vue
-        if(!isset($_SESSION["errors"])){
-            $this->render('user', [
-                'user' => $user,
-                'booksList' => $booksList
-            ]);
-        }
+        $this->render('user', [
+            'user' => $user,
+            'booksList' => $booksList
+        ]);
     }
-
 
 }
