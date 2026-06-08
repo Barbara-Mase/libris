@@ -49,9 +49,6 @@ class BookController extends AbstractController {
         $book_id = $book->getId();
         echo json_encode($book_id);
 
-
-
-
     }
 
     //en chantier
@@ -61,10 +58,10 @@ class BookController extends AbstractController {
         $bm = new BookManager();
 
         if ($_SESSION['user_id']) {
-            $user_id = $_SESSION['user_id'];
+            $userId = $_SESSION['user_id'];
             if($_SESSION['book_id']) {
-                $book_id = $_SESSION['book_id'];
-                $bm->addBookUser($book_id, $user_id);
+                $bookId = $_SESSION['book_id'];
+                $bm->addBookUser($bookId, $userId);
             } else {
                 $_SESSION["errors"]["book"] = "Book not found";
                 //décider où rediriger
@@ -76,6 +73,27 @@ class BookController extends AbstractController {
             $this->redirect("route=home");
         }
 
+    }
+
+    public function booksList(int $userId) : void
+    {
+
+        $bm = new BookManager();
+        $bookIdList = $bm->findBookUsers($userId);
+        $_SESSION['errors'] = [];
+
+        if ($bookIdList) {
+            foreach ($bookIdList as $bookId)
+            {
+                $book = $bm->findById($bookId);
+                $booksList[] = $book;
+                $this->render('books-list', [
+                    'booksList' => $booksList
+                ]);
+            }
+        } else {
+            $_SESSION["errors"]["list"] = "No book yet in list";
+        }
     }
 
 }

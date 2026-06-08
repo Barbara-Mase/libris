@@ -37,6 +37,10 @@ class Router {
             else if ($get['route'] === 'add-to-list') {
                 $this->bc->addToList();
             }
+            else if ($get['route'] === 'books-list')
+            {
+                $this->bc->booksList(intval($get["id"]));
+            }
             else if ($get['route'] === 'delete-book-list') {
                 echo "Delete Book List";
             }

@@ -4,7 +4,7 @@ class Book {
     private ?int $book_id = NULL;
 
 
-    public function __construct(private string $book_key, private string $title, private string $author, private int $publish_year, private ?string $cover_id) {
+    public function __construct(private string $bookKey, private string $title, private string $author, private int $publishYear, private ?string $coverId) {
 
     }
 
@@ -13,15 +13,15 @@ class Book {
      */
     public function getId(): ?int
     {
-        return $this->book_id;
+        return $this->bookId;
     }
 
     /**
      * @param int|null $book_id
      */
-    public function setBookId(?int $book_id): void
+    public function setBookId(?int $bookId): void
     {
-        $this->book_id = $book_id;
+        $this->bookId = $bookId;
     }
 
     /**
@@ -29,12 +29,12 @@ class Book {
      */
     public function getKey(): string
     {
-        return $this->book_key;
+        return $this->bookKey;
     }
 
-    public function setKey(string $book_key): void
+    public function setKey(string $bookKey): void
     {
-        $this->book_key = $book_key;
+        $this->bookKey = $bookKey;
     }
 
     public function getTitle(): string
@@ -62,24 +62,24 @@ class Book {
      */
     public function getPublishYear(): int
     {
-        return $this->publish_year;
+        return $this->publishYear;
     }
 
     /**
      * @param int $publication_date
      */
-    public function setPublishYear(int $publication_year): void
+    public function setPublishYear(int $publishYear) : void
     {
-        $this->publish_date = $publish_year;
+        $this->publishYear = $publishYear;
     }
     public function getCoverId(): ?string
     {
-        return $this->cover_id;
+        return $this->coverId;
     }
 
-    public function setCoverId(?string $cover_id): void
+    public function setCoverId(?string $coverId): void
     {
-        $this->cover_id = $cover_id;
+        $this->coverId = $coverId;
     }
 
 

@@ -139,17 +139,16 @@ class BookManager extends AbstractManager {
 
         $query->execute($parameters);
 
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if (empty($result)) {
+        if (empty($results)) {
             return null;
         }
 
         $list = [];
 
-        foreach($result as $row) {
-            $list[] = $row['book_id'];
-            return $list;
+        foreach($results as $result) {
+            $list[] = $result;
         }
 
         return $list;

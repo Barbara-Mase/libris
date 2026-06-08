@@ -1,0 +1,16 @@
+<main class="booklist">
+<div class="list-div"></div>
+    <?php
+    if ($_SESSION['user_id']) {
+        if(isset($booksList)) {
+        foreach ($booksList as $book) { ?>
+    <ul>
+        <li><?=$book->getTitle()?></li>
+        <li><?= $book->getAuthor()?></li>
+    </ul>
+        <?php }
+        }
+    }?>
+
+
+</main>
