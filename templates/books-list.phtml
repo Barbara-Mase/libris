@@ -4,10 +4,12 @@
     if ($_SESSION['user_id']) {
         if(isset($booksList)) {
         foreach ($booksList as $book) { ?>
-    <ul>
-        <li><?=$book->getTitle()?></li>
-        <li><?= $book->getAuthor()?></li>
-    </ul>
+            <div class="book-list-div">
+                <ul>
+                    <li class="list-book-title"><?=$book->getTitle()?></li>
+                    <li class="list-book-author"><?= $book->getAuthor()?></li>
+                </ul>
+            </div>
         <?php }
         }
     }?>

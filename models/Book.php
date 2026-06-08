@@ -1,7 +1,7 @@
 <?php
 
 class Book {
-    private ?int $book_id = NULL;
+    private ?int $bookId = NULL;
 
 
     public function __construct(private string $bookKey, private string $title, private string $author, private int $publishYear, private ?string $coverId) {
@@ -11,7 +11,7 @@ class Book {
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getBookId(): ?int
     {
         return $this->bookId;
     }

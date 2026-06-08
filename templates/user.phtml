@@ -2,19 +2,33 @@
 
 <main>
         <div class="div-profile">
+            <?php if (isset($errors)) {
+                foreach($errors as $error) { ?>
+                    <p><?= $error ?></p>
+                    <?php
+                }
+            }?>
             <?php if(isset($user)) { ?>
                 <p><?php echo $user->getUsername() ?></p>
-                <php><?=$user->getIntro()?></php>
-            <?php }
-            else { ?>
-            <p>Utilisateur introuvable</p>
-           <?php }?>
+                <p><?=$user->getIntro()?></p>
+            <?php } ?>
             <?php if(isset($_SESSION['user_id'])) {
                 if($user->getId() == $_SESSION['user_id']) { ?>
                     <button class="button-update-profile"><a href="index.php?route=update-user&id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
                <?php }
                 } ?>
-
+            <div class="list-div"></div>
+            <?php
+                if(isset($booksList)) {
+                    foreach ($booksList as $book) { ?>
+                        <div class="book-list-div">
+                            <ul>
+                                <li class="list-book-title"><?=$book->getTitle()?></li>
+                                <li class="list-book-author"><?= $book->getAuthor()?></li>
+                            </ul>
+                        </div>
+                    <?php }
+            }?>
 
         </div>
 </main>

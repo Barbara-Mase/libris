@@ -13,14 +13,14 @@ class BookController extends AbstractController {
         $book = $bm->findById($id);
 
         if($book) {
-            $this->render('book', [
+            $this->render('detail-book', [
                 'book' => $book
             ]);
             $_SESSION["book_id"] = $id;
         } else {
             $_SESSION["errors"]["book"] = "Book not found";
             $errors = $_SESSION["errors"];
-            $this->render('home', [
+            $this->render('detail-book', [
                 'errors' => $errors
             ]);
         }
@@ -46,7 +46,7 @@ class BookController extends AbstractController {
         }
 
         //On récupère l'id du livre qu'on envoie à javascript via un json_encode()
-        $book_id = $book->getId();
+        $book_id = $book->getBookId();
         echo json_encode($book_id);
 
     }
@@ -75,7 +75,7 @@ class BookController extends AbstractController {
 
     }
 
-    public function booksList(int $userId) : void
+    /*public function booksList(int $userId) : void
     {
 
         $bm = new BookManager();
@@ -83,17 +83,19 @@ class BookController extends AbstractController {
         $_SESSION['errors'] = [];
 
         if ($bookIdList) {
-            foreach ($bookIdList as $bookId)
+            foreach ($bookIdList as $arrayBookId)
             {
-                $book = $bm->findById($bookId);
-                $booksList[] = $book;
-                $this->render('books-list', [
-                    'booksList' => $booksList
-                ]);
+                foreach ($arrayBookId as $bookId) {
+                    $book = $bm->findById($bookId);
+                    $booksList[] = $book;
+                }
             }
+            $this->render('user', [
+                'booksList' => $booksList
+            ]);
         } else {
             $_SESSION["errors"]["list"] = "No book yet in list";
         }
-    }
+    }*/
 
 }
