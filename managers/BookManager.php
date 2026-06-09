@@ -40,6 +40,7 @@ class BookManager extends AbstractManager {
         $parameters = [
             'book_id' => $book_id
         ];
+
         $query->execute($parameters);
 
         $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -47,6 +48,7 @@ class BookManager extends AbstractManager {
         if($result)
         {
             $book = new Book($result['book_key'], $result['title'], $result['author'], $result['publish_year'], $result['cover_id']);
+            $book->setBookId($result['book_id']);
             return $book;
         }
         else

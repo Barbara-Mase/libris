@@ -21,11 +21,28 @@
                     <button class="button-add-to-list" type="submit">Add to list</button>
                 </div>
             </div>
-
-
+                <div class="div-add-comment">
+                <form method="post" action="index.php?route=add-comment&id=<?= $book->getBookId() ?>">
+                    <fieldset class="fieldset-comment-content-title">
+                        <label  for="comment-title" class="label-comment-title label-comment">Title</label>
+                        <input type="text" name="comment-title" id="comment-title" placeholder="Your title here" maxlength="40" required>
+                        <label for="comment-content" class="label-comment-content label-comment">Content</label>
+                        <input type="text" name="comment-content" id="comment-content" placeholder="Your comment here" minlength="30" maxlength="750" required">
+                    </fieldset>
+                    <fieldset class="fieldset-comment-submit">
+                        <button type="submit">Submit comment</button>
+                    </fieldset>
+                </form>
+                </div>
             <?php } else {?>
-            <p>Book Unfound</p>
+                <p>Book Unfound</p>
             <?php }?>
         </section>
+
+            <?php //if (isset($_SESSION['user-id'])) { ?>
+
+            <?php// } ?>
+
+
 
 <script type="application/javascript" src="src/api/detail_book_script.js"></script>

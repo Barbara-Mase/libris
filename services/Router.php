@@ -9,10 +9,11 @@ class Router {
     private UserController $uc;
     private AuthController $ac;
 
+    private CommentController $cc;
+
 
     public function __construct() {
         $this->hc = new HomeController();
-        $this->blc = new BookListController();
         $this->bc = new BookController();
         $this->uc = new UserController();
         $this->ac = new AuthController();
@@ -55,8 +56,8 @@ class Router {
             }
             else if ($get["route"] === 'delete-book') {
                 echo "Delete Book";
-            } else if ($get["route"] === 'comment') {
-                $this->cc->comment(intval($get["id"]));
+            } else if ($get["route"] === 'add-comment') {
+                $this->cc->addComment(intval($get["id"]));
             }
             //Gestion des utilisateurs
             else if($get['route'] === "profile") {

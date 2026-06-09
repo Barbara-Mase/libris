@@ -3,8 +3,9 @@
 class Comment {
 
     private ?int $commentId;
+    private DateTime $publishDate;
 
-    public function __construct(private string $title, private string $content, private int $bookId) {
+    public function __construct(private string $title, private string $content) {
     }
 
     public function getCommentId(): ?int {
@@ -27,11 +28,12 @@ class Comment {
         $this->content = $content;
     }
 
-    public function getBookId(): ?int {
-        return $this->bookId;
+    public function getPublishDate(): DateTime {
+        return $this->publishDate;
     }
 
-    public function setBookId(?int $bookId): void {
-        $this->bookId = $bookId;
+    public function setPublishDate(DateTime $publishDate): void {
+        $this->publishDate = $publishDate;
     }
+
 }
