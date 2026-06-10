@@ -4,14 +4,11 @@ class User {
 
     // DateTimeUmmitable ne peut pas être modifié
     private DateTime $registration_date;
-    //ajouter registration_date
+
     public function __construct(private string $username, private string $email, private string $password, private string $intro, private ?int $id = null)
     {
     }
 
-    /**
-     * @return int
-     */
     public function getId() : int {
         return $this->id;
     }

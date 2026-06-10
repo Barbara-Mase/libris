@@ -79,33 +79,9 @@ class BookManager extends AbstractManager {
             return null;
         }
 
-        /*$result = $query->fetchColumn();
 
-        return (bool) $result;*/
 
     }
-    /*public function findByKey(string $book_key) : bool
-    {
-
-        $query = $this->db->prepare('SELECT * FROM books WHERE book_key = :book_key');
-
-        $parameters = [
-            'book_key' => $book_key
-        ];
-
-        $query->execute($parameters);
-
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-
-        if($result)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }*/
 
     public function addBookUser(int $book_id, int $user_id) : bool {
 
@@ -125,11 +101,7 @@ class BookManager extends AbstractManager {
         }
     }
 
-    //a completer
-    //public function removeBookUser(int $book_id, int $user_id) : bool {}
 
-    //à compléter
-    //public function removeBook(int $book_id) : bool {}
 
     public function findBookUsers(int $user_id) : ?array {
 
@@ -154,6 +126,20 @@ class BookManager extends AbstractManager {
         }
 
         return $list;
+    }
+
+    //a completer
+    //public function removeBookUser(int $book_id, int $user_id) : bool {}
+
+    //à compléter
+    public function deleteBook(int $book_id) : int {
+
+        $query = $this->db->prepare("DELETE FROM books WHERE book_id = :book_id");
+
+        $query->execute([]);
+
+        return $query->rowCount();
+
     }
 
 }

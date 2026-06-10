@@ -1,6 +1,7 @@
 <?php
 
 use MongoDB\Driver\Manager;
+use PharIo\Manifest\Author;
 
 class   CommentManager extends AbstractManager
 {
@@ -9,42 +10,39 @@ class   CommentManager extends AbstractManager
         parent::__construct();
     }
 
-    public function findCommentsByBookId(int $bookId)
+    /*SELECT comments.*, users.username as author FROM comments
+    JOIN users on comments.user_id = users.id
+    WHERE comments.book_id = :bookId*/
+    public function findCommentsByBookId(int $bookId): array
     {
-
-        $query = $this->db->prepare('SELECT comments.title,comments.content, comments.publish_date FROM comments JOIN book_com_user ON comments.com_id = book_com_user.com_id WHERE book_com_user.book_id = :book_id');
+        $query = $this->db->prepare("SELECT comments.* FROM comments WHERE comments.book_id = :bookId");
 
         $parameters = [
-            "book_id" => $bookId
+            "bookId" => $bookId
         ];
-
         $query->execute($parameters);
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
+        $comments = [];
+        $um = new UserManager();
 
-        if (!$results) {
-            return null;
-        } else {
-            $comments = [];
-            foreach ($results as $result) {
-                $comment = new Comment($result['title'], $result['content'], $result['publish_date']);
-                $id = intval($result['com_id']);
-                $comment->setCommentId($id);
-                $format = 'Y-m-d H:i:s';
-                $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
-                $comment->setPublishDate($publishDate);
-                $comments[] = $comment;
-            }
+        foreach ($results as $result) {
+            $comment = new Comment( $result['book_id'], $result['title'],$result['content']);
+            $comment->setPublishDate($result['publish_date']);
+            $author = $um->findById($result['user_id']);
+            $comment->setAuthor($author);
 
-            return $comments;
+            $comments[] = $comment;
         }
+
+        return $comments;
+
     }
 
-    public function findCommentsByUserId(int $userId)
+    public function findCommentByUserId($userId) : ?Comment
     {
-
-        $query = $this->db->prepare('SELECT comments.title,comments.content, comments.publish_date FROM comments JOIN book_com_user ON comments.com_id = book_com_user.com_id WHERE book_com_user.user_id = :user_id');
+        $query = $this->db->prepare("SELECT comments.*, user.username as author, books.title as title FROM comments JOIN users on comments.user_id = users.id JOIN books on comments.book_id = comments.book_id WHERE comments.book_id = :bookId");
 
         $parameters = [
             "user_id" => $userId
@@ -54,24 +52,16 @@ class   CommentManager extends AbstractManager
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
+        if($results){
+            foreach ($results as $result){
+                $comment = new Comment( $result['user_id'], $result['book_id'], $result['com_title'], $result['content']);
+                $comment->setPublishDate($result['publish_date']);
 
-        if (!$results) {
-            return null;
-        } else {
-            $comments = [];
-            foreach ($results as $result) {
-                $comment = new Comment($result['title'], $result['content'], $result['publish_date']);
-                $id = intval($result['com_id']);
-                $comment->setCommentId($id);
-                $format = 'Y-m-d H:i:s';
-                $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
-                $comment->setPublishDate($publishDate);
-                $comments[] = $comment;
             }
-
-            return $comments;
+            return $comment;
+        } else {
+            return null;
         }
-
 
     }
 
@@ -116,5 +106,33 @@ class   CommentManager extends AbstractManager
             return false;
         }
     }
+
+    public function update(Comment $comment) : bool
+    {
+        $query = $this->db->prepare("UPDATE comments SET title = :title, content = :content WHERE id = :id");
+
+        $parameters = [
+            'title' => $comment->getTitle(),
+            'content' => $comment->getContent(),
+        ];
+
+        $result = $query->execute($parameters);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+        public function delete(int $commentId) : int {
+
+            $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
+
+            $query->execute([]);
+
+            return $query->rowCount();
+
+        }
 
 }

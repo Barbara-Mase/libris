@@ -222,6 +222,8 @@ class AuthController extends AbstractController
 
     public function delete(int $id) : void
     {
+        // /!\
+        //Ajouter vérification du user pour la suppression du compte
         $um = new UserManager();
         $um->delete($id);
         $this->redirect("index.php?route=list-users");

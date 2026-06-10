@@ -21,6 +21,10 @@
                     <button class="button-add-to-list" type="submit">Add to list</button>
                 </div>
             </div>
+        </section>
+        <section class="section_comments">
+            <div class="show-comments">
+            </div>
                 <div class="div-add-comment">
                 <form method="post" action="index.php?route=add-comment&id=<?= $book->getBookId() ?>">
                     <fieldset class="fieldset-comment-content-title">
@@ -34,10 +38,11 @@
                     </fieldset>
                 </form>
                 </div>
+        </section>
             <?php } else {?>
                 <p>Book Unfound</p>
             <?php }?>
-        </section>
+
 
             <?php //if (isset($_SESSION['user-id'])) { ?>
 

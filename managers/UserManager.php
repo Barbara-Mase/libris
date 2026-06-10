@@ -120,7 +120,7 @@ class UserManager extends AbstractManager {
         }
     }
 
-    public function delete(int $id) : bool {
+    public function delete(int $id) : int {
 
         $query = $this->db->prepare("DELETE FROM users WHERE id = :id");
 
@@ -130,6 +130,6 @@ class UserManager extends AbstractManager {
 
         $query->execute($parameters);
 
-        return true;
+        return $query->rowCount();
     }
 }
