@@ -86,9 +86,9 @@ class UserManager extends AbstractManager {
             'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s')
         ];
 
-        $ret = $query->execute($parameters);
+        $result = $query->execute($parameters);
 
-        if($ret) {
+        if($result) {
             return true;
         } else {
             return false;

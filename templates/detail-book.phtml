@@ -23,8 +23,18 @@
             </div>
         </section>
         <section class="section_comments">
-            <div class="show-comments">
-            </div>
+
+                <?php if(isset($comments)) {
+                    foreach($comments as $comment) { ?>
+                        <div class="card-comment">
+                            <h3><?= $comment->getTitle()?></h3>
+                            <p><?= $comment->getAuthor()->getUsername() ?></p>
+                            <p><?= $comment->getContent() ?></p>
+                        </div>
+                    <?php } ?>
+
+                <?php }?>
+
                 <div class="div-add-comment">
                 <form method="post" action="index.php?route=add-comment&id=<?= $book->getBookId() ?>">
                     <fieldset class="fieldset-comment-content-title">

@@ -5,8 +5,9 @@ class Comment {
     private ?int $commentId;
     private DateTime $publishDate;
     private User $author;
+    private Book $book;
 
-    public function __construct(private ?int $bookId, private string $title, private string $content) {
+    public function __construct(private ?int $userId, private ?int $bookId, private string $title, private string $content) {
     }
 
     public function getCommentId(): ?int {
@@ -18,11 +19,24 @@ class Comment {
     public function getAuthor(): User {
         return $this->author;
     }
-
     public function setAuthor(User $author): void {
         $this->author = $author;
     }
 
+    public function getBook(): Book {
+        return $this->book;
+    }
+    public function setBook(Book $book): void {
+            $this->book = $book;
+    }
+
+    public function getUserId(): ?int {
+        return $this->userId;
+    }
+
+    public function setUserId(?int $userId): void {
+        $this->userId = $userId;
+    }
     public function getBookId(): ?int {
         return $this->bookId;
     }

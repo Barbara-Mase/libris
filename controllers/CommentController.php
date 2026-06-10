@@ -6,31 +6,6 @@ class CommentController extends AbstractController
         parent::__construct();
     }
 
-    public function showCommentsByBook(int $bookId) : void {
-
-        $cm = new CommentManager();
-
-        $comments = $cm->findCommentsByBookId($bookId);
-
-        if(isset($comments)) {
-            $this->render('detail-book', [
-                "comments" => $comments
-            ]);
-        }
-    }
-
-    public function showCommentByUser(int $userId) : void {
-
-        $cm = new CommentManager();
-
-        $comments = $cm->findCommentsByUserId($userId);
-
-        if(isset($comments)) {
-            $this->render('user', [
-                "comments" => $comments
-            ]);
-        }
-    }
     public function addComment(int $bookId) : void {
 
         $cm = new CommentManager();
@@ -39,16 +14,18 @@ class CommentController extends AbstractController
             if (!empty($_POST['comment-title']) && !empty($_POST['comment-content'])) {
                 $title = htmlspecialchars($_POST["comment-title"]);
                 $content = htmlspecialchars($_POST["comment-content"]);
-                $comment = new Comment($title, $content,);
+                $userId = $_SESSION['user_id'];
+                $comment = new Comment($userId, $bookId, $title, $content);
                 $date = new DateTime();
                 $comment->setPublishDate($date);
-                $userId = $_SESSION['user_id'];
-                $cm->comment($bookId, $userId, $comment);
+                $cm->comment($comment);
             } else {
-                $_SESSION['error']['comment'] = 'Missing fields';
+                $_SESSION['errors']['comment'] = 'Missing fields';
             }
         } else {
-            $_SESSION['error']['comment'] = 'You must be logged in to post comments.';
+            $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
+            $errors = $_SESSION['errors'];
+            $this->redirect('index.php?route=detail-book&id=' . $bookId);
         }
     }
 

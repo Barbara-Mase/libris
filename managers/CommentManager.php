@@ -10,12 +10,9 @@ class   CommentManager extends AbstractManager
         parent::__construct();
     }
 
-    /*SELECT comments.*, users.username as author FROM comments
-    JOIN users on comments.user_id = users.id
-    WHERE comments.book_id = :bookId*/
     public function findCommentsByBookId(int $bookId): array
     {
-        $query = $this->db->prepare("SELECT comments.* FROM comments WHERE comments.book_id = :bookId");
+        $query = $this->db->prepare("SELECT * FROM comments WHERE comments.book_id = :bookId");
 
         $parameters = [
             "bookId" => $bookId
@@ -28,8 +25,10 @@ class   CommentManager extends AbstractManager
         $um = new UserManager();
 
         foreach ($results as $result) {
-            $comment = new Comment( $result['book_id'], $result['title'],$result['content']);
-            $comment->setPublishDate($result['publish_date']);
+            $comment = new Comment($result['user_id'], $result['book_id'], $result['title'],$result['content']);
+            $format = 'Y-m-d H:i:s';
+            $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
+            $comment->setPublishDate($publishDate);
             $author = $um->findById($result['user_id']);
             $comment->setAuthor($author);
 
@@ -40,71 +39,56 @@ class   CommentManager extends AbstractManager
 
     }
 
-    public function findCommentByUserId($userId) : ?Comment
+    public function findCommentByUserId($userId) : array
     {
-        $query = $this->db->prepare("SELECT comments.*, user.username as author, books.title as title FROM comments JOIN users on comments.user_id = users.id JOIN books on comments.book_id = comments.book_id WHERE comments.book_id = :bookId");
+        $query = $this->db->prepare("SELECT * FROM comments WHERE user_id = :userId");
 
         $parameters = [
-            "user_id" => $userId
+            'userId' => $userId
         ];
-
         $query->execute($parameters);
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if($results){
-            foreach ($results as $result){
-                $comment = new Comment( $result['user_id'], $result['book_id'], $result['com_title'], $result['content']);
-                $comment->setPublishDate($result['publish_date']);
+        $comments = [];
+        $bm = new BookManager();
 
-            }
-            return $comment;
-        } else {
-            return null;
+        foreach ($results as $result) {
+            $comment = new Comment($result['user_id'], $result['book_id'], $result['title'],$result['content']);
+            $format = 'Y-m-d H:i:s';
+            $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
+            $comment->setPublishDate($publishDate);
+            $book = $bm->findById($result['book_id']);
+            $comment->setBook($book);
+
+            $comments[] = $comment;
         }
+
+        return $comments;
 
     }
 
-    public function comment(int $bookId, int $userId, Comment $comment): bool
+    public function comment(Comment $comment): bool
     {
-        try {
-            //La transaction permet de faire en sorte que les deux opérations fonctionnent sans que l'une ou l'autre échoue
-            //permet d'effectuer deux opérations comme si c'était une seule entité
-            $this->db->beginTransaction();
 
-            $query = $this->db->prepare("INSERT INTO comments (title, content, publish_date) VALUES (:title, :content, :publish_date)");
+        $query = $this->db->prepare("INSERT INTO comments (book_id, user_id, title, content, publish_date) VALUES (:book_id, :user_id, :title, :content, :publish_date)");
 
-            $parameters = [
-                'title' => $comment->getTitle(),
-                'content' => $comment->getContent(),
-                'publish_date' => $comment->getPublishDate()->format('Y-m-d H:i:s')
-            ];
+        $parameters = [
+            'book_id' => $comment->getBookId(),
+            'user_id' => $comment->getUserId(),
+            'title' => $comment->getTitle(),
+            'content' => $comment->getContent(),
+            'publish_date' => $comment->getPublishDate()->format('Y-m-d H:i:s')
+        ];
 
-            $query->execute($parameters);
+        $result = $query->execute($parameters);
 
-            //On récupère l'id du commentaires nouvellement créé
-            $comId = $this->db->lastInsertId();
-            //On l'ajoute à la table de liaison en même temps de l'user_id et le book_id
-            $query = $this->db->prepare("INSERT INTO book_com_user (com_id, user_id, book_id) VALUES (:com_id, :user_id, :book_id)");
-
-            $parameters = [
-                'com_id' => $comId,
-                'user_id' => $userId,
-                'book_id' => $bookId,
-            ];
-
-            $query->execute($parameters);
-
-            //On met fin à la transaction pour éviter les problèmes
-            $this->db->commit();
-
+        if($result) {
             return true;
-
-        } catch (PDOException $e) {
-            //Si quelque chose se passe mal, on revient en arrière
-            $this->db->rollBack();
+        } else {
             return false;
         }
+
     }
 
     public function update(Comment $comment) : bool
@@ -125,14 +109,14 @@ class   CommentManager extends AbstractManager
         }
     }
 
-        public function delete(int $commentId) : int {
+    public function delete(int $commentId) : int {
 
-            $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
+        $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
 
-            $query->execute([]);
+        $query->execute([]);
 
-            return $query->rowCount();
+        return $query->rowCount();
 
-        }
+    }
 
 }

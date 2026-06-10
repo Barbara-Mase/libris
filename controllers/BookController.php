@@ -6,17 +6,23 @@ class BookController extends AbstractController {
         parent::__construct();
     }
 
-    public function detailBook(int $id) : void {
+    public function detailBook(int $bookId) : void {
 
         $_SESSION['errors'] = [];
+        $comments = [];
+
         $bm = new BookManager();
-        $book = $bm->findById($id);
+        $book = $bm->findById($bookId);
+
+        $cm = new CommentManager();
+        $comments = $cm->findCommentsByBookId($bookId);
 
         if($book) {
             $this->render('detail-book', [
-                'book' => $book
+                'book' => $book,
+                "comments" => $comments
             ]);
-            $_SESSION["book_id"] = $id;
+            $_SESSION["book_id"] = $bookId;
         } else {
             $_SESSION["errors"]["book"] = "Book not found";
             $errors = $_SESSION["errors"];

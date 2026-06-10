@@ -17,6 +17,17 @@
                     <button class="button-update-profile"><a href="index.php?route=update-user&id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
                <?php }
                 } ?>
+            <section class="section-user-comments">
+                <?php if(isset($comments)) {
+                    foreach($comments as $comment) { ?>
+                    <div class="card-user-comments">
+                         <h3><?= $comment->getTitle()?></h3>
+                        <p><?= $comment->getBook()->getTitle()?></p>
+                        <p><?= $comment->getContent()?></p>
+                    </div>
+                 <?php }
+                    } ?>
+            </section>
             <div class="list-div"></div>
             <?php
                 if(isset($booksList)) {

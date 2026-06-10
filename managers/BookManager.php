@@ -91,6 +91,7 @@ class BookManager extends AbstractManager {
             'book_id' => $book_id,
             'user_id' => $user_id
         ];
+
         $result = $query->execute($parameters);
 
 

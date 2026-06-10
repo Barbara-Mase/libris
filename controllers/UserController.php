@@ -61,10 +61,13 @@ class UserController extends AbstractController {
             }
         }
 
+        $cm = new CommentManager();
+        $comments = $cm->findCommentByUserId($id);
         //s'il n'y a pas d'erreur, on envoie tout à la vue
         $this->render('user', [
             'user' => $user,
-            'booksList' => $booksList
+            'booksList' => $booksList,
+            'comments' => $comments
         ]);
     }
 
