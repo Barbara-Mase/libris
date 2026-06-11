@@ -15,7 +15,9 @@ class CommentController extends AbstractController
                 $title = htmlspecialchars($_POST["comment-title"]);
                 $content = htmlspecialchars($_POST["comment-content"]);
                 $userId = $_SESSION['user_id'];
-                $comment = new Comment($userId, $bookId, $title, $content);
+                $comment = new Comment($title, $content);
+                $comment->setUserId($userId);
+                $comment->setBookId($bookId);
                 $date = new DateTime();
                 $comment->setPublishDate($date);
                 $cm->comment($comment);

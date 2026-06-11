@@ -11,9 +11,8 @@
             <?php if(isset($user)) { ?>
                 <p><?php echo $user->getUsername() ?></p>
                 <p><?=$user->getIntro()?></p>
-            <?php } ?>
             <?php if(isset($_SESSION['user_id'])) {
-                if($user->getId() == $_SESSION['user_id']) { ?>
+                if($user->getId() === $_SESSION['user_id']) { ?>
                     <button class="button-update-profile"><a href="index.php?route=update-user&id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
                <?php }
                 } ?>
@@ -37,9 +36,16 @@
                                 <li class="list-book-title"><?=$book->getTitle()?></li>
                                 <li class="list-book-author"><?= $book->getAuthor()?></li>
                             </ul>
+                            <?php if($_SESSION['user_id'] === $user->getId()) { ?>
+                                    <p>Bouton ici</p>
+                                <form method="post" action="index.php?route=remove-book-from-list&amp;id=<?= $book->getBookId() ?>">
+                                <button type="submit" class="button-remove-book">Remove</button>
+                            </form>
+                            <?php } ?>
                         </div>
                     <?php }
-            }?>
+                }?>
+            <?php } ?>
 
         </div>
 </main>

@@ -10,6 +10,28 @@ class   CommentManager extends AbstractManager
         parent::__construct();
     }
 
+    public function findCommentById(int $commentId): ?Comment {
+
+        $query = $this->db->prepare("SELECT * FROM comments WHERE id = :commentId");
+
+        $parameters = [
+            "commentId" => $commentId
+        ];
+
+        $query->execute($parameters);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if($result) {
+            $comment = new Comment($result['title'], $result['content']);
+            $comment->setUserId($result['user_id']);
+            $comment->setUserId($comment['userId']);
+            $comment->setBookId($comment['bookId']);
+            return $comment;
+        } else {
+            return null;
+        }
+    }
     public function findCommentsByBookId(int $bookId): array
     {
         $query = $this->db->prepare("SELECT * FROM comments WHERE comments.book_id = :bookId");
@@ -25,7 +47,9 @@ class   CommentManager extends AbstractManager
         $um = new UserManager();
 
         foreach ($results as $result) {
-            $comment = new Comment($result['user_id'], $result['book_id'], $result['title'],$result['content']);
+            $comment = new Comment($result['title'],$result['content']);
+            $comment->setUserId($result['user_id']);
+            $comment->setBookId($result['book_id']);
             $format = 'Y-m-d H:i:s';
             $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
             $comment->setPublishDate($publishDate);
@@ -54,7 +78,9 @@ class   CommentManager extends AbstractManager
         $bm = new BookManager();
 
         foreach ($results as $result) {
-            $comment = new Comment($result['user_id'], $result['book_id'], $result['title'],$result['content']);
+            $comment = new Comment($result['title'],$result['content']);
+            $comment->setUserId($result['user_id']);
+            $comment->setBookId($result['book_id']);
             $format = 'Y-m-d H:i:s';
             $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
             $comment->setPublishDate($publishDate);
@@ -91,32 +117,28 @@ class   CommentManager extends AbstractManager
 
     }
 
-    public function update(Comment $comment) : bool
+    public function update(Comment $comment): int
     {
         $query = $this->db->prepare("UPDATE comments SET title = :title, content = :content WHERE id = :id");
 
-        $parameters = [
-            'title' => $comment->getTitle(),
+        $query->execute([
+            'title'   => $comment->getTitle(),
             'content' => $comment->getContent(),
-        ];
-
-        $result = $query->execute($parameters);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function delete(int $commentId) : int {
-
-        $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
-
-        $query->execute([]);
+            'id'      => $comment->getCommentId(),
+        ]);
 
         return $query->rowCount();
+    }
 
+    public function delete(int $commentId): int
+    {
+        $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
+
+        $query->execute([
+            'id' => $commentId,
+        ]);
+
+        return $query->rowCount();
     }
 
 }

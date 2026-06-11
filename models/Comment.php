@@ -6,8 +6,11 @@ class Comment {
     private DateTime $publishDate;
     private User $author;
     private Book $book;
+    private ?int $userId;
 
-    public function __construct(private ?int $userId, private ?int $bookId, private string $title, private string $content) {
+    private ?int $bookId;
+
+    public function __construct(private string $title, private string $content) {
     }
 
     public function getCommentId(): ?int {

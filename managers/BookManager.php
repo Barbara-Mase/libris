@@ -9,7 +9,6 @@ class BookManager extends AbstractManager {
 
     public function createBook(Book $book) : ?Book {
 
-
         $query = $this->db->prepare("INSERT INTO books (book_key, title, author, publish_year, cover_id) VALUES (:book_key, :title, :author, :publish_year, :cover_id)");
 
         $parameters = [
@@ -29,9 +28,7 @@ class BookManager extends AbstractManager {
         } else {
             return null;
         }
-
     }
-
 
     public function findById(int $book_id) : ?Book {
 
@@ -104,7 +101,7 @@ class BookManager extends AbstractManager {
 
 
 
-    public function findBookUsers(int $user_id) : ?array {
+    public function findBooksUsers(int $user_id) : ?array {
 
         $query = $this->db->prepare('SELECT book_id FROM books_users WHERE user_id = :user_id');
 
@@ -130,14 +127,29 @@ class BookManager extends AbstractManager {
     }
 
     //a completer
-    //public function removeBookUser(int $book_id, int $user_id) : bool {}
+    public function removeBookUser(int $bookId, int $userId) : int {
 
-    //à compléter
-    public function deleteBook(int $book_id) : int {
+        $query = $this->db->prepare("DELETE FROM books_users WHERE book_id = :book_id AND user_id = :user_id");
+
+        $parameters = [
+            'book_id' => $bookId,
+            'user_id' => $userId
+        ];
+
+        $result = $query->execute($parameters);
+
+        return $query->rowCount();
+
+    }
+
+    public function deleteBook(int $bookId) : int {
 
         $query = $this->db->prepare("DELETE FROM books WHERE book_id = :book_id");
 
-        $query->execute([]);
+        $parameters = [
+            'book_id' => $bookId,
+        ];
+        $query->execute($parameters);
 
         return $query->rowCount();
 

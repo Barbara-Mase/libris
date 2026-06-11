@@ -81,27 +81,26 @@ class BookController extends AbstractController {
 
     }
 
-    /*public function booksList(int $userId) : void
+    public function removeBookFromList(int $bookId) : void
     {
 
         $bm = new BookManager();
-        $bookIdList = $bm->findBookUsers($userId);
-        $_SESSION['errors'] = [];
 
-        if ($bookIdList) {
-            foreach ($bookIdList as $arrayBookId)
-            {
-                foreach ($arrayBookId as $bookId) {
-                    $book = $bm->findById($bookId);
-                    $booksList[] = $book;
-                }
-            }
-            $this->render('user', [
-                'booksList' => $booksList
-            ]);
+        if (isset($_SESSION['user_id'])) {
+            unset($_SESSION['errors']);
+            $userId = $_SESSION['user_id'];
+            $bm->removeBookUser($bookId, $userId);
         } else {
-            $_SESSION["errors"]["list"] = "No book yet in list";
+            $_SESSION["errors"]["book"] = "Something went wrong";
+            $this->redirect("route=home");
         }
-    }*/
+
+    }
+    public function deleteBook(int $bookId) : void {
+
+        $bm = new BookManager();
+        //Il faut que ce soit un admin qui le fasse
+        $bm->deleteBook($bookId);
+    }
 
 }
