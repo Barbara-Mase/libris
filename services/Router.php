@@ -75,13 +75,13 @@ class Router {
             else if ($get['route'] === "update-user")
             {
                 if(!empty($get["id"])) {
-                    $this->ac->updateUser(intval($get['id']));
+                    $this->uc->updateUser(intval($get['id']));
                 }
             }
             else if ($get['route'] === "check-update-user")
             {
                 if(!empty($get["id"])) {
-                    $this->ac->checkUpdateUser(intval($get['id']));
+                    $this->uc->checkUpdateUser(intval($get['id']));
                 }
             }
             else if ($get['route'] === "delete-user") {

@@ -48,7 +48,7 @@ class AuthController extends AbstractController
                                     $username = htmlspecialchars($_POST["username"]);
                                     //Ajouter le hash de l'email
                                     $email = $_POST["email"];
-                                    $password = password_hash(["password"], PASSWORD_BCRYPT);
+                                    $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
                                     $intro = htmlspecialchars($_POST["intro"]);
                                     $user = new User($username, $email, $password, $intro);
                                     $date = new DateTime();

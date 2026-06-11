@@ -8,15 +8,18 @@ class HomeController extends AbstractController
     public function home(): void
     {
 
+        $errors = null;
         if(!empty($_SESSION["errors"])){
             $errors = $_SESSION["errors"];
             unset($_SESSION["errors"]);
-            $this->render("home", [
-                "errors" => $errors
-            ]);
+            $this->render('home', [
+                'errors' => $errors
+                ]);
         } else {
-            $this->render("home");
+            $this->render('home');
         }
+
+
 
     }
 
