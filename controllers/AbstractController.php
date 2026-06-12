@@ -14,7 +14,7 @@ class AbstractController
 
     protected function redirect(string $route): void
     {
-        header("Location: $route");
-        exit;
+        header('Location: /libris/?' . $route);
+        exit();
     }
 }

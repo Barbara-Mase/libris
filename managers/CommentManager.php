@@ -50,6 +50,7 @@ class   CommentManager extends AbstractManager
             $comment = new Comment($result['title'],$result['content']);
             $comment->setUserId($result['user_id']);
             $comment->setBookId($result['book_id']);
+            $comment->setCommentId($result['com_id']);
             $format = 'Y-m-d H:i:s';
             $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
             $comment->setPublishDate($publishDate);
@@ -63,7 +64,7 @@ class   CommentManager extends AbstractManager
 
     }
 
-    public function findCommentByUserId($userId) : array
+    public function findCommentsByUserId($userId) : array
     {
         $query = $this->db->prepare("SELECT * FROM comments WHERE user_id = :userId");
 
@@ -81,6 +82,7 @@ class   CommentManager extends AbstractManager
             $comment = new Comment($result['title'],$result['content']);
             $comment->setUserId($result['user_id']);
             $comment->setBookId($result['book_id']);
+            $comment->setCommentId($result['com_id']);
             $format = 'Y-m-d H:i:s';
             $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
             $comment->setPublishDate($publishDate);

@@ -55,6 +55,12 @@ class Router {
             {
                 $this->cc->addComment(intval($get["id"]));
             }
+            else if ($get["route"] === 'delete-comment') {
+                $this->cc->deleteComment(intval($get["id"]));
+            }
+            else if ($get["route"] === 'update-comment') {
+                $this->cc->updateComment(intval($get["id"]));
+            }
             //Gestion des utilisateurs
             else if($get['route'] === "profile")
             {

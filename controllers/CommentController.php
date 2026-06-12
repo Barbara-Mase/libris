@@ -10,7 +10,7 @@ class CommentController extends AbstractController
 
         $cm = new CommentManager();
 
-        if (isset($_SESSION['user_id'])) {
+        if (!empty($_SESSION['user_id'])) {
             if (!empty($_POST['comment-title']) && !empty($_POST['comment-content'])) {
                 $title = htmlspecialchars($_POST["comment-title"]);
                 $content = htmlspecialchars($_POST["comment-content"]);
@@ -21,13 +21,14 @@ class CommentController extends AbstractController
                 $date = new DateTime();
                 $comment->setPublishDate($date);
                 $cm->comment($comment);
+                $this->redirect('route=detail-book&id=' . $bookId);
             } else {
                 $_SESSION['errors']['comment'] = 'Missing fields';
+                $this->redirect('route=detail-book&id=' . $bookId);
             }
         } else {
             $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
-            $errors = $_SESSION['errors'];
-            $this->redirect('index.php?route=detail-book&id=' . $bookId);
+            $this->redirect('route=detail-book&id=' . $bookId);
         }
     }
 

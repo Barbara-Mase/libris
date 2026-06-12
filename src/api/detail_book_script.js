@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", () => {
             fetch("index.php?route=add-to-list")
                 .then(response => response.text)
                 .then(data => {
-                    console.log(data)
+                    //Gérer l'erreur 'si le user n'est pas connecté)
 
                 })
                 .catch(error => {

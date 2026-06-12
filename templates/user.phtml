@@ -23,6 +23,16 @@
                          <h3><?= $comment->getTitle()?></h3>
                         <p><?= $comment->getBook()->getTitle()?></p>
                         <p><?= $comment->getContent()?></p>
+                        <?php if($user->getId() === $_SESSION['user_id']) { ?>
+                            <div class="div-remove-update-comment">
+                                <form method="post" action="index.php?route=update-comment&amp;id=<?= $comment->getCommentId() ?>">
+                                    <button type="submit" class="button-update-comment">Update</button>
+                                </form>
+                                <form method="post" action="index.php?route=delete-comment&amp;id=<?= $comment->getCommentId() ?>">
+                                    <button type="submit" class="button-delete-comment">Delete</button>
+                                </form>
+                            </div>
+                            <?php }?>
                     </div>
                  <?php }
                     } ?>

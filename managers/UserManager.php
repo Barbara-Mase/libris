@@ -83,7 +83,7 @@ class UserManager extends AbstractManager {
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
-            'registration_date' => $user->getRegistrationDate()
+            'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s'),
         ];
 
         $result = $query->execute($parameters);

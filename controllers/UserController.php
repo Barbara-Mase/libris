@@ -10,15 +10,15 @@ class UserController extends AbstractController {
 
     public function list() : void
     {
-        $errors = [];
         $um = new UserManager();
         $users = $um->findAll();
 
         if(empty($users)){
             $_SESSION['errors']['users_list'] = 'No users found';
-            $errors = $_SESSION['errors'];
-            unset($_SESSION['errors']);
         }
+
+        $errors = $_SESSION['errors'] ?? [];
+        unset($_SESSION['errors']);
 
         $this->render('list-users', [
             'users' => $users,
@@ -40,12 +40,10 @@ class UserController extends AbstractController {
             } else {
                 $_SESSION["errors"]["access_denied"] = "User not found";
                 $this->redirect('home');
-                exit();
             }
         } else {
             $_SESSION["errors"]["access_denied"] = "You must be logged in to view this page.";
             $this->redirect('home');
-            exit();
         }
 
         $bm = new BookManager();
@@ -63,7 +61,7 @@ class UserController extends AbstractController {
         }
 
         $cm = new CommentManager();
-        $comments = $cm->findCommentByUserId($id);
+        $comments = $cm->findCommentsByUserId($id);
         //s'il n'y a pas d'erreur, on envoie tout à la vue
         $this->render('user', [
             'user' => $user,
@@ -79,21 +77,22 @@ class UserController extends AbstractController {
 
         $userId = $user->getId();
         $sessionId = $_SESSION["user_id"];
+        //Par défaut, renvoie un tableau vide
+        $errors = $_SESSION['errors'] ?? [];
 
         if (!empty($_SESSION['user_id'])) {
             if ($userId === $sessionId) {
                 $this->render('update-user', [
                     'user' => $user,
+                    'errors' => $errors
                 ]);
             } else {
                 $_SESSION["errors"]["access_denied"] = "You are not allowed to update this user.";
                 $this->redirect('home');
-                exit();
             }
         } else {
             $_SESSION["errors"]["access_denied"] = "You must be logged in to view this page.";
             $this->redirect('home');
-            exit();
         }
 
 
@@ -118,74 +117,98 @@ class UserController extends AbstractController {
 
                             $password_pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$/';
 
-                            if (!preg_match($password_pattern, $_POST["password"])) {
+                            if (preg_match($password_pattern, $_POST["password"])) {
 
                                 $user = $um->findById($id);
+
                                 if ($user) {
                                     $user->setUsername(htmlspecialchars($_POST["username"]));
-                                    //va provoquer une erreur en base de données puisque son email sera déjà enregistré
-                                    // -> j'ai mis l'email en readonly
-                                    //$user_email = $_POST["email"];
-                                    //$existing_email = $um->findByEmail($user_email);
-                                    //if ($existing_email === null)
-                                    //Peut-pêtre ajouté une fonction pour supprimer l'email seulement ? puis faire la vérification 's'il existe déjà' ?
                                     $user->setPassword(password_hash($_POST["password"], PASSWORD_BCRYPT));
                                     $user->setIntro(htmlspecialchars($_POST["intro"]));
+
+                                    if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+
+                                        $newEmail = $_POST["email"];
+
+                                        if ($newEmail !== $user->getEmail()) {
+                                            $existingEMail = $um->findByEmail($newEmail);
+
+                                            if ($existingEMail === null) {
+                                                $user->setEmail($newEmail);
+                                            } else {
+                                                $_SESSION["errors"]["email"] = "This email is already in use.";
+                                                $this->redirect('route=update-user&id=' . $id);
+                                            }
+                                        }
+                                        $user->setId($id);
+                                        $um->update($user);
+                                        $this->redirect('route=profile&id=' . $id);
+                                    } else {
+                                        $_SESSION["errors"]["email"] = "Please enter a valid email address.";
+                                        $this->redirect('route=update-user&id=' . $id);
+                                    }
                                 } else {
                                     $_SESSION["errors"]["user"] = "User not found";
-                                    //$this->redirect('index.php?route=update-user&id='.$id);
-                                    exit();
+                                    $this->redirect('route=update-user&id=' . $id);
+
                                 }
                             } else {
                                 $_SESSION["errors"]["password"] = "Password is not strong enough.";
-                                //$this->redirect('index.php?route=update-user&id='.$id);
-                                exit();
+                                $this->redirect('route=update-user&id=' . $id);
+
                             }
                         }  else {
                             $_SESSION["errors"]['password'] = "Passwords do not match.";
-                            //$this->redirect('index.php?route=update-user&id='.$id);
-                            exit();
+                            $this->redirect('route=update-user&id=' . $id);
+
                         }
                     } else {
                         $_SESSION["errors"]["fields"] = "Missing fields";
-                        //$this->redirect('index.php?route=update-user&id='.$id);
-                        exit();
+                        $this->redirect('route=update-user&id=' . $id);
+
                     }
 
                 } else {
                     $_SESSION["errors"]["access denied"] = "You're not allowed to update this user.";
                     $this->redirect('home');
-                    exit();
+
                 }
             } else {
                 $_SESSION["errors"]["csrf_token"] = "Invalid csrf token.";
                 $this->redirect('home');
-                exit();
+
             }
 
         } else {
             $_SESSION["errors"]["access_denied"] = "You must be logged in to view this page.";
             $this->redirect('home');
-            exit();
-    }
-
-
 
     }
-     public function deleteUser(int $userId) : void {
 
+
+
+    }
+    public function deleteUser(int $userId) : void
+    {
         $um = new UserManager();
-         //Ou à un membre de l'administration
-        if ($_SESSION['id'] === $userId) {
+
+        if ($_SESSION['user_id'] === $userId) {
+
             $tokenManager = new CSRFTokenManager();
-            if($_SESSION['csrf_token'] !== $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
+
+            if ($_SESSION['csrf_token'] && $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
                 $um->delete($userId);
+                session_destroy();
+                $_SESSION['success'] = "Your account has been successfully deleted.";
+                $this->redirect("home");
+            } else {
+                $_SESSION["errors"]["csrf_token"] = "Invalid CSRF token.";
                 $this->redirect("home");
             }
         } else {
-            $_SESSION["errors"]["access_denied"] = "Access denied";
+            $_SESSION["errors"]["access_denied"] = "Access denied.";
             $this->redirect("home");
         }
-     }
+    }
 
 }

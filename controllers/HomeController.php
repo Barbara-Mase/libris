@@ -5,21 +5,18 @@ class HomeController extends AbstractController
 
 {
 
-    public function home(): void
+        public function home() : void
     {
+        $errors = $_SESSION['errors'] ?? [];
+        unset($_SESSION['errors']);
 
-        $errors = null;
-        if(!empty($_SESSION["errors"])){
-            $errors = $_SESSION["errors"];
-            unset($_SESSION["errors"]);
-            $this->render('home', [
-                'errors' => $errors
-                ]);
-        } else {
-            $this->render('home');
-        }
+        $success = $_SESSION['success'] ?? [];
+        unset($_SESSION['success']);
 
-
+        $this->render('home', [
+            'errors' => $errors,
+            'success' => $success
+        ]);
 
     }
 
