@@ -4,6 +4,7 @@ class User {
 
     // DateTimeUmmitable ne peut pas être modifié
     private DateTime $registration_date;
+    private DateTime $lastLogin;
 
     public function __construct(private string $username, private string $email, private string $password, private string $intro, private ?int $id = null)
     {
@@ -61,5 +62,13 @@ class User {
 
     public function setRegistrationDate(DateTime $registration_date) : void {
         $this->registration_date = $registration_date;
+    }
+
+    public function getLastLogin() : DateTime {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(DateTime $lastLogin) : void {
+        $this->lastLogin = $lastLogin;
     }
 }

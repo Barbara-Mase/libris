@@ -13,9 +13,11 @@ class UserManager extends AbstractManager {
 
         foreach($results as $result) {
             $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
+            $format = 'Y-m-d H:i:s';
+            $lastLogin = DateTime::createFromFormat($format, $result['last_login']);
+            $user->setLastLogin($lastLogin);
             $id = intval($result['user_id']);
             $user->setId($id);
-            $format = 'Y-m-d H:i:s';
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setRegistrationDate($registration_date);
             $users[] = $user;
@@ -37,6 +39,8 @@ class UserManager extends AbstractManager {
         {
             $user = new User($result['username'], $result['email'], $result['password'], $result['intro']);
             $format = 'Y-m-d H:i:s';
+            $lastLogin = DateTime::createFromFormat($format, $result['last_login']);
+            $user->setLastLogin($lastLogin);
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setRegistrationDate($registration_date);
             $user->setId($result['user_id']);
@@ -63,7 +67,9 @@ class UserManager extends AbstractManager {
         {
             $user = new User($result['username'], $result['email'], $result['password'], $result["intro"], $result["user_id"]);
             $format = 'Y-m-d H:i:s';
+            $lastLogin = DateTime::createFromFormat($format, $result['last_login']);
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
+            $user->setLastLogin($lastLogin);
             $user->setRegistrationDate($registration_date);
             return $user;
         }
@@ -75,7 +81,7 @@ class UserManager extends AbstractManager {
 
     public function create(User $user) : bool {
 
-        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date) VALUES (:username, :email, :password, :intro, :registration_date)");
+        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date, last_login) VALUES (:username, :email, :password, :intro, :registration_date, :last_login)");
 
 
         $parameters = [
@@ -84,6 +90,7 @@ class UserManager extends AbstractManager {
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
             'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s'),
+            'last_login' => $user->getLastLogin()->format('Y-m-d H:i:s')
         ];
 
         $result = $query->execute($parameters);
@@ -99,7 +106,7 @@ class UserManager extends AbstractManager {
     public function update(User $user) : bool
     {
         $query = $this->db->prepare("UPDATE users 
-                                    SET username = :username, email = :email, password = :password, intro = :intro
+                                    SET username = :username, email = :email, password = :password, intro = :intro, last_login = :last_login
                                     WHERE user_id = :user_id");
 
         $parameters = [
@@ -107,7 +114,8 @@ class UserManager extends AbstractManager {
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
-            'user_id' => $user->getId()
+            'user_id' => $user->getId(),
+            'last_login' => $user->getLastLogin()->format('Y-m-d H:i:s'),
         ];
 
 

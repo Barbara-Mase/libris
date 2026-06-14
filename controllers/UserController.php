@@ -20,7 +20,7 @@ class UserController extends AbstractController {
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION['errors']);
 
-        $this->render('list-users', [
+        $this->render('users-list', [
             'users' => $users,
             'errors' => $errors
         ]);

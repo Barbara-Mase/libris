@@ -32,7 +32,11 @@ class CommentController extends AbstractController
         }
     }
 
-    public function updateComment(int $commentId) : void {
+
+    // FONCTION UPDATE A IMPLEMENTER SI TEMPS DISPONIBLE //////
+
+
+   /* public function updateComment(int $commentId) : void {
 
         $_SESSION['error']= '';
         $cm = new CommentManager();
@@ -58,7 +62,7 @@ class CommentController extends AbstractController
         } else {
             $_SESSION['error']['comment'] = 'You must be logged in to update comments.';
         }
-    }
+    }*/
 
     public function deleteComment(int $commentId) : void {
 
@@ -67,10 +71,15 @@ class CommentController extends AbstractController
 
         $userId = $_SESSION['user_id'];
 
+        //Ajouter la possibilité pour un admin de supprimer le commentaire
+
         if (isset($userId)) {
-            if($userId === $comment['user_id']) {
+            if($userId === $comment->getUserId()) {
                 $cm->delete($commentId);
             }
+        } else {
+            $_SESSION['errors']['comment'] = 'You must be logged in to delete comments.';
+            $this->redirect('route=profile&id=' . $userId);
         }
     }
 }

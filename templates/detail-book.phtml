@@ -28,7 +28,7 @@
                     foreach($comments as $comment) { ?>
                         <div class="card-comment">
                             <h3><?= $comment->getTitle()?></h3>
-                            <p><?= $comment->getAuthor()->getUsername() ?></p>
+                            <p><a href="index.php?route=profile&amp;id=<?= $comment->getUserId() ?>"><?= $comment->getAuthor()->getUsername() ?></a></p>
                             <p><?= $comment->getContent() ?></p>
                         </div>
                     <?php } ?>

@@ -10,6 +10,7 @@
             }?>
             <?php if(isset($user)) { ?>
                 <p><?php echo $user->getUsername() ?></p>
+                <p>Last login : <?= $user->getLastLogin()->format('Y-m-d H:i') ?></p>
                 <p><?=$user->getIntro()?></p>
             <?php if(isset($_SESSION['user_id'])) {
                 if($user->getId() === $_SESSION['user_id']) { ?>
@@ -20,14 +21,11 @@
                 <?php if(isset($comments)) {
                     foreach($comments as $comment) { ?>
                     <div class="card-user-comments">
-                         <h3><?= $comment->getTitle()?></h3>
-                        <p><?= $comment->getBook()->getTitle()?></p>
+                        <h3><?= $comment->getTitle()?></h3>
+                        <p><a href="index.php?route=detail-book&amp;id=<?= $comment->getBookId()?>"><?= $comment->getBook()->getTitle()?></a></p>
                         <p><?= $comment->getContent()?></p>
                         <?php if($user->getId() === $_SESSION['user_id']) { ?>
                             <div class="div-remove-update-comment">
-                                <form method="post" action="index.php?route=update-comment&amp;id=<?= $comment->getCommentId() ?>">
-                                    <button type="submit" class="button-update-comment">Update</button>
-                                </form>
                                 <form method="post" action="index.php?route=delete-comment&amp;id=<?= $comment->getCommentId() ?>">
                                     <button type="submit" class="button-delete-comment">Delete</button>
                                 </form>

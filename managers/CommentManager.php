@@ -12,7 +12,7 @@ class   CommentManager extends AbstractManager
 
     public function findCommentById(int $commentId): ?Comment {
 
-        $query = $this->db->prepare("SELECT * FROM comments WHERE id = :commentId");
+        $query = $this->db->prepare("SELECT * FROM comments WHERE com_id = :commentId");
 
         $parameters = [
             "commentId" => $commentId
@@ -25,8 +25,8 @@ class   CommentManager extends AbstractManager
         if($result) {
             $comment = new Comment($result['title'], $result['content']);
             $comment->setUserId($result['user_id']);
-            $comment->setUserId($comment['userId']);
-            $comment->setBookId($comment['bookId']);
+            $comment->setUserId($result['user_id']);
+            $comment->setBookId($result['book_id']);
             return $comment;
         } else {
             return null;
@@ -134,7 +134,7 @@ class   CommentManager extends AbstractManager
 
     public function delete(int $commentId): int
     {
-        $query = $this->db->prepare("DELETE FROM comments WHERE id = :id");
+        $query = $this->db->prepare("DELETE FROM comments WHERE com_id = :id");
 
         $query->execute([
             'id' => $commentId,

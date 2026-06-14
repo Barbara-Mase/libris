@@ -48,6 +48,8 @@ class AuthController extends AbstractController
                                     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
                                     $intro = htmlspecialchars($_POST["intro"]);
                                     $user = new User($username, $email, $password, $intro);
+                                    $lastLogin = new DateTime();
+                                    $user->setLastLogin($lastLogin);
                                     $date = new DateTime();
                                     $user->setRegistrationDate($date);
                                     $newUser = $um->create($user);
@@ -139,6 +141,10 @@ class AuthController extends AbstractController
                         if (password_verify($_POST["password-login"], $user->getPassword()))
                         {
                             $_SESSION["user_id"] = $user->getId();
+                            $lastLogin = new DateTime();
+                            $user->setLastLogin($lastLogin);
+                            $um = new UserManager;
+                            $um->update($user);
                             $this->redirect("route=profile&id=" . $_SESSION["user_id"]);
 
                         }
@@ -186,6 +192,5 @@ class AuthController extends AbstractController
         session_start();
         session_regenerate_id(true);
         $this->redirect("index.php?route=home");
-        exit();
     }
 }
