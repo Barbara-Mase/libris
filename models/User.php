@@ -6,6 +6,8 @@ class User {
     private DateTime $registration_date;
     private DateTime $lastLogin;
 
+    private string $role = 'USER';
+
     public function __construct(private string $username, private string $email, private string $password, private string $intro, private ?int $id = null)
     {
     }
@@ -70,5 +72,17 @@ class User {
 
     public function setLastLogin(DateTime $lastLogin) : void {
         $this->lastLogin = $lastLogin;
+    }
+
+    public function getRole() : string {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 }

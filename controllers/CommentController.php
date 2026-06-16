@@ -11,23 +11,32 @@ class CommentController extends AbstractController
         $cm = new CommentManager();
 
         if (!empty($_SESSION['user_id'])) {
-            if (!empty($_POST['comment-title']) && !empty($_POST['comment-content'])) {
-                $title = htmlspecialchars($_POST["comment-title"]);
-                $content = htmlspecialchars($_POST["comment-content"]);
-                $userId = $_SESSION['user_id'];
-                $comment = new Comment($title, $content);
-                $comment->setUserId($userId);
-                $comment->setBookId($bookId);
-                $date = new DateTime();
-                $comment->setPublishDate($date);
-                $cm->comment($comment);
-                $this->redirect('route=detail-book&id=' . $bookId);
+
+            $tokenManager = new CSRFTokenManager();
+
+            if (isset($_POST['csrf_token']) && $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
+
+                if (!empty($_POST['comment-title']) && !empty($_POST['comment-content'])) {
+                    $title = htmlspecialchars($_POST["comment-title"]);
+                    $content = htmlspecialchars($_POST["comment-content"]);
+                    $userId = $_SESSION['user_id'];
+                    $comment = new Comment($title, $content);
+                    $comment->setUserId($userId);
+                    $comment->setBookId($bookId);
+                    $date = new DateTime();
+                    $comment->setPublishDate($date);
+                    $cm->comment($comment);
+                    $this->redirect('route=detail-book&id=' . $bookId);
+                } else {
+                    $_SESSION['errors']['comment'] = 'Missing fields';
+                    $this->redirect('route=detail-book&id=' . $bookId);
+                }
             } else {
-                $_SESSION['errors']['comment'] = 'Missing fields';
+                $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
                 $this->redirect('route=detail-book&id=' . $bookId);
             }
         } else {
-            $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
+            $_SESSION['errors']['comment'] = 'Invalid CSRF token.';
             $this->redirect('route=detail-book&id=' . $bookId);
         }
     }

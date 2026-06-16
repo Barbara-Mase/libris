@@ -7,6 +7,29 @@ class BookManager extends AbstractManager {
         parent::__construct();
     }
 
+    public function findAll(): ?array {
+
+        $query = $this->db->prepare("SELECT * FROM books ORDER BY title");
+
+        $query->execute();
+
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $list = [];
+
+        if ($results) {
+            foreach ($results as $result) {
+                $book = new Book($result['book_key'], $result['title'], $result['author'], $result['publish_year'], $result['cover_id']);
+                $book->setBookId($result['book_id']);
+                $list[] = $book;
+            }
+        } else {
+            return null;
+        }
+
+        return $list;
+    }
+
     public function createBook(Book $book) : ?Book {
 
         $query = $this->db->prepare("INSERT INTO books (book_key, title, author, publish_year, cover_id) VALUES (:book_key, :title, :author, :publish_year, :cover_id)");

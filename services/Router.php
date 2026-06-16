@@ -107,6 +107,9 @@ class Router {
             else if ($get['route'] === "logout") {
                 $this->ac->logout();
             }
+            else if ($get['route'] === "list-books") {
+                $this->bc->showAllBooks();
+            }
             //si le chemin n'existe pas, affichage d'une erreur
             else {
                 echo "Cette page n existe pas";

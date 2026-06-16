@@ -52,6 +52,7 @@ class AuthController extends AbstractController
                                     $user->setLastLogin($lastLogin);
                                     $date = new DateTime();
                                     $user->setRegistrationDate($date);
+                                    $user->setRole('USER');
                                     $newUser = $um->create($user);
                                     //penser à régler la timezone
                                     if ($newUser) {
@@ -89,7 +90,7 @@ class AuthController extends AbstractController
                 else
                 {
                     $_SESSION["errors"]["CSRF_token"] = "Invalid CSRF token";
-                    $this->redirect("route=create_user");
+                    $this->redirect("route=create-user");
 
                 }
             }

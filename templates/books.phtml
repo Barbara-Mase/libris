@@ -1,0 +1,25 @@
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Book key</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publication</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    if (isset($books)) {
+        foreach ($books as $book) { ?>
+    <tr>
+        <td><?= $book->getBookId()?></td>
+        <td><?= $book->getKey() ?></td>
+        <td><?= $book->getTitle()?></td>
+        <td><?= $book->getAuthor()?></td>
+        <td><?= $book->getPublishYear()?></td>
+    </tr>
+        <?php }
+    } ?>
+    </tbody>
+</table>

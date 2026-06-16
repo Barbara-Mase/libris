@@ -44,6 +44,7 @@ class UserManager extends AbstractManager {
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setRegistrationDate($registration_date);
             $user->setId($result['user_id']);
+            $user->setRole($result['role']);
             return $user;
         }
         else
@@ -71,6 +72,7 @@ class UserManager extends AbstractManager {
             $registration_date = DateTime::createFromFormat($format, $result['registration_date']);
             $user->setLastLogin($lastLogin);
             $user->setRegistrationDate($registration_date);
+            $user->setRole($result['role']);
             return $user;
         }
         else
@@ -81,7 +83,7 @@ class UserManager extends AbstractManager {
 
     public function create(User $user) : bool {
 
-        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date, last_login) VALUES (:username, :email, :password, :intro, :registration_date, :last_login)");
+        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date, last_login, role) VALUES (:username, :email, :password, :intro, :registration_date, :last_login, :role)");
 
 
         $parameters = [
@@ -90,7 +92,8 @@ class UserManager extends AbstractManager {
             'password' => $user->getPassword(),
             'intro' => $user->getIntro(),
             'registration_date' => $user->getRegistrationDate()->format('Y-m-d H:i:s'),
-            'last_login' => $user->getLastLogin()->format('Y-m-d H:i:s')
+            'last_login' => $user->getLastLogin()->format('Y-m-d H:i:s'),
+            'role' => $user->getRole(),
         ];
 
         $result = $query->execute($parameters);
