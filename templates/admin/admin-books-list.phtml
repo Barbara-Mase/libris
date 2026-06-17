@@ -4,44 +4,46 @@
             ?> <p><?= $error ?></p>
         <?php }
     }?>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Book key</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publication</th>
-            <th>Delete</th>
-            <th>Update</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="container">
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Book key</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publication</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        <?php
-        if (isset($books)) {
-            foreach ($books as $book) { ?>
-                <tr>
-                    <td><?= $book->getBookId()?></td>
-                    <td><?= $book->getKey() ?></td>
-                    <td><?= $book->getTitle()?></td>
-                    <td><?= $book->getAuthor()?></td>
-                    <td><?= $book->getPublishYear()?></td>
-                    <td>
-                        <form method="post" action="index.php?route=admin-delete-book&amp;id=<?= $book->getBookId() ?>">
-                            <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="post" action="index.php?route=admin-edit-book&amp;id=<?= $book->getBookId() ?>">
-                            <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-                            <button type="submit">Update</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php }
-        } ?>
-        </tbody>
-    </table>
+            <?php
+            if (isset($books)) {
+                foreach ($books as $book) { ?>
+                    <tr>
+                        <td><?= $book->getBookId()?></td>
+                        <td><?= $book->getKey() ?></td>
+                        <td><?= $book->getTitle()?></td>
+                        <td><?= $book->getAuthor()?></td>
+                        <td><?= $book->getPublishYear()?></td>
+                        <td>
+                            <form method="post" action="index.php?route=admin-delete-book&amp;id=<?= $book->getBookId() ?>">
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="index.php?route=admin-edit-book&amp;id=<?= $book->getBookId() ?>">
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php }
+            } ?>
+            </tbody>
+        </table>
+    </div>
 </main>

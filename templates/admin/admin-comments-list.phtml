@@ -4,37 +4,40 @@
             ?> <p><?= $error ?></p>
         <?php }
     }?>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Author Id</th>
-            <th>Author name</th>
-            <th>Book Title</th>
-            <th>Content</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        if (isset($comments)) {
-            foreach ($comments as $comment) { ?>
-                <tr>
-                    <td><?= $comment->getCommentId()?></td>
-                    <td><?= $comment->getTitle() ?></td>
-                    <th><?= $comment->getUserId()?></th>
-                    <td><?= $comment->getAuthor()->getUsername()?></td>
-                    <td><?= $comment->getBook()->getTitle()?></td>
-                    <td><?= $comment->getContent()?></td>
-                    <td>
-                        <form method="post" action="index.php?route=admin-delete-comment&amp;id=<?= $comment->getCommentId(); ?>">
-                            <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>"/>
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php }
-        } ?>
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author Id</th>
+                <th>Author name</th>
+                <th>Book Title</th>
+                <th>Content</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if (isset($comments)) {
+                foreach ($comments as $comment) { ?>
+                    <tr>
+                        <td><?= $comment->getCommentId()?></td>
+                        <td><?= $comment->getTitle() ?></td>
+                        <th><?= $comment->getUserId()?></th>
+                        <td><?= $comment->getAuthor()->getUsername()?></td>
+                        <td><?= $comment->getBook()->getTitle()?></td>
+                        <td><?= $comment->getContent()?></td>
+                        <td>
+                            <form method="post" action="index.php?route=admin-delete-comment&amp;id=<?= $comment->getCommentId(); ?>">
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>"/>
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php }
+            } ?>
+            </tbody>
+        </table>
+    </div>
 </main>

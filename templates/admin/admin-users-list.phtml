@@ -4,40 +4,43 @@
             ?> <p><?= $error ?></p>
         <?php }
     }?>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Intro</th>
-            <th>Registration date</th>
-            <th>Last login</th>
-            <th>Role</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        if (isset($users)) {
-            foreach ($users as $user) { ?>
-                <tr>
-                    <td><?= $user->getId()?></td>
-                    <td><?=$user->getUsername()?></td>
-                    <td><?= $user->getEmail() ?></td>
-                    <td><?= $user->getIntro()?></td>
-                    <td><?= $user->getRegistrationDate()->format('Y-m-d H:i')?></td>
-                    <td><?= $user->getLastLogin()->format('Y-m-d H:i')?></td>
-                    <td><?= $user->getRole()?></td>
-                    <td>
-                        <form method="post" action="index.php?route=admin-delete-user&amp;id=<?= $user->getId(); ?>">
-                            <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>"/>
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
+    <div class="container">
+        <table class="table table-success table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Intro</th>
+                <th>Registration date</th>
+                <th>Last login</th>
+                <th>Role</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if (isset($users)) {
+                foreach ($users as $user) { ?>
+                    <tr>
+                        <td><?= $user->getId()?></td>
+                        <td><?=$user->getUsername()?></td>
+                        <td><?= $user->getEmail() ?></td>
+                        <td><?= $user->getIntro()?></td>
+                        <td><?= $user->getRegistrationDate()->format('Y-m-d H:i')?></td>
+                        <td><?= $user->getLastLogin()->format('Y-m-d H:i')?></td>
+                        <td><?= $user->getRole()?></td>
+                        <td>
+                            <form method="post" action="index.php?route=admin-delete-user&amp;id=<?= $user->getId(); ?>">
+                                <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>"/>
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
 
-                </tr>
-            <?php }
-        } ?>
-        </tbody>
-    </table>
+                    </tr>
+                <?php }
+            } ?>
+            </tbody>
+        </table>
+    </div>
 </main>

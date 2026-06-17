@@ -110,6 +110,9 @@ class Router {
                 $this->ac->logout();
             }
             //routes admin ci-dessous
+            else if ($get['route'] === "admin-home") {
+                $this->adminc->adminHome();
+            }
                 //routes gestion des livres
             else if ($get['route'] === "admin-books-list") {
                 $this->adminc->showAllBooks();

@@ -7,6 +7,37 @@ class AdminController extends AbstractController
     {
         parent::__construct();
     }
+
+    public function adminHome() : void {
+
+        if (!empty($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $um = new UserManager();
+            $user = $um->findById($user_id);
+        } else {
+            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $this->redirect('route=home');
+        }
+
+
+        $errors = $_SESSION['errors'] ?? [];
+        unset($_SESSION['errors']);
+
+        $isAdmin = false;
+
+        if($user->getRole() === 'ADMIN') {
+            $isAdmin = true;
+            $this->adminRender('admin/admin-home', [
+                'isAdmin' => $isAdmin,
+                'errors' => $errors,
+            ]);
+        } else {
+            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $this->redirect('route=home');
+        }
+
+
+    }
 ///GESTION DES LIVRES///
     public function showAllBooks(): void {
 
@@ -15,6 +46,7 @@ class AdminController extends AbstractController
 
         if(empty($books)){
             $_SESSION['errors']['books'] = 'Something went wrong';
+            $this->redirect('route=admin-home');
         }
 
         if (!empty($_SESSION['user_id'])) {
@@ -31,7 +63,7 @@ class AdminController extends AbstractController
         unset($_SESSION['errors']);
 
         if($user->getRole() === 'ADMIN') {
-            $this->adminRender("admin-books-list",
+            $this->adminRender("admin/admin-books-list",
                 [
                     "books" => $books,
                     "errors" => $errors
@@ -80,6 +112,7 @@ class AdminController extends AbstractController
 
         if (empty($book)) {
             $_SESSION['errors']['books'] = 'Book not found';
+            $this->redirect('route=admin-books-list');
         }
 
         if (!empty($_SESSION['user_id'])) {
@@ -94,7 +127,7 @@ class AdminController extends AbstractController
         unset($_SESSION['errors']);
 
         if ($user->getRole() === 'ADMIN') {
-            $this->adminRender("admin-edit-book", [
+            $this->adminRender("admin/admin-edit-book", [
                 "errors" => $errors,
                 "book" => $book
             ]);
@@ -137,13 +170,15 @@ class AdminController extends AbstractController
                     $this->redirect('route=admin-books-list');
                 } else {
                     $_SESSION['errors']['missing_fields'] = 'Missing fields';
+                    $this->redirect('route=admin-books-list');
                 }
             } else {
                 $_SESSION['errors']['access_denied'] = "You are not allowed to do this action";
+                $this->redirect('route=home');
             }
         } else {
             $_SESSION['errors']['csrf_token'] = "CSRF Token Error";
-            $this->redirect('route=home');
+            $this->redirect('route=admin-home');
         }
     }
 
@@ -156,6 +191,7 @@ class AdminController extends AbstractController
 
         if (empty($comments)) {
             $_SESSION['errors']['comments'] = 'Something went wrong';
+            $this->redirect('route=admin-home');
         }
 
         if (!empty($_SESSION['user_id'])) {
@@ -173,7 +209,7 @@ class AdminController extends AbstractController
 
 
         if($user->getRole() === 'ADMIN') {
-            $this->adminRender("admin-comments-list",
+            $this->adminRender("admin/admin-comments-list",
                 [
                     "comments" => $comments,
                     "errors" => $errors
@@ -221,6 +257,7 @@ class AdminController extends AbstractController
 
         if (empty($users)) {
             $_SESSION['errors']['comments'] = 'Something went wrong';
+            $this->redirect('route=admin-home');
         }
 
         if (!empty($_SESSION['user_id'])) {
@@ -237,7 +274,7 @@ class AdminController extends AbstractController
 
 
         if ($sessionUser->getRole() === 'ADMIN') {
-            $this->adminRender("admin-users-list",
+            $this->adminRender("admin/admin-users-list",
                 [
                     "users" => $users,
                     "errors" => $errors
@@ -272,6 +309,7 @@ class AdminController extends AbstractController
                 $this->redirect('route=admin-users-list');
             } else {
                 $_SESSION['errors']['access_denied'] = 'You are not allowed to do this action';
+                $this->redirect('route=home');
             }
         } else {
             $_SESSION['errors']['csrf_token'] = "CSRF Token Error";

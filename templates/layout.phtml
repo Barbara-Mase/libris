@@ -48,14 +48,10 @@
             </div>
         </div>
         <?php if (isset($isAdmin)) {
-            if($isAdmin === true) {?>
-             <menu>
-                    <li><a href="index.php?route=admin-books-list">Books List</a></li>
-                    <li><a href="index.php?route=admin-users-list">Users List</a></li>
-                    <li><a href="index.php?route=admin-comments-list">Comments List</a></li>
-                </menu>
-            <?php }
-        }?>
+        if($isAdmin === true) {?>
+        <a href="index.php?route=admin-home">Back Office</a>
+        <?php }
+        } ?>
     </div>
 </header>
 <?php
