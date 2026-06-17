@@ -6,6 +6,7 @@ class CommentController extends AbstractController
         parent::__construct();
     }
 
+
     public function addComment(int $bookId) : void {
 
         $cm = new CommentManager();

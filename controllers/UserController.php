@@ -20,7 +20,7 @@ class UserController extends AbstractController {
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION['errors']);
 
-        $this->render('users-list', [
+        $this->render('user/users-list', [
             'users' => $users,
             'errors' => $errors
         ]);
@@ -63,7 +63,7 @@ class UserController extends AbstractController {
         $cm = new CommentManager();
         $comments = $cm->findCommentsByUserId($id);
         //s'il n'y a pas d'erreur, on envoie tout à la vue
-        $this->render('user', [
+        $this->render('user/user', [
             'user' => $user,
             'booksList' => $booksList,
             'comments' => $comments
@@ -82,7 +82,7 @@ class UserController extends AbstractController {
 
         if (!empty($_SESSION['user_id'])) {
             if ($userId === $sessionId) {
-                $this->render('update-user', [
+                $this->render('user/update-user', [
                     'user' => $user,
                     'errors' => $errors
                 ]);

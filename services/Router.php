@@ -10,6 +10,7 @@ class Router {
     private AuthController $ac;
 
     private CommentController $cc;
+    private AdminController $adminc;
 
 
     public function __construct() {
@@ -18,6 +19,7 @@ class Router {
         $this->uc = new UserController();
         $this->ac = new AuthController();
         $this->cc = new CommentController();
+        $this->adminc = new AdminController();
     }
 
 
@@ -107,8 +109,33 @@ class Router {
             else if ($get['route'] === "logout") {
                 $this->ac->logout();
             }
-            else if ($get['route'] === "list-books") {
-                $this->bc->showAllBooks();
+            //routes admin ci-dessous
+                //routes gestion des livres
+            else if ($get['route'] === "admin-books-list") {
+                $this->adminc->showAllBooks();
+            }
+            else if ($get['route'] === "admin-delete-book") {
+                $this->adminc->deleteBook(intval($get["id"]));
+            }
+            else if ($get['route'] === "admin-edit-book") {
+                $this->adminc->editBook(intval($get["id"]));
+            }
+            else if ($get['route'] === "admin-check-edit-book") {
+                $this->adminc->checkEditBook(intval($get["id"]));
+            }
+                //routes gestion des commentaires
+            else if($get["route"] === "admin-comments-list") {
+                $this->adminc->showAllComments();
+            }
+            else if ($get["route"] === "admin-delete-comment") {
+                $this->adminc->deleteComment(intval($get["id"]));
+            }
+                //route festion des utilisateurs
+            else if ($get["route"] === "admin-users-list") {
+                $this->adminc->showAllUsers();
+            }
+            else if ($get["route"] === "admin-delete-user") {
+                $this->adminc->deleteUser(intval($get["id"]));
             }
             //si le chemin n'existe pas, affichage d'une erreur
             else {

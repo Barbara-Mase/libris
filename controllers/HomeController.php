@@ -13,11 +13,25 @@ class HomeController extends AbstractController
         $success = $_SESSION['success'] ?? [];
         unset($_SESSION['success']);
 
+        $um = new UserManager();
+
+        $isAdmin = false;
+        $sessionUserId = '';
+        if(!empty($_SESSION["user_id"])){
+            $sessionUserId = $_SESSION["user_id"];
+            $user = $um->findById($sessionUserId);
+            if($user->getRole() === "ADMIN") {
+                $isAdmin = true;
+            }
+        }
+
+
         $this->render('home', [
             'errors' => $errors,
-            'success' => $success
+            'success' => $success,
+            'sessionUserId' => $sessionUserId,
+            'isAdmin' => $isAdmin
         ]);
-
     }
 
     /*public function profileLink(): void {

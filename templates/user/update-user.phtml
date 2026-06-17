@@ -1,14 +1,14 @@
 <h2>Update profile</h2>
+<?php if(isset($errors)) {
+    foreach ($errors as $error) {
+        ?> <p><?= $error ?></p>
+    <?php }
+}?>
 <form method="post" action="index.php?route=check-update-user&id=<?= $user->getId() ?>">
-    <?php if(isset($errors)) {
-        foreach ($errors as $error) {
-            ?> <p><?= $error ?></p>
-        <?php }
-    }?>
     <fieldset class="fieldset input-fieldset">
-        <label class="label">Username</label>
-        <!-- token caché envoyé au bacl -->
+        <!-- token caché envoyé au back -->
         <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+        <label class="label">Username</label>
         <!-- Vérifier la value et décider si on peut changer le nom d'utilisateur ou non (readonly)-->
         <input type="text" name="username" value="<?php echo $user->getUsername(); ?>" required/>
         <label class="label">Password</label>

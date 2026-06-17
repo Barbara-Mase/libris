@@ -12,6 +12,13 @@ class AbstractController
         require "templates/layout.phtml";
     }
 
+    protected function adminRender(string $template, array $data = []): void {
+
+        extract($data);
+
+        require "templates/admin/admin-layout.phtml";
+    }
+
     protected function redirect(string $route): void
     {
         header('Location: /libris/?' . $route);

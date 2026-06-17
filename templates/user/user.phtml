@@ -14,7 +14,7 @@
                 <p><?=$user->getIntro()?></p>
             <?php if(isset($_SESSION['user_id'])) {
                 if($user->getId() === $_SESSION['user_id']) { ?>
-                    <button class="button-update-profile"><a href="index.php?route=update-user&id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
+                    <button class="button-update-profile"><a href="index.php?route=update-user&amp;id=<?= $_SESSION["user_id"] ?>">Account settings</a></button>
                <?php }
                 } ?>
             <section class="section-user-comments">

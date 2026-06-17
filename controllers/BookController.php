@@ -6,36 +6,7 @@ class BookController extends AbstractController {
         parent::__construct();
     }
 
-    public function showAllBooks(): void {
 
-        $bm = new BookManager();
-        $books = $bm->findAll();
-
-        if(empty($books)){
-            $_SESSION['errors']['users_list'] = 'No users found';
-        }
-
-        $errors = $_SESSION['errors'] ?? [];
-        unset($_SESSION['errors']);
-
-        $um = new UserManager();
-        $user_id = $_SESSION['user_id'];
-        $user = $um->findById($user_id);
-
-        var_dump($user);
-        if($user->getRole() === 'ADMIN') {
-            $this->render("books",
-                [
-                    "books" => $books,
-                    "errors" => $errors
-                ]);
-        } else {
-            $_SESSION['errors']['users_list'] = 'You do not have permission to access this page';
-            $this->redirect("route=home");
-        }
-
-
-    }
 
     public function detailBook(int $bookId) : void {
 

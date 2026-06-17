@@ -23,7 +23,7 @@
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
                         <li>
-                            <a href="index.php?route=profile&id=<?php if (isset($_SESSION['user_id'])) {
+                            <a href="index.php?route=profile&id=<?php if(isset($sessionUserId)){ echo $sessionUserId; } ?>">Profile</a>)) {
                                 echo $_SESSION['user_id'];
                             } ?>">Profile</a>
                         </li>
@@ -47,6 +47,15 @@
                 </form>
             </div>
         </div>
+        <?php if (isset($isAdmin)) {
+            if($isAdmin === true) {?>
+             <menu>
+                    <li><a href="index.php?route=admin-books-list">Books List</a></li>
+                    <li><a href="index.php?route=admin-users-list">Users List</a></li>
+                    <li><a href="index.php?route=admin-comments-list">Comments List</a></li>
+                </menu>
+            <?php }
+        }?>
     </div>
 </header>
 <?php

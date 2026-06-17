@@ -133,10 +133,10 @@ class UserManager extends AbstractManager {
 
     public function delete(int $id) : int {
 
-        $query = $this->db->prepare("DELETE FROM users WHERE id = :id");
+        $query = $this->db->prepare("DELETE FROM users WHERE user_id = :user_id");
 
         $parameters = [
-            "id" => $id
+            "user_id" => $id
         ];
 
         $query->execute($parameters);

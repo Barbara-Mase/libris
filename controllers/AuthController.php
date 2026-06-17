@@ -9,7 +9,7 @@ class AuthController extends AbstractController
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION["errors"]);
 
-        $this->render('create-user', [
+        $this->render('user/create-user', [
             "errors" => $errors
         ]);
     }
@@ -116,7 +116,7 @@ class AuthController extends AbstractController
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION["errors"]);
 
-        $this->render('login', [
+        $this->render('user/login', [
             'errors' => $errors
         ]);
 

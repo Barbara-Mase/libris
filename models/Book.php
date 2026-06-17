@@ -4,7 +4,7 @@ class Book {
     private ?int $bookId = NULL;
 
 
-    public function __construct(private string $bookKey, private string $title, private string $author, private int $publishYear, private ?string $coverId) {
+    public function __construct(private string $bookKey, private string $title, private string $author, private int $publishYear, private ?int $coverId) {
 
     }
 
@@ -72,12 +72,12 @@ class Book {
     {
         $this->publishYear = $publishYear;
     }
-    public function getCoverId(): ?string
+    public function getCoverId(): ?int
     {
         return $this->coverId;
     }
 
-    public function setCoverId(?string $coverId): void
+    public function setCoverId(?int $coverId): void
     {
         $this->coverId = $coverId;
     }

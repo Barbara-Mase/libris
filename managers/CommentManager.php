@@ -10,6 +10,35 @@ class   CommentManager extends AbstractManager
         parent::__construct();
     }
 
+    public function findAllComments(): array
+    {
+
+        $query = $this->db->prepare('SELECT * FROM comments');
+
+        $query->execute();
+
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        $comments = [];
+        $um = new UserManager();
+        $bm = new BookManager();
+
+        foreach ($results as $result) {
+            $comment = new Comment($result['title'], $result['content']);
+            $comment->setUserId($result['user_id']);
+            $comment->setBookId($result['book_id']);
+            $comment->setCommentId($result['com_id']);
+            $format = 'Y-m-d H:i:s';
+            $publishDate = DateTime::createFromFormat($format, $result['publish_date']);
+            $comment->setPublishDate($publishDate);
+            $author = $um->findById($result['user_id']);
+            $comment->setAuthor($author);
+            $book = $bm->findById($result['book_id']);
+            $comment->setBook($book);
+            $comments[] = $comment;
+
+        }
+        return $comments;
+    }
     public function findCommentById(int $commentId): ?Comment {
 
         $query = $this->db->prepare("SELECT * FROM comments WHERE com_id = :commentId");

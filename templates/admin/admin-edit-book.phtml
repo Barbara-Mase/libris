@@ -1,0 +1,25 @@
+<main>
+    <?php if(isset($errors)) {
+        foreach ($errors as $error) {
+            ?> <p><?= $error ?></p>
+        <?php }
+    }?>
+<?php if (isset($book)) { ?>
+    <form method="post" action="index.php?route=admin-check-edit-book&&amp;id=<?= $book->getBookId(); ?>">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>"/>
+        <fieldset>
+            <label for="book-title">Title</label>
+            <input type="text" name="book-title" id="book-title" value="<?php echo $book->getTitle(); ?>"  required/>
+            <label for="author">Author</label>
+            <input type="text" name="author" id="author" value="<?= $book->getAuthor(); ?>" required/>
+            <label for="publish-year">Publish year</label>
+            <input type="text" name="publish-year" id="publish-year" value="<?= $book->getPublishYear()?>" required/>
+            <label for="edit-cover-id">Cover id</label>
+            <input type="text" name="edit-cover-id" id="edit-cover-id" value="<?= $book->getCoverId(); ?>"/>
+        </fieldset>
+        <fieldset>
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+<?php } ?>
+</main>

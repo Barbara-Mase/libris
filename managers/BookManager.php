@@ -15,19 +15,15 @@ class BookManager extends AbstractManager {
 
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        $list = [];
+        $books = [];
 
-        if ($results) {
-            foreach ($results as $result) {
-                $book = new Book($result['book_key'], $result['title'], $result['author'], $result['publish_year'], $result['cover_id']);
-                $book->setBookId($result['book_id']);
-                $list[] = $book;
-            }
-        } else {
-            return null;
+        foreach ($results as $result) {
+            $book = new Book($result['book_key'], $result['title'], $result['author'], $result['publish_year'], $result['cover_id']);
+            $book->setBookId($result['book_id']);
+            $books[] = $book;
         }
 
-        return $list;
+        return $books;
     }
 
     public function createBook(Book $book) : ?Book {
@@ -167,6 +163,7 @@ class BookManager extends AbstractManager {
 
     public function deleteBook(int $bookId) : int {
 
+        //Pour supprimer les commentaires liée, voir ON DELETE CASCADE
         $query = $this->db->prepare("DELETE FROM books WHERE book_id = :book_id");
 
         $parameters = [
@@ -176,6 +173,30 @@ class BookManager extends AbstractManager {
 
         return $query->rowCount();
 
+    }
+
+    public function update(Book $book) : bool
+    {
+        $query = $this->db->prepare("UPDATE books
+                                    SET title = :title, author = :author, publish_year = :publish_year, cover_id = :cover_id
+                                    WHERE book_id = :book_id");
+
+        $parameters = [
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'publish_year' => $book->getPublishYear(),
+            'cover_id' => $book->getCoverId(),
+            'book_id' => $book->getBookId()
+        ];
+
+
+        $ret = $query->execute($parameters);
+
+        if($ret) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
