@@ -25,12 +25,21 @@ class HomeController extends AbstractController
             }
         }
 
-
         $this->render('home', [
             'errors' => $errors,
             'success' => $success,
             'sessionUserId' => $sessionUserId,
             'isAdmin' => $isAdmin
+        ]);
+    }
+
+    public function research() : void {
+
+        $errors = $_SESSION['errors'] ?? [];
+        unset($_SESSION['errors']);
+
+        $this->render('research', [
+            'errors' => $errors
         ]);
     }
 

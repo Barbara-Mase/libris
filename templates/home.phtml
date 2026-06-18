@@ -1,7 +1,16 @@
-<h2>Page home</h2>
 
 <?php if(isset($errors)) {
     foreach ($errors as $error) {
-        ?> <p><?= $error ?></p>
+        ?> <p class="error"><?= $error ?></p>
     <?php }
 }?>
+<section class="container-home-research">
+    <h2>Find a book</h2>
+    <div class=container-home-research>
+        <form action="" method="POST" id="form">
+            <label for="search">Rechercher par mots clés</label>
+            <input type="text" id="search" name="search" required>
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
+</section>

@@ -26,9 +26,13 @@ class Router {
 
     public function handleRequest(array $get) : void
     {
-        if(isset($get['route'])){
-            if($get['route'] === 'home'){;
+        if(isset($get['route'])) {
+
+            if($get['route'] === 'home') {
                 $this->hc->home();
+            }
+            if($get['route'] === 'research') {
+                $this->hc->research();
             }
             else if ($get['route'] === 'add-to-list')
             {
@@ -142,7 +146,7 @@ class Router {
             }
             //si le chemin n'existe pas, affichage d'une erreur
             else {
-                echo "Cette page n existe pas";
+                $_SESSION['errors']['invalidRoute'] = "This route does not exist";
             }
         // Si aucun chemin n'est spécifié, on redirige vers "home"
         } else {

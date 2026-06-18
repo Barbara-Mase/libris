@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @font-face {
     font-family : 'K2D';
-    src: local(fonts/K2D-Regular.ttf);
+    src: url('../fonts/K2D/K2D-Medium.ttf');
 }
 
 /** **/
@@ -100,3 +100,5 @@ li, a {
 #cover-id {
     display: none;
 }
+
+/*TEST*/

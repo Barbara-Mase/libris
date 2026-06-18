@@ -2,10 +2,10 @@
 window.addEventListener("DOMContentLoaded", () => {
 
     //sélection du formulaire par l'id
-    let form = document.getElementById('form');
+    let findBooks = document.getElementById('find-books');
 
     //écoute du formulaire
-    form.addEventListener("submit", (event) => {
+    findBooks.addEventListener("submit", (event) => {
         event.preventDefault()
 
         //Création de l'url et de ses paramètres de recherche
@@ -25,6 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 if (oldContainer) {
                     oldContainer.remove();
                 }
+                history.pushState(null, '', 'index.php?route=research');
+
+                let mainResearchContainer = document.getElementById("main-research")
 
                 //mettre un id pour vérifier si elle existe déjà et l'enlever à la prochaine requête
                 let resultContainer = document.createElement('section');
@@ -99,7 +102,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     //Ajout de la classe du container de résultat de la recherche
                     resultContainer.classList.add("result-container");
                     //Ajout dans le body du container de résultat
-                    document.body.appendChild(resultContainer);
+                    mainResearchContainer.appendChild(resultContainer);
 
                     addButton.addEventListener('click', (event) => {
 

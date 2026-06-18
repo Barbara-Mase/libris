@@ -6,6 +6,13 @@
 <head>
     <meta charset="utf-8" />
     <link href="./assets/css/style.css" rel="stylesheet" />
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+    />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+    </style>
     <title>Libris</title>
 </head>
 <body>
@@ -23,7 +30,7 @@
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
                         <li>
-                            <a href="index.php?route=profile&id=<?php if(isset($sessionUserId)){ echo $sessionUserId; } ?>">Profile</a>)) {
+                            <a href="index.php?route=profile&id=<?php if(isset($_SESSION['user_id'])){ echo $_SESSION['user_id']; } ?>">Profile</a>)) {
                                 echo $_SESSION['user_id'];
                             } ?>">Profile</a>
                         </li>
@@ -40,7 +47,7 @@
                 <li class="menu-link"><a>Popular</a></li>
             </menu>
             <div class="search-engine-container">
-                <form action="" method="POST" id="form">
+                <form action="" method="POST" id="find-books">
                     <label for="search">Rechercher par mots clés</label>
                     <input type="text" id="search" name="search" required>
                     <button type="submit">Rechercher</button>
@@ -57,7 +64,9 @@
 <?php
 require  "templates/$template.phtml";
 ?>
-<script type="application/javascript" src="src/api/search_engine.js"></script>
 
+<script type="application/javascript" src="src/api/search_engine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+<script src="/libris/assets/js/swiper.js"></script>
 </body>
 </html>

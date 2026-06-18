@@ -1,0 +1,32 @@
+/*COLOR*/
+
+$background-color: #321278;
+$title-color: #F6E06E;
+$dark-blue: #321278;
+$lavender-color: #A5A5c0;
+
+/* FONTS FAMILY */
+
+@import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family : 'K2D';
+  src: url('../fonts/K2D/K2D-Medium.ttf');
+}
+/*GENERAL*/
+
+* {
+  font-size: 16px;
+}
+
+.header {
+
+  background-color: $background-color;
+
+    h1 {
+      color: $title-color;
+      font-size: 3rem;
+    }
+}
+
+
+
