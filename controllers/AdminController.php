@@ -14,8 +14,12 @@ class AdminController extends AbstractController
             $user_id = $_SESSION['user_id'];
             $um = new UserManager();
             $user = $um->findById($user_id);
+            if ($user->getRole() !== 'ADMIN') {
+                $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
+                $this->redirect('route=home');
+            }
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 
@@ -23,19 +27,10 @@ class AdminController extends AbstractController
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION['errors']);
 
-        $isAdmin = false;
 
-        if($user->getRole() === 'ADMIN') {
-            $isAdmin = true;
-            $this->adminRender('admin/admin-home', [
-                'isAdmin' => $isAdmin,
-                'errors' => $errors,
-            ]);
-        } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
-            $this->redirect('route=home');
-        }
-
+        $this->adminRender('admin/admin-home', [
+            'errors' => $errors,
+        ]);
 
     }
 ///GESTION DES LIVRES///

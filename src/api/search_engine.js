@@ -101,7 +101,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     bookArticle.appendChild(addButton);
                     //Ajout de la classe du container de résultat de la recherche
                     resultContainer.classList.add("result-container");
-                    //Ajout dans le body du container de résultat
+                    //Ajout dans le main du container de résultats
                     mainResearchContainer.appendChild(resultContainer);
 
                     addButton.addEventListener('click', (event) => {

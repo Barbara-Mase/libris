@@ -2,6 +2,8 @@
 
 class Router {
 
+    private AbstractController $controller;
+
     private HomeController $hc;
 
     private BookListController $blc;
@@ -31,7 +33,7 @@ class Router {
             if($get['route'] === 'home') {
                 $this->hc->home();
             }
-            if($get['route'] === 'research') {
+            else if($get['route'] === 'research') {
                 $this->hc->research();
             }
             else if ($get['route'] === 'add-to-list')
@@ -40,7 +42,9 @@ class Router {
             }
             else if ($get['route'] === 'remove-book-from-list')
             {
-                $this->bc->removeBookFromList($get['id']);
+                if (!empty($get["id"])) {
+                    $this->bc->removeBookFromList($get['id']);
+                }
             }
             else if($get["route"] === 'detail-book')
             {
@@ -59,18 +63,28 @@ class Router {
             }
             else if ($get["route"] === 'add-comment')
             {
-                $this->cc->addComment(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->cc->addComment(intval($get["id"]));
+                }
             }
             else if ($get["route"] === 'delete-comment') {
-                $this->cc->deleteComment(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->cc->deleteComment(intval($get["id"]));
+                }
             }
             else if ($get["route"] === 'update-comment') {
-                $this->cc->updateComment(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->cc->updateComment(intval($get["id"]));
+                }
             }
             //Gestion des utilisateurs
             else if($get['route'] === "profile")
             {
+                if (!empty($get["id"])) {
                     $this->uc->profile(intval($get['id']));
+                } else {
+                    $_SESSION['errors']['not_logged_in'] = 'You must be logged in to access this page.';
+                }
             }
             else if ($get['route'] === "users-list")
             {
@@ -122,31 +136,42 @@ class Router {
                 $this->adminc->showAllBooks();
             }
             else if ($get['route'] === "admin-delete-book") {
-                $this->adminc->deleteBook(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->adminc->deleteBook(intval($get["id"]));
+                }
             }
             else if ($get['route'] === "admin-edit-book") {
-                $this->adminc->editBook(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->adminc->editBook(intval($get["id"]));
+                }
             }
             else if ($get['route'] === "admin-check-edit-book") {
-                $this->adminc->checkEditBook(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->adminc->checkEditBook(intval($get["id"]));
+                }
             }
                 //routes gestion des commentaires
             else if($get["route"] === "admin-comments-list") {
                 $this->adminc->showAllComments();
             }
             else if ($get["route"] === "admin-delete-comment") {
-                $this->adminc->deleteComment(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->adminc->deleteComment(intval($get["id"]));
+                }
             }
                 //route festion des utilisateurs
             else if ($get["route"] === "admin-users-list") {
                 $this->adminc->showAllUsers();
             }
             else if ($get["route"] === "admin-delete-user") {
-                $this->adminc->deleteUser(intval($get["id"]));
+                if (!empty($get["id"])) {
+                    $this->adminc->deleteUser(intval($get["id"]));
+                }
             }
             //si le chemin n'existe pas, affichage d'une erreur
             else {
                 $_SESSION['errors']['invalidRoute'] = "This route does not exist";
+                $this->hc->home();
             }
         // Si aucun chemin n'est spécifié, on redirige vers "home"
         } else {
