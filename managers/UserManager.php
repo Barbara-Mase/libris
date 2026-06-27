@@ -131,16 +131,29 @@ class UserManager extends AbstractManager {
         }
     }
 
-    public function delete(int $id) : int {
+    public function delete(int $userId) : void {
 
-        $query = $this->db->prepare("DELETE FROM users WHERE user_id = :user_id");
+        try {
 
-        $parameters = [
-            "user_id" => $id
-        ];
+            $this->db->beginTransaction();
+            $firstQuery = $this->db->prepare("DELETE FROM comments WHERE user_id = :user_id");
+            $secondQuery = $this->db->prepare("DELETE FROM users WHERE user_id = :user_id");
+            $thirdQuery = $this->db->prepare("DELETE FROM books_users WHERE user_id = :user_id");
 
-        $query->execute($parameters);
+            $parameters = [
+                'user_id' => $userId
+            ];
 
-        return $query->rowCount();
+            $firstQuery->execute($parameters);
+            $secondQuery->execute($parameters);
+            $thirdQuery->execute($parameters);
+
+            $this->db->commit();
+
+        } catch(Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+
+        }
     }
 }

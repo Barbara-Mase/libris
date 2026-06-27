@@ -25,3 +25,7 @@
         <button class="button">Submit</button>
     </fieldset>
 </form>
+<h3>Delete my account</h3>
+<form method="post" action="index.php?route=check-delete-user&id=<?= $user->getId() ?>">
+    <button type="Submit">Delete</button>
+</form>

@@ -25,9 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 if (oldContainer) {
                     oldContainer.remove();
                 }
-                history.pushState(null, '', 'index.php?route=research');
 
-                let mainResearchContainer = document.getElementById("main-research")
+
+                let researchContainer = document.getElementById("container-search-result")
 
                 //mettre un id pour vérifier si elle existe déjà et l'enlever à la prochaine requête
                 let resultContainer = document.createElement('section');
@@ -102,7 +102,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     //Ajout de la classe du container de résultat de la recherche
                     resultContainer.classList.add("result-container");
                     //Ajout dans le main du container de résultats
-                    mainResearchContainer.appendChild(resultContainer);
+                    researchContainer.appendChild(resultContainer);
 
                     addButton.addEventListener('click', (event) => {
 

@@ -29,9 +29,11 @@
                 <!-- menu déroulant : vers le profil, vers les paramètres du compte, vers la liste)-->
                 <div class="div-drop-down-menu">
                     <ul class="ul-drop-down-menu">
+                        <?php if(isset($sessionUserId)) { ?>
                         <li>
-                            <a href="index.php?route=profile&id=<?php if(isset($sessionUserId)){ echo $sessionUserId; } ?>">Profile</a>
+                            <a href="index.php?route=profile&id=<?php { echo $sessionUserId; } ?>">Profile</a>
                         </li>
+                        <?php } ?>
                         <li><a href="index.php?route=bookmarks">Bookmarks</a></li>
                         <li><a href="index.php?route=users-list">Users list</a></li>
                     </ul>
@@ -44,13 +46,6 @@
                 <li class="menu-link"><a>Categories</a></li>
                 <li class="menu-link"><a>Popular</a></li>
             </menu>
-            <div class="search-engine-container">
-                <form action="" method="POST" id="find-books">
-                    <label for="search">Rechercher par mots clés</label>
-                    <input type="text" id="search" name="search" required>
-                    <button type="submit">Rechercher</button>
-                </form>
-            </div>
         </div>
         <?php if (isset($isAdmin)) {
                     if($isAdmin === true) {?>

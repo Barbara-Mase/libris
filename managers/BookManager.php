@@ -161,17 +161,31 @@ class BookManager extends AbstractManager {
 
     }
 
-    public function deleteBook(int $bookId) : int {
+    public function deleteBook(int $bookId) : void {
 
-        //Pour supprimer les commentaires liée, voir ON DELETE CASCADE
-        $query = $this->db->prepare("DELETE FROM books WHERE book_id = :book_id");
+        try {
 
-        $parameters = [
-            'book_id' => $bookId,
-        ];
-        $query->execute($parameters);
+            $this->db->beginTransaction();
 
-        return $query->rowCount();
+            $firstQuery = $this->db->prepare("DELETE FROM comments WHERE book_id = :book_id");
+            $SecondQuery = $this->db->prepare("DELETE FROM books WHERE book_id = :book_id");
+            $thirdQuery = $this->db->prepare("DELETE FROM books_users WHERE book_id = :book_id");
+
+            $parameters = [
+                'book_id' => $bookId
+            ];
+
+            $firstQuery->execute($parameters);
+            $SecondQuery->execute($parameters);
+            $thirdQuery->execute($parameters);
+
+            $this->db->commit();
+
+        } catch(Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+
+        }
 
     }
 

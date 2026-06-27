@@ -49,7 +49,7 @@ class AdminController extends AbstractController
             $um = new UserManager();
             $user = $um->findById($user_id);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 
@@ -64,7 +64,7 @@ class AdminController extends AbstractController
                     "errors" => $errors
                 ]);
         } else {
-            $_SESSION['errors']['users_list'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['users_list'] = 'You are not allowed to access this page';
             $this->redirect("route=home");
         }
 
@@ -79,7 +79,7 @@ class AdminController extends AbstractController
             $um = new UserManager();
             $user = $um->findById($user_id);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 
@@ -114,7 +114,7 @@ class AdminController extends AbstractController
             $user_id = $_SESSION['user_id'];
             $user = $um->findById($user_id);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to do this action';
             $this->redirect('route=home');
         }
 
@@ -143,7 +143,7 @@ class AdminController extends AbstractController
             $user_id = $_SESSION['user_id'];
             $user = $um->findById($user_id);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to do this action';
             $this->redirect('route=home');
         }
 
@@ -194,7 +194,7 @@ class AdminController extends AbstractController
             $um = new UserManager();
             $user = $um->findById($user_id);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 
@@ -210,7 +210,7 @@ class AdminController extends AbstractController
                     "errors" => $errors
                 ]);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect("route=home");
         }
 
@@ -224,7 +224,7 @@ class AdminController extends AbstractController
             $sessionUserId = $_SESSION['user_id'];
             $sessionUser = $um->findById($sessionUserId);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to do this action';
             $this->redirect('route=home');
         }
 
@@ -259,7 +259,7 @@ class AdminController extends AbstractController
             $sessionUserId = $_SESSION['user_id'];
             $sessionUser = $um->findById($sessionUserId);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 
@@ -275,7 +275,7 @@ class AdminController extends AbstractController
                     "errors" => $errors
                 ]);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect("route=home");
         }
 
@@ -291,7 +291,7 @@ class AdminController extends AbstractController
             $sessionUserId = $_SESSION['user_id'];
             $sessionUser = $um->findById($sessionUserId);
         } else {
-            $_SESSION['errors']['access_denied'] = 'You do not have permission to access this page';
+            $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
 

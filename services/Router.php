@@ -6,7 +6,6 @@ class Router {
 
     private HomeController $hc;
 
-    private BookListController $blc;
     private BookController $bc;
     private UserController $uc;
     private AuthController $ac;
