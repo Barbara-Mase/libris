@@ -1,45 +1,45 @@
 window.addEventListener("DOMContentLoaded", () => {
 
-    let coverId = document.getElementById("cover-id").innerHTML;
-    console.log(coverId);
-    let coverImg = document.createElement("img");
+    function fetchCoverL() {
+        let coverId = document.getElementById("cover-id").innerHTML;
 
-    if (coverId) {
-        let url_cover = "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";
+        let coverImg = document.createElement("img");
 
-        fetch(url_cover)
-            .then(response => response.blob())
+        if (coverId) {
+            let url_cover = "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";
 
-            //réviser blob
-            .then(blob => {
-                coverImg.src = URL.createObjectURL(blob);
+            fetch(url_cover)
+                .then(response => response.blob())
+                .then(blob => {
+                    coverImg.src = URL.createObjectURL(blob);
+                })
+                .catch(error => console.error("Error fetching dynamic image:", error));
+        }
+        let divBookCover = document.getElementsByClassName("div-book-cover");
+
+        for (let div of divBookCover) {
+            div.appendChild(coverImg);
+        }
+    }
+
+    function addToList() {
+
+        let addButton = document.getElementById("button-add-to-list");
+            addButton.addEventListener("click", (event) => {
+                fetch("index.php?route=add-to-list")
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (!data.success) {
+                            document.getElementById("error-container").innerText = data.message;
+                        }
+                    })
+                    .catch(error => {
+                    })
             })
-            .catch(error => console.error("Error fetching dynamic image:", error));
-    }
-     let divBookCover = document.getElementsByClassName("div-book-cover");
-
-    for (let div of divBookCover) {
-        div.appendChild(coverImg);
     }
 
-    let addButton = document.getElementsByClassName("button-add-to-list");
-
-    for(let button of addButton) {
-
-        button.addEventListener("click", (event) => {
-
-            fetch("index.php?route=add-to-list")
-                .then(response => response.text)
-                .then(data => {
-                    //Gérer l'erreur 'si le user n'est pas connecté)
-
-                })
-                .catch(error => {
-
-                })
-        })
-    }
-
-
+    fetchCoverL();
+    addToList();
 
 })

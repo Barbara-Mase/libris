@@ -33,11 +33,11 @@ class CommentController extends AbstractController
                     $this->redirect('route=detail-book&id=' . $bookId);
                 }
             } else {
-                $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
+                $_SESSION['errors']['comment'] = 'Invalid CSRF token.';
                 $this->redirect('route=detail-book&id=' . $bookId);
             }
         } else {
-            $_SESSION['errors']['comment'] = 'Invalid CSRF token.';
+            $_SESSION['errors']['comment'] = 'You must be logged in to post comments.';
             $this->redirect('route=detail-book&id=' . $bookId);
         }
     }
@@ -86,6 +86,7 @@ class CommentController extends AbstractController
         if (isset($userId)) {
             if($userId === $comment->getUserId()) {
                 $cm->delete($commentId);
+                $this->redirect("route=profile&id=" . $userId);
             }
         } else {
             $_SESSION['errors']['comment'] = 'You must be logged in to delete comments.';

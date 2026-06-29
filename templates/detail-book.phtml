@@ -5,6 +5,7 @@
         <?php
     }
 }?>
+<div id="error-container"></div>
         <section class="container-book-detail">
             <?php if(isset($book)) { ?>
                 <div class="div-book-cover">
@@ -18,7 +19,7 @@
                     <p class="detail-book-year"><?= $book->getPublishYear()?></p>
                 </div>
                 <div class="div-add-button">
-                    <button class="button-add-to-list" type="submit">Add to list</button>
+                    <button id="button-add-to-list" type="submit">Add to list</button>
                 </div>
             </div>
         </section>
@@ -53,12 +54,6 @@
             <?php } else {?>
                 <p>Book Unfound</p>
             <?php }?>
-
-
-            <?php //if (isset($_SESSION['user-id'])) { ?>
-
-            <?php// } ?>
-
 
 
 <script type="application/javascript" src="src/api/detail_book_script.js"></script>

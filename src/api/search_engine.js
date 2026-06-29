@@ -129,7 +129,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
                             .then(response => response.text())
 
-                            //empêche l'enregistrement en bdd
                             .then( data => {
                                 id = data
                                 window.location.assign('index.php?route=detail-book&id=' + id);

@@ -26,6 +26,7 @@
     </fieldset>
 </form>
 <h3>Delete my account</h3>
-<form method="post" action="index.php?route=check-delete-user&id=<?= $user->getId() ?>">
+<form method="post" action="index.php?route=delete-user&id=<?= $user->getId() ?>">
+    <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
     <button type="Submit">Delete</button>
 </form>

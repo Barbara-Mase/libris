@@ -194,4 +194,30 @@ class AuthController extends AbstractController
         session_regenerate_id(true);
         $this->redirect("index.php?route=home");
     }
+
+    public function deleteUser($userId) : void {
+
+        $_SESSION["errors"] = [];
+        $um = new UserManager();
+
+        if (empty($_SESSION["user_id"])) {
+            $_SESSION["errors"]["login"] = "You must be logged in to delete user.";
+            $this->redirect("route=login");
+        }
+
+        if($_SESSION["user_id"] !== $userId) {
+            $_SESSION["errors"]["login"] = "You do not have permission to delete user.";
+            $this->redirect("route=home");
+        }
+
+        $tokenManager = new CSRFTokenManager();
+
+        if (!isset($_POST['csrf_token']) || !$tokenManager->validateCSRFToken($_POST['csrf_token'])) {
+            $_SESSION["errors"]["csrf_token"] = "Invalid CSRF token";
+            $this->redirect("route=home");
+        }
+
+        $um->delete($userId);
+        $this->redirect("route=home");
+    }
 }

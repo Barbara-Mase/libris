@@ -57,27 +57,36 @@ class BookController extends AbstractController {
         echo json_encode($book_id);
     }
 
-    //en chantier
     public function addToList() : void {
 
         //Gérer les erreurs 'user not loggedin"
         $_SESSION['errors'] = [];
         $bm = new BookManager();
 
-        if ($_SESSION['user_id']) {
+
+        if (!empty($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
-            if($_SESSION['book_id']) {
+            if(!empty($_SESSION['book_id'])) {
                 $bookId = $_SESSION['book_id'];
-                $bm->addBookUser($bookId, $userId);
+                $book = $bm->findBooksUsers($userId);
+                if(!isset($book)) {
+                    $bm->addBookUser($bookId, $userId);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'This book is already in your list'
+                    ]);
+                }
             } else {
                 $_SESSION["errors"]["book"] = "Book not found";
                 $this->redirect("route=home");
             }
         } else {
-            $_SESSION["errors"]["book"] = "You must be logged in to add a book to your list";
-            echo json_encode(['success' => false]);
+            echo json_encode([
+                'success' => false,
+                'message' => 'You must be logged in to add a book!'
+                ]);
         }
-
     }
 
     public function removeBookFromList(int $bookId) : void

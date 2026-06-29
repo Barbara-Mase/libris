@@ -193,13 +193,11 @@ class UserController extends AbstractController {
         $um = new UserManager();
 
         if ($_SESSION['user_id'] === $userId) {
-
             $tokenManager = new CSRFTokenManager();
-
             if ($_SESSION['csrf_token'] && $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
                 $um->delete($userId);
                 session_destroy();
-                $_SESSION['success'] = "Your account has been successfully deleted.";
+                $_SESSION['success']['account_deleted'] = "Your account has been successfully deleted.";
                 $this->redirect("home");
             } else {
                 $_SESSION["errors"]["csrf_token"] = "Invalid CSRF token.";
