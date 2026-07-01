@@ -1,9 +1,9 @@
 /*COLOR*/
 
-$background-color: #321278;
-$title-color: #F6E06E;
-$dark-blue: #321278;
-$lavender-color: #A5A5c0;
+$background-color: #0D0B2B;
+$yellow: #F6E06E;
+$royal-blue: #321278;
+$lavender: #A5A5c0;
 
 /* FONTS FAMILY */
 
@@ -16,17 +16,202 @@ $lavender-color: #A5A5c0;
 
 * {
   font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-family: "K2D";
 }
+
+.logo-libris {
+  height: 6em;
+  width: 5em;
+}
+
+a {
+  text-decoration: none;
+}
+/*HEADER*/
 
 .header {
 
-  background-color: $background-color;
+    background-color: $background-color;
+    position: relative;
+
 
     h1 {
-      color: $title-color;
+      color: $yellow;
       font-size: 3rem;
+      font-family: "Expletus Sans";
+      position: absolute;
+      top: 35%;
+      right: 50%;
+      transform: translateX(-50%);
+      transform: translateY(-50%);
     }
+
+  .header-top {
+    display: flex;
+
+  }
+
+  .header-bottom {
+    display: flex;
+    justify-content: space-between;
+    background-color: $royal-blue;
+    padding: 1em;
+
+   a {
+      margin-left: 1em;
+      color: white;
+    }
+  }
+  .header-top-right {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    transform: translateY(-50%);
+  }
+
+  .switch-dark-mode {
+    height: 3em;
+    width: 5em;
+  }
+}
+/* menu burger */
+
+#topnav-menu-burger {
+  display : block;
+  position: absolute;
+  right   : 0;
+  top     : 0;
+  margin  : 0;
+  z-index: 99;
+
+  transform-origin: 0% 0%;
+  transform: translate(200%, 0);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+
+  background-color: $background-color;
+  border-color: $yellow;
+
+  ul li {
+    list-style: none;
+    padding: 1em;
+    text-align: center;
+    border: $yellow 1px solid;
+    a {
+      text-decoration: none;
+      color: $yellow;
+    }
+  }
+}
+
+#topnav-hamburger-icon {
+  position: relative;
+  top: 1em;
+  display: block;
+  width: 3em;
+  height: 6em;
+
+  span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    margin-bottom: 5px;
+    background-color: $yellow;
+    border-radius: 3px;
+
+    z-index: 100;
+
+    opacity: 1;
+    left: 0;
+
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+  }
 }
 
 
+#topnav-hamburger-icon span:nth-child(1) {
+  top: 0px;
+  -webkit-transform-origin: left top;
+  -moz-transform-origin: left top;
+  -o-transform-origin: left top;
+  transform-origin: left top;
+}
+#topnav-hamburger-icon span:nth-child(2) {
+  top: 12px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+#topnav-hamburger-icon span:nth-child(3) {
+  top: 24px;
+  -webkit-transform-origin: left bottom;
+  -moz-transform-origin: left bottom;
+  -o-transform-origin: left bottom;
+  transform-origin: left bottom;
+}
+
+#topnav-hamburger-icon.open span:nth-child(1) {
+  width: 110%;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* the second span disappears */
+#topnav-hamburger-icon.open span:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+/* the last span rotates -45° / */
+#topnav-hamburger-icon.open span:nth-child(3) {
+  width: 110%;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#root {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* position responsive menu at the right of the screen */
+#topnav-menu-burger {
+  display : block;
+  position: absolute;
+  right   : 0;
+  top     : 0;
+  margin  : 0;
+  width: min(300px, 80vw);;
+  height  : 100vh;
+
+  z-index: 99;
+
+  transform-origin: 0% 0%;
+  transform: translate(100%, 0);
+
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+/* and let's slide it in from the right */
+#topnav-menu-burger.open {
+  transform: none;
+  position : fixed;
+}
 
