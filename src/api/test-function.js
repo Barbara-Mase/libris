@@ -16,7 +16,7 @@ function searchParams(event) {
 
     const params = new URLSearchParams();
     params.append("q", event.target.elements.search.value);
-    params.append("limit", "30");
+    params.append("limit", "32");
 
     return params
 }
@@ -48,8 +48,8 @@ function displayBooks(docs) {
         resultContainer.appendChild(bookCard);
     })
 
-    let researchContainer = document.getElementById("container-search-result");
-    researchContainer.appendChild(resultContainer);
+    let containerHome = document.getElementById("container-home");
+    containerHome.appendChild(resultContainer);
 
 
 }
@@ -66,7 +66,7 @@ function createBookCard(doc) {
         fetchCoverM(doc.cover_i, coverImg);
     }
 
-    let titleBalise = document.createElement("h2");
+    let titleBalise = document.createElement("h3");
     let authorBalise = document.createElement("p")
     let dateBalise = document.createElement("p")
 

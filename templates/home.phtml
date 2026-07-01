@@ -4,15 +4,13 @@
         ?> <p class="error"><?= $error ?></p>
     <?php }
 }?>
-<section class="container-home-research">
-    <h2>Find a book</h2>
-    <div class=container-home-research>
-        <form action="" method="POST" id="find-books">
-            <label for="search">Search a book</label>
-            <input type="text" id="search" name="search" required>
-            <button type="submit">Browse</button>
-        </form>
+<section id="container-home">
+    <div class="container-research-tool">
+        <h2>Find a book</h2>
+            <form class="browse-form action=" method="POST" id="find-books">
+                <input type="text" id="search" name="search" required>
+                <button type="submit">Browse</button>
+            </form>
     </div>
 </section>
-<section id="container-search-result">
-</section>
+
