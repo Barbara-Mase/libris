@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
         let coverId = document.getElementById("cover-id").innerHTML;
 
         let coverImg = document.createElement("img");
+        coverImg.className = "cover-detail-book";
 
         if (coverId) {
             let url_cover = "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";

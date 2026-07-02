@@ -23,6 +23,11 @@ a {
   text-decoration: none;
 }
 
+main {
+  width: 1200px;
+  margin: auto;
+}
+
 /*HEADER*/
 .header {
   background-color: #0D0B2B;
@@ -140,7 +145,6 @@ a {
 /*HOME*/
 /* research tool */
 #container-home {
-  width: 1200px;
   margin: auto;
   padding: 2em;
   display: flex;
@@ -204,9 +208,53 @@ a {
   margin-bottom: 2px;
 }
 
-/*detail d'un libre */
+/*detail d'un livre */
+.want-to-read {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 1em;
+}
+
 #cover-id {
   display: none;
+}
+
+.container-book-detail {
+  margin: auto;
+  margin-top: 4em;
+  display: flex;
+  background-color: #0D0B2B;
+  width: 70%;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px #F6E06E;
+}
+.container-book-detail h3 {
+  color: #F6E06E;
+  font-family: "Expletus Sans";
+  margin-top: 1em;
+  margin-left: -1.2em;
+  font-size: 1.7rem;
+}
+.container-book-detail p {
+  color: white;
+  margin-top: 1em;
+  margin-left: -1.4em;
+  font-size: 1.4rem;
+}
+.container-book-detail .detail-book-year {
+  font-size: 1.2rem;
+  margin-top: 0.8em;
+}
+.container-book-detail .div-book-cover {
+  width: 23em;
+}
+.container-book-detail .div-book-cover .cover-detail-book {
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em;
+}
+
+.container-comments {
+  margin: 10rem;
 }
 
 /*# sourceMappingURL=test.css.map */

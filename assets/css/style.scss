@@ -29,6 +29,11 @@ $lavender: #A5A5c0;
 a {
   text-decoration: none;
 }
+
+main {
+  width: 1200px;
+  margin: auto;
+}
 /*HEADER*/
 
 .header {
@@ -165,7 +170,6 @@ a {
 /* research tool */
 
 #container-home {
-  width: 1200px;
   margin: auto;
   padding: 2em;
   display: flex;
@@ -237,11 +241,60 @@ a {
   }
 }
 
-/*detail d'un libre */
+/*detail d'un livre */
 
+.want-to-read {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 1em;
+
+}
 #cover-id {
   display: none;
 }
+
+.container-book-detail {
+  margin: auto;
+  margin-top: 4em;
+  display: flex;
+  background-color: $background-color;
+  width: 70%;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px $yellow;
+
+
+  h3 {
+    color: $yellow;
+    font-family: "Expletus Sans";
+    margin-top: 1em;
+    margin-left: -1.2em;
+    font-size: 1.7rem;
+  }
+  p {
+    color: white;
+    margin-top: 1em;
+    margin-left: -1.4em;
+    font-size: 1.4rem;
+
+  }
+
+  .detail-book-year {
+    font-size: 1.2rem;
+    margin-top: 0.8em;
+  }
+  .div-book-cover {
+    width: 23em;
+
+    .cover-detail-book {
+      border-top-left-radius: 2em;
+      border-bottom-left-radius: 2em;
+    }
+  }
+}
+.container-comments {
+  margin: 10rem;
+}
+
 
 
 

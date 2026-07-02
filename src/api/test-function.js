@@ -71,14 +71,30 @@ function createBookCard(doc) {
     let dateBalise = document.createElement("p")
 
     //Récupération des infos renvoyés par le fetch
-    let bookTitle = document.createTextNode(doc.title)
-    let author = document.createTextNode(doc.author_name)
+
+
+    let nodeBookTitle = document.createTextNode(doc.title);
+    let nodeAuthor = document.createTextNode(doc.author_name);
+    let strBookTitle = nodeBookTitle.textContent;
+    let strAuthor = nodeAuthor.textContent;
+    let truncBookTitle = strBookTitle.substring(0, 20);
+    console.log(truncBookTitle)
+    let truncAuthor = strAuthor.substring(0, 20);
+    console.log(truncAuthor)
     let publishYear = document.createTextNode(doc.first_publish_year)
 
 
     //ajout des infos dans les balises
-    titleBalise.appendChild(bookTitle);
-    authorBalise.appendChild(author);
+    if(truncBookTitle.length === 20) {
+        titleBalise.textContent = truncBookTitle + "...";
+    } else {
+        titleBalise.textContent = truncBookTitle;
+    }
+    if(truncAuthor.length === 20) {
+        authorBalise.textContent = truncAuthor + "...";
+    } else {
+        authorBalise.textContent = truncAuthor;
+    }
     dateBalise.appendChild(publishYear);
 
     //Ajout des balises dans le container

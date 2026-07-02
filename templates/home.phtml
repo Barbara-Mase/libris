@@ -1,16 +1,18 @@
 
-<?php if(isset($errors)) {
-    foreach ($errors as $error) {
-        ?> <p class="error"><?= $error ?></p>
-    <?php }
-}?>
-<section id="container-home">
-    <div class="container-research-tool">
-        <h2>Find a book</h2>
-            <form class="browse-form action=" method="POST" id="find-books">
-                <input type="text" id="search" name="search" required>
-                <button type="submit">Browse</button>
-            </form>
-    </div>
-</section>
+<main>
+    <?php if(isset($errors)) {
+        foreach ($errors as $error) {
+            ?> <p class="error"><?= $error ?></p>
+        <?php }
+    }?>
+    <section id="container-home">
+        <div class="container-research-tool">
+            <h2>Find a book</h2>
+                <form class="browse-form action=" method="POST" id="find-books">
+                    <input type="text" id="search" name="search" required>
+                    <button type="submit">Browse</button>
+                </form>
+        </div>
+    </section>
+</main>
 

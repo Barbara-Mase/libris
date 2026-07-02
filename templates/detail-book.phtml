@@ -1,11 +1,13 @@
 
-<?php if (isset($errors)) {
-    foreach($errors as $error) { ?>
-        <p><?= $error ?></p>
-        <?php
-    }
-}?>
-<div id="error-container"></div>
+<main>
+    <?php if (isset($errors)) {
+        foreach($errors as $error) { ?>
+            <p><?= $error ?></p>
+            <?php
+        }
+    }?>
+    <div id="error-container"></div>
+    <h2 class="want-to-read">Want to read it ? </h2>
         <section class="container-book-detail">
             <?php if(isset($book)) { ?>
                 <div class="div-book-cover">
@@ -14,17 +16,16 @@
                 </div>
             <div class="div-info-add">
                 <div class="div-book-info">
-                    <h2 class="detail-book-title"><?= $book->getTitle()?></h2>
-                    <p class="detail-book-author"><?= $book->getAuthor()?></p>
-                    <p class="detail-book-year"><?= $book->getPublishYear()?></p>
+                    <h3 class="detail-book-title"><?= $book->getTitle()?></h3>
+                    <p class="detail-book-author">Written by <?= $book->getAuthor()?></p>
+                    <p class="detail-book-year">First published in <?= $book->getPublishYear()?></p>
                 </div>
                 <div class="div-add-button">
                     <button id="button-add-to-list" type="submit">Add to list</button>
                 </div>
             </div>
         </section>
-        <section class="section_comments">
-
+        <section class="container-comments">
                 <?php if(isset($comments)) {
                     foreach($comments as $comment) { ?>
                         <div class="card-comment">
@@ -52,8 +53,9 @@
                 </div>
         </section>
             <?php } else {?>
-                <p>Book Unfound</p>
+                <p>Book not found</p>
             <?php }?>
+</main>
 
 
 <script type="application/javascript" src="src/api/detail_book_script.js"></script>
