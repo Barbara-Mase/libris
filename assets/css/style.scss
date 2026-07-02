@@ -34,6 +34,13 @@ main {
   width: 1200px;
   margin: auto;
 }
+
+h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 1em;
+
+}
 /*HEADER*/
 
 .header {
@@ -241,14 +248,10 @@ main {
   }
 }
 
+
 /*detail d'un livre */
 
-h2 {
-  text-align: center;
-  font-size: 3rem;
-  margin-top: 1em;
 
-}
 #cover-id {
   display: none;
 }
@@ -422,7 +425,75 @@ h2 {
   }
 }
 
+/* PROFIL */
 
+
+.user-info {
+  background-color: $background-color;
+  color: white;
+  width: 70%;
+  margin: auto;
+  margin-top: 2em;
+  padding-bottom: 2em;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-top: 0.1em;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px $yellow;
+  position: relative;
+
+  h2 {
+    color: $yellow;
+  }
+  .last-login {
+    font-size: 1rem;
+    margin: 1em;
+  }
+
+  .intro {
+    font-size: 1.1rem;
+    margin: 1em;
+    word-spacing: 0.1rem;
+    text-justify: inter-word;
+
+  }
+
+  .button-update-profile {
+    position: absolute;
+    right: 1.5em;
+    bottom: 1em;
+    background-color: $yellow;
+    border-color: $yellow;
+    color: $background-color;
+    padding: 0.5em;
+    border-radius: 4%;
+
+    a:visited {
+      color: $background-color;
+    }
+  }
+  .button-update-profile:hover {
+    background-color: $background-color;
+    border-color: $background-color;
+    color: $yellow;
+  }
+
+  .button-update-profile:hover a:visited {
+    color: $yellow;
+  }
+
+}
+
+.section-book-list {
+  .book-list-card {
+    border: 1px solid $background-color;
+    box-shadow: 8px 5px 5px $background-color;
+    border-radius: 5px;
+    width: 13em;
+    margin: 3em;
+  }
+
+}
 
 
 

@@ -75,8 +75,10 @@ function createBookCard(doc) {
 
     let nodeBookTitle = document.createTextNode(doc.title);
     let nodeAuthor = document.createTextNode(doc.author_name);
+    //Puisque substring ne fonctionne que sur des chaines de caractères, on transforme les noeuds en string
     let strBookTitle = nodeBookTitle.textContent;
     let strAuthor = nodeAuthor.textContent;
+    // substring permet de tronquer des chaines de caractères
     let truncBookTitle = strBookTitle.substring(0, 20);
     console.log(truncBookTitle)
     let truncAuthor = strAuthor.substring(0, 20);
@@ -85,6 +87,7 @@ function createBookCard(doc) {
 
 
     //ajout des infos dans les balises
+    // Conditions qui permet d'ajouter des points de suspension si le titre tronqué est long de 20 caractères
     if(truncBookTitle.length === 20) {
         titleBalise.textContent = truncBookTitle + "...";
     } else {

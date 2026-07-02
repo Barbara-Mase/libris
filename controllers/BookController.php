@@ -68,9 +68,13 @@ class BookController extends AbstractController {
             $userId = $_SESSION['user_id'];
             if(!empty($_SESSION['book_id'])) {
                 $bookId = $_SESSION['book_id'];
-                $book = $bm->findBooksUsers($userId);
-                if(!isset($book)) {
+                $book = $bm->findOneBookUser($bookId, $userId);
+                if($book === false) {
                     $bm->addBookUser($bookId, $userId);
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Book added to your list'
+                    ]);
                 } else {
                     echo json_encode([
                         'success' => false,

@@ -119,6 +119,25 @@ class BookManager extends AbstractManager {
     }
 
 
+    public function findOneBookUser(int $bookId, int $userId) : bool {
+
+        $query = $this->db->prepare('SELECT * FROM books_users WHERE book_id = :book_id AND user_id = :user_id');
+
+        $parameters = [
+            'book_id' => $bookId,
+            'user_id' => $userId
+        ];
+
+        $query->execute($parameters);
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function findBooksUsers(int $user_id) : ?array {
 
