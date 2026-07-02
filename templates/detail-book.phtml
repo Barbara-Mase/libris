@@ -1,5 +1,4 @@
-
-<main>
+<main xmlns="http://www.w3.org/1999/html">
     <?php if (isset($errors)) {
         foreach($errors as $error) { ?>
             <p><?= $error ?></p>
@@ -7,54 +6,56 @@
         }
     }?>
     <div id="error-container"></div>
+    <?php if(isset($book)) { ?>
     <h2 class="want-to-read">Want to read it ? </h2>
         <section class="container-book-detail">
-            <?php if(isset($book)) { ?>
                 <div class="div-book-cover">
                     <!--Ne pas oublier de cacher la div avec l'id du livre, cette div me permet de récupérer l'id du livre dans js pour interroger l'api-->
                     <div id="cover-id"><?= $book->getCoverId()?></div>
                 </div>
-            <div class="div-info-add">
+            <div class="div-book-detail">
                 <div class="div-book-info">
                     <h3 class="detail-book-title"><?= $book->getTitle()?></h3>
                     <p class="detail-book-author">Written by <?= $book->getAuthor()?></p>
                     <p class="detail-book-year">First published in <?= $book->getPublishYear()?></p>
                 </div>
-                <div class="div-add-button">
-                    <button id="button-add-to-list" type="submit">Add to list</button>
+                <div class="div-button-add-to-list">
+                    <button id="button-add-to-list" type="submit"><img class="img-add-to-list" src="./assets/img/coeur.jpg" alt="button add to list">Add to list</button>
                 </div>
             </div>
         </section>
         <section class="container-comments">
-                <?php if(isset($comments)) {
+            <h2 class="h2-comments">Comments</h2>
+                <?php if(isset($comments) && count($comments) > 0) {
                     foreach($comments as $comment) { ?>
                         <div class="card-comment">
                             <h3><?= $comment->getTitle()?></h3>
-                            <p><a href="index.php?route=profile&amp;id=<?= $comment->getUserId() ?>"><?= $comment->getAuthor()->getUsername() ?></a></p>
+                            <p>Review by  <a href="index.php?route=profile&amp;id=<?= $comment->getUserId() ?>"><?= $comment->getAuthor()->getUsername() ?></a></p>
                             <p><?= $comment->getContent() ?></p>
                         </div>
-                    <?php } ?>
+                    <?php }
+                } else { ?>
+                    <div class="no-comment">
+                        <p>There's nothing here yet !</p>
+                    </div>
+            <?php }?>
 
-                <?php }?>
 
                 <div class="div-add-comment">
-                <form method="post" action="index.php?route=add-comment&id=<?= $book->getBookId() ?>">
-                    <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-                    <fieldset class="fieldset-comment-content-title">
-                        <label  for="comment-title" class="label-comment-title label-comment">Title</label>
-                        <input type="text" name="comment-title" id="comment-title" placeholder="Your title here" maxlength="40" required>
-                        <label for="comment-content" class="label-comment-content label-comment">Content</label>
-                        <input type="text" name="comment-content" id="comment-content" placeholder="Your comment here" minlength="30" maxlength="750" required">
-                    </fieldset>
-                    <fieldset class="fieldset-comment-submit">
-                        <button type="submit">Submit comment</button>
-                    </fieldset>
-                </form>
+                    <h2>Do you want to leave a comment ?</h2>
+                    <form method="post" action="index.php?route=add-comment&id=<?= $book->getBookId() ?>">
+                        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+                        <fieldset class="fieldset-comment-content-title">
+                            <label  for="comment-title" class="label-comment-title label-comment">Title</label>
+                            <input type="text" name="comment-title" id="comment-title" placeholder="Your title here" maxlength="40" required>
+                            <label for="comment-content" class="label-comment-content label-comment">Comment</label>
+                            <textarea name="comment-content" id="comment-content" placeholder="Your comment here" minlength="30" maxlength="750" required"></textarea>
+                            <button class="button-submit-comment" type="submit">Submit comment</button>
+                        </fieldset>
+                    </form>
                 </div>
         </section>
-            <?php } else {?>
-                <p>Book not found</p>
-            <?php }?>
+    <?php } ?>
 </main>
 
 
