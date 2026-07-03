@@ -1,4 +1,4 @@
-function fetchCoverM() {
+export function fetchCoverM() {
 
     const divBookCovers = document.getElementsByClassName("div-book-cover");
 
@@ -23,6 +23,5 @@ function fetchCoverM() {
 }
 
 
-fetchCoverM();
 
 

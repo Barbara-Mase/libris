@@ -1,4 +1,4 @@
-function init() {
+export function init() {
     const findBooks = document.getElementById('find-books');
     if(findBooks) {
         findBooks.addEventListener("submit", (event) => {

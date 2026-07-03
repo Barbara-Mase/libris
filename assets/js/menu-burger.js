@@ -1,4 +1,4 @@
-function showResponsiveMenu() {
+export function showResponsiveMenu() {
     const menu = document.getElementById("topnav-menu-burger");
     const icon = document.getElementById("topnav-hamburger-icon");
     const root = document.getElementById("root");

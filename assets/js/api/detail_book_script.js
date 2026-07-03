@@ -1,6 +1,5 @@
-window.addEventListener("DOMContentLoaded", () => {
 
-    function fetchCoverL() {
+    export function fetchCoverL() {
         let coverId = document.getElementById("cover-id").innerHTML;
 
         let coverImg = document.createElement("img");
@@ -23,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function addToList() {
+    export function addToList() {
 
         let addButton = document.getElementById("button-add-to-list");
             addButton.addEventListener("click", (event) => {
@@ -39,8 +38,3 @@ window.addEventListener("DOMContentLoaded", () => {
                     })
             })
     }
-
-    fetchCoverL();
-    addToList();
-
-})

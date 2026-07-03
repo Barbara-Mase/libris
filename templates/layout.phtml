@@ -59,9 +59,26 @@
 <?php
 require  "templates/$template.phtml";
 ?>
+<script type="module" src="./assets/js/main.js"></script>
+<script type="module">
+    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs';
+    import Navigation from 'https://cdn.jsdelivr.net/npm/swiper@11/modules/navigation.min.mjs';
+    import Pagination from 'https://cdn.jsdelivr.net/npm/swiper@11/modules/pagination.min.mjs';
 
-<script type="application/javascript" src="src/api/test-function.js"></script>
-<script type="application/javascript" src="assets/js/menu-burger.js"></script>
-<script src="/libris/assets/js/swiper.js"></script>
+    const swiper = new Swiper('.swiper', {
+        modules: [ Navigation, Pagination ],
+        slidesPerView: 5,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+        },
+        scrollbar: {
+            el: ".swiper-scrollbar",
+            draggable: true
+        }
+    });
+</script>
 </body>
+
 </html>

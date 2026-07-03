@@ -22,28 +22,38 @@
             <section class="section-book-list">
                 <div class="swiper">
                     <div class="swiper-wrapper">
-                    <?php
-                    if(isset($booksList)) {
-                        foreach ($booksList as $book) { ?>
-                            <div class="book-list-card swiper-slide">
-                                <?php if ($book->getCoverId()) { ?>
-                                <div class="div-book-cover swiper-slide">
-                                    <!--div qui permet de récupérer l'identifiant du livre pour interroger l'API-->
-                                    <div class="cover-id" hidden><?= $book->getCoverId()?></div>
+                        <?php
+                        if(isset($booksList)) {
+                            foreach ($booksList as $book) { ?>
+                                <div class="book-list-card swiper-slide">
+                                    <?php if ($book->getCoverId()) { ?>
+                                        <div class="div-book-cover">
+                                            <div class="cover-id" hidden><?= $book->getCoverId()?></div>
+                                        </div>
+                                    <?php } ?>
+                                    <h3 class="list-book-title"><?php
+                                        if(strlen($book->getTitle()) > 20) {
+                                            echo substr($book->getTitle(), 0, 20) . "...";
+                                        } else {
+                                            echo $book->getTitle();
+                                        }
+                                        ?></h3>
+                                    <p class="list-book-author"><?php if(strlen($book->getAuthor()) > 20) {
+                                            echo substr($book->getAuthor(), 0, 25) . "...";
+                                        } else {
+                                            echo $book->getAuthor();
+                                        }?></p>
+                                    <?php if($_SESSION['user_id'] === $user->getId()) { ?>
+                                        <form method="post" action="index.php?route=remove-book-from-list&amp;id=<?= $book->getBookId() ?>">
+                                            <button type="submit" class="button-remove-book">Remove</button>
+                                        </form>
+                                    <?php } ?>
                                 </div>
-                                <?php } ?>
-                                <h3 class="list-book-title"><?=$book->getTitle()?></h3>
-                                <p class="list-book-author"><?= $book->getAuthor()?></p>
-                                <?php if($_SESSION['user_id'] === $user->getId()) { ?>
-                                    <form method="post" action="index.php?route=remove-book-from-list&amp;id=<?= $book->getBookId() ?>">
-                                        <button type="submit" class="button-remove-book">Remove</button>
-                                    </form>
-                                <?php } ?>
-                            </div>
-                        <?php }
-                    }?>
-                    <?php } ?>
+                            <?php }
+                        }
+                        }?>
                     </div>
+                    <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-scrollbar"></div>
@@ -69,8 +79,4 @@
             </section>
         </div>
 </main>
-
-<script type="application/javascript" src="src/api/fetch-cover-list.js"></script>
-<script type="application/javascript" src="assets/js/swiper.js"></script>
-
 
