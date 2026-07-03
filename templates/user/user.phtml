@@ -25,7 +25,7 @@
                         <?php
                         if(isset($booksList)) {
                             foreach ($booksList as $book) { ?>
-                                <div class="book-list-card swiper-slide">
+                                <div class="book-card book-list-card swiper-slide">
                                     <?php if ($book->getCoverId()) { ?>
                                         <div class="div-book-cover">
                                             <div class="cover-id" hidden><?= $book->getCoverId()?></div>
@@ -62,14 +62,14 @@
             <section class="section-user-comments">
                 <?php if(isset($comments)) {
                     foreach($comments as $comment) { ?>
-                    <div class="card-user-comments">
+                    <div class="card-comment-profile">
                         <h3><?= $comment->getTitle()?></h3>
                         <p><a href="index.php?route=detail-book&amp;id=<?= $comment->getBookId()?>"><?= $comment->getBook()->getTitle()?></a></p>
-                        <p><?= $comment->getContent()?></p>
+                        <p class="comment-content-profile"><?= $comment->getContent()?></p>
                         <?php if($user->getId() === $_SESSION['user_id']) { ?>
                             <div class="div-remove-update-comment">
                                 <form method="post" action="index.php?route=delete-comment&amp;id=<?= $comment->getCommentId() ?>">
-                                    <button type="submit" class="button-delete-comment">Delete</button>
+                                    <button type="submit" class="button-delete-comment">Delete comment</button>
                                 </form>
                             </div>
                             <?php }?>

@@ -1,0 +1,574 @@
+@charset "UTF-8";
+/*COLOR*/
+/* FONTS FAMILY */
+@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@font-face {
+  font-family: "K2D";
+  src: url("../fonts/K2D/K2D-Medium.ttf");
+}
+/*GENERAL*/
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-family: "K2D";
+}
+
+.logo-libris {
+  height: 6em;
+  width: 5em;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  width: 1200px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  font-size: 3rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+/*HEADER*/
+.header {
+  background-color: #0D0B2B;
+  position: relative;
+}
+.header h1 {
+  color: #F6E06E;
+  font-size: 3rem;
+  font-family: "Expletus Sans";
+  position: absolute;
+  top: 35%;
+  right: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
+}
+.header .header-top {
+  display: flex;
+}
+.header .header-bottom {
+  display: flex;
+  justify-content: space-between;
+  background-color: #321278;
+  padding: 1em;
+}
+.header .header-bottom a {
+  margin-left: 1em;
+  color: white;
+}
+.header .header-top-right {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 50%;
+  right: 1%;
+  transform: translateY(-50%);
+}
+.header .switch-dark-mode {
+  height: 3em;
+  width: 5em;
+}
+
+/* menu burger */
+#topnav-menu-burger {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+  width: min(300px, 80vw);
+  z-index: 99;
+  transform-origin: 0% 0%;
+  transform: translate(100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+#topnav-menu-burger ul li {
+  list-style: none;
+  padding: 1em;
+  text-align: center;
+  border: #F6E06E 1px solid;
+}
+#topnav-menu-burger ul li a {
+  text-decoration: none;
+  color: #F6E06E;
+}
+
+#topnav-hamburger-icon {
+  position: relative;
+  top: 1em;
+  display: block;
+  width: 3em;
+  height: 6em;
+}
+#topnav-hamburger-icon span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  margin-bottom: 5px;
+  background-color: #F6E06E;
+  border-radius: 3px;
+  z-index: 100;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+#topnav-hamburger-icon span:nth-child(1) {
+  top: 0px;
+  transform-origin: left top;
+}
+
+#topnav-hamburger-icon span:nth-child(2) {
+  top: 12px;
+  transform-origin: left center;
+}
+
+#topnav-hamburger-icon span:nth-child(3) {
+  top: 24px;
+  transform-origin: left bottom;
+}
+
+#root {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* and let's slide it in from the right */
+#topnav-menu-burger.open {
+  transform: none;
+  position: relative;
+  background-color: #0D0B2B;
+}
+
+/*HOME*/
+/* research tool */
+#container-home {
+  margin: auto;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#container-home .container-research-tool {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#container-home .container-research-tool h2 {
+  font-size: 4rem;
+}
+#container-home .container-research-tool form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+#container-home .container-research-tool form input {
+  width: 30em;
+  height: 2em;
+  text-align: center;
+  box-shadow: 2px 1px 1px #A5A5c0;
+  border-radius: 5px;
+}
+#container-home .container-research-tool form button {
+  margin-top: 1em;
+  height: 3em;
+  box-shadow: 2px 1px 1px #A5A5c0;
+  border-radius: 5px;
+}
+#container-home {
+  /*Containers de résultat */
+}
+#container-home .result-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 2em;
+}
+#container-home .result-container .book-card {
+  border: 1px solid #0D0B2B;
+  box-shadow: 8px 5px 5px #0D0B2B;
+  border-radius: 5px;
+  width: 13em;
+  margin: 3em;
+}
+#container-home .result-container .book-card h3, #container-home .result-container .book-card p {
+  padding: 0.3em;
+}
+#container-home .result-container .book-card img {
+  width: 100%;
+  height: 18em;
+}
+#container-home .result-container .book-card button {
+  padding: 0.3em;
+  display: block;
+  margin: auto;
+  margin-bottom: 0.5em;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+}
+#container-home .result-container .book-card button:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+
+/*detail d'un livre */
+#cover-id {
+  display: none;
+}
+
+.container-book-detail {
+  margin: auto;
+  margin-top: 4em;
+  display: flex;
+  background-color: #0D0B2B;
+  width: 70%;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px #F6E06E;
+  position: relative;
+}
+.container-book-detail .div-book-detail {
+  width: 100%;
+}
+.container-book-detail .div-book-detail h3 {
+  color: #F6E06E;
+  font-family: "Expletus Sans";
+  margin-top: 1em;
+  margin-left: 0.8em;
+  font-size: 1.7rem;
+}
+.container-book-detail .div-book-detail p {
+  color: white;
+  margin-top: 1em;
+  margin-left: 1em;
+  font-size: 1.4rem;
+}
+.container-book-detail .div-book-detail .detail-book-year {
+  font-size: 1.2rem;
+  margin-top: 0.6em;
+}
+.container-book-detail .div-book-detail .div-button-add-to-list {
+  position: absolute;
+  right: 2em;
+  bottom: 2em;
+}
+.container-book-detail .div-book-detail .div-button-add-to-list #button-add-to-list {
+  overflow: hidden;
+  height: 2.6em;
+  width: 2.6em;
+  border-radius: 50%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+}
+.container-book-detail .div-book-detail .div-button-add-to-list #button-add-to-list img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+.container-book-detail .div-book-detail .div-button-add-to-list #button-add-to-list img:hover {
+  display: none;
+}
+.container-book-detail .div-book-detail .div-button-add-to-list #button-add-to-list:hover {
+  height: 3em;
+  width: 6em;
+  border-radius: 10%;
+  background-color: #F6E06E;
+  color: #0D0B2B;
+  padding: 0.4em;
+  cursor: pointer;
+}
+.container-book-detail .div-book-cover {
+  width: 23em;
+}
+.container-book-detail .div-book-cover .cover-detail-book {
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em;
+}
+
+/* Détail livre : section commentaire*/
+.container-comments {
+  width: 75%;
+  margin: auto;
+}
+
+.no-comment {
+  text-align: center;
+}
+.no-comment p {
+  font-size: 2.3rem;
+}
+
+.card-comment, .no-comment, .card-comment-profile {
+  border: 1px solid #A5A5c0;
+  margin: 1em;
+  padding: 2em;
+  border-radius: 3%;
+  background: #8093ff;
+  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
+  box-shadow: 1px 1px 1px #321278;
+}
+.card-comment h3, .no-comment h3, .card-comment-profile h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+}
+.card-comment p, .no-comment p, .card-comment-profile p {
+  text-justify: inter-word;
+  margin-bottom: 1em;
+}
+
+.div-add-comment {
+  margin: 1em;
+}
+.div-add-comment form {
+  margin-top: 1em;
+  background: #8093ff;
+  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
+  border: 2px solid #A5A5c0;
+  border-radius: 3%;
+  box-shadow: 1px 1px 1px #321278;
+}
+.div-add-comment form label {
+  margin-left: 1em;
+  font-size: 1.2rem;
+}
+.div-add-comment form input {
+  border: 1px solid #A5A5c0;
+  border-radius: 2%;
+  margin: 1em;
+  padding: 0.5em;
+}
+.div-add-comment form textarea {
+  border: 1px solid #A5A5c0;
+  margin: 1em;
+  padding: 0.5em;
+  height: 6em;
+  border-radius: 2%;
+}
+.div-add-comment form fieldset {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border: none;
+  position: relative;
+  margin-bottom: 3em;
+}
+.div-add-comment form button {
+  width: 20%;
+  position: absolute;
+  right: 1.8em;
+  bottom: -1.3em;
+  padding: 0.5em;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+}
+.div-add-comment form button:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+
+/* PROFIL */
+/* Profile: section information de l'utilisateur */
+.user-info {
+  background-color: #0D0B2B;
+  color: white;
+  width: 70%;
+  margin: auto;
+  margin-top: 2em;
+  padding-bottom: 2em;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-top: 0.1em;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px #F6E06E;
+  position: relative;
+}
+.user-info h2 {
+  color: #F6E06E;
+}
+.user-info .last-login {
+  font-size: 1rem;
+  margin: 1.5em;
+}
+.user-info .intro {
+  font-size: 1.1rem;
+  margin: 1.5em;
+  word-spacing: 0.1rem;
+  text-justify: inter-word;
+}
+.user-info .button-update-profile {
+  position: absolute;
+  right: 1.5em;
+  bottom: 1em;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+  color: #0D0B2B;
+  padding: 0.5em;
+  border-radius: 4%;
+}
+.user-info .button-update-profile a:visited {
+  color: #0D0B2B;
+}
+.user-info .button-update-profile:hover {
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+}
+.user-info .button-update-profile:hover a:visited {
+  color: #F6E06E;
+}
+
+/* Profil : section liste de livre */
+.section-book-list .book-list-card {
+  border: 1px solid #0D0B2B;
+  box-shadow: 8px 5px 5px #0D0B2B;
+  border-radius: 5px;
+  width: 13em;
+  margin: 3em;
+}
+.section-book-list .book-list-card img {
+  width: 100%;
+  height: 18em;
+}
+.section-book-list .book-list-card .button-remove-book {
+  padding: 0.3em;
+  display: block;
+  margin: auto;
+  margin-bottom: 0.5em;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+}
+.section-book-list .book-list-card .button-remove-book:hover, .section-book-list .book-list-card .button-delete-comment:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+
+/* profil : section commentaires*/
+.card-comment-profile {
+  position: relative;
+}
+.card-comment-profile .button-delete-comment {
+  padding: 0.3em;
+  display: block;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+  position: absolute;
+  right: 1.5em;
+  bottom: 1em;
+}
+.card-comment-profile .button-delete-comment:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+.card-comment-profile .comment-content-profile {
+  padding-bottom: 1em;
+}
+
+/* PAGE UPDATE USER */
+.account-settings h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 1em;
+}
+.account-settings .form-account-settings {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  padding: 1.5em;
+  background: #8093ff;
+  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
+  border: 2px solid #A5A5c0;
+  border-radius: 3%;
+  box-shadow: 1px 1px 1px #321278;
+}
+.account-settings .form-account-settings label {
+  margin-left: 0.7em;
+}
+.account-settings .form-account-settings input, .account-settings .form-account-settings textarea, .account-settings .form-account-settings button {
+  width: 95%;
+  height: 2em;
+  margin: 0.7em;
+}
+.account-settings .form-account-settings textarea {
+  height: 4em;
+}
+.account-settings .form-account-settings button {
+  padding: 0.3em;
+  display: block;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+  right: 1.5em;
+  bottom: 1em;
+}
+.account-settings .form-account-settings button:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+
+/* Page login */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  padding: 1.5em;
+  background: #8093ff;
+  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
+  border: 2px solid #A5A5c0;
+  border-radius: 3%;
+  box-shadow: 1px 1px 1px #321278;
+}
+.form-login label {
+  margin-left: 0.7em;
+}
+.form-login input, .form-login button {
+  width: 95%;
+  height: 2em;
+  margin: 0.7em;
+}
+.form-login button {
+  padding: 0.3em;
+  display: block;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+  right: 1.5em;
+  bottom: 1em;
+}
+.form-login button:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
+}
+
+/*# sourceMappingURL=style.css.map */

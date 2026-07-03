@@ -11,7 +11,7 @@
         <section class="container-book-detail">
                 <div class="div-book-cover">
                     <!--Ne pas oublier de cacher la div avec l'id du livre, cette div me permet de récupérer l'id du livre dans js pour interroger l'api-->
-                    <div id="cover-id"><?= $book->getCoverId()?></div>
+                    <div id="cover-id-detail-book" hidden><?= $book->getCoverId()?></div>
                 </div>
             <div class="div-book-detail">
                 <div class="div-book-info">
@@ -57,4 +57,3 @@
 </main>
 
 
-<script type="application/javascript" src="src/api/detail_book_script.js"></script>

@@ -1,32 +1,39 @@
-<h2>Update profile</h2>
-<?php if(isset($errors)) {
-    foreach ($errors as $error) {
-        ?> <p><?= $error ?></p>
-    <?php }
-}?>
-<form method="post" action="index.php?route=check-update-user&id=<?= $user->getId() ?>">
-    <fieldset class="fieldset input-fieldset">
-        <!-- token caché envoyé au back -->
-        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-        <label class="label">Username</label>
-        <!-- Vérifier la value et décider si on peut changer le nom d'utilisateur ou non (readonly)-->
-        <input type="text" name="username" value="<?php echo $user->getUsername(); ?>" required/>
-        <label class="label">Password</label>
-        <input type="password" name="password" required />
-        <label class="label">Confirm password</label>
-        <input type="password" name="confirm-password" required />
-        <label class="label">Email</label>
-        <!-- Vérifier la value -->
-        <input type="email" name="email" value="<?php echo $user->getEmail(); ?>" required/>
-        <label class="label">Intro</label>
-        <input type="text" name="intro" value="<?php echo $user->getIntro(); ?>" required />
-    </fieldset>
-    <fieldset class="fieldset button-fieldset">
-        <button class="button">Submit</button>
-    </fieldset>
-</form>
-<h3>Delete my account</h3>
-<form method="post" action="index.php?route=delete-user&id=<?= $user->getId() ?>">
-    <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-    <button type="Submit">Delete</button>
-</form>
+<main>
+    <h2>Account settings</h2>
+    <?php if(isset($errors)) {
+        foreach ($errors as $error) {
+            ?> <p><?= $error ?></p>
+        <?php }
+    }?>
+    <?php if (isset($user)) { ?>
+            <div class="account-settings">
+                <section class="update-profile">
+                    <h3>Update my profile</h3>
+                    <form class="form-account-settings" method="post" action="index.php?route=check-update-user&id=<?= $user->getId() ?>">
+                            <!-- token caché envoyé au back -->
+                            <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+                            <label class="label">Username</label>
+                            <!-- Vérifier la value et décider si on peut changer le nom d'utilisateur ou non (readonly)-->
+                            <input type="text" name="username" value="<?php echo $user->getUsername(); ?>" required/>
+                            <label class="label">Email</label>
+                            <!-- Vérifier la value -->
+                            <input type="email" name="email" value="<?php echo $user->getEmail(); ?>" required/>
+                            <label class="label">Password</label>
+                            <input type="password" name="password" required />
+                            <label class="label">Confirm password</label>
+                            <input type="password" name="confirm-password" required />
+                            <label class="label">Intro</label>
+                            <textarea name="intro" value="<?php echo $user->getIntro(); ?>"></textarea>
+                            <button class="button">Submit</button>
+                    </form>
+                </section>
+                <section class="delete-profile">
+                    <h3>Delete my account</h3>
+                    <form class="form-account-settings" method="post" action="index.php?route=delete-user&id=<?= $user->getId() ?>">
+                        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+                       <button type="Submit">Delete my account</button>
+                    </form>
+                </div>
+            </div>
+    <?php } ?>
+</main>

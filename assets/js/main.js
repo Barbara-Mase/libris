@@ -4,14 +4,15 @@ import {fetchCoverM} from "./api/fetch-cover-list.js";
 
 import {fetchCoverL, addToList} from "./api/detail_book_script.js";
 
+document.addEventListener("DOMContentLoaded", () => {
 
-init();
+    init();
 
-fetchCoverM();
+    fetchCoverM();
 
-fetchCoverL();
+    fetchCoverL();
 
-addToList();
-
+    addToList();
+});
 
 

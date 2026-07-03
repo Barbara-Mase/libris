@@ -1,14 +1,19 @@
-<form class="form-login form" method="post" action="index.php?route=check-login">
+<main>
     <?php if (isset($errors)) {
         foreach($errors as $error) { ?>
             <p><?= $error ?></p>
             <?php
         }
     }?>
-    <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
-    <label>Email</label>
-    <input type="email" class="form-input" name="email-login" id="email-login" required>
-    <label>Password</label>
-    <input type="password" class="form-input" name="password-login" id="password-login" required>
-    <button type="submit">Submit</button>
-</form>
+    <div class=""></div>
+    <h2>Login</h2>
+    <form class="form-login form" method="post" action="index.php?route=check-login">
+        <input type="hidden" name="csrf_token" id="csrf_token" value="<?= $_SESSION["csrf_token"] ?>" />
+        <label>Email</label>
+        <input type="email" class="form-input" name="email-login" id="email-login" required>
+        <label>Password</label>
+        <input type="password" class="form-input" name="password-login" id="password-login" required>
+        <button type="submit">Submit</button>
+    </form>
+
+</main>

@@ -39,6 +39,7 @@ h2 {
   text-align: center;
   font-size: 3rem;
   margin-top: 1em;
+  margin-bottom: 1em;
 
 }
 /*HEADER*/
@@ -344,7 +345,7 @@ h2 {
   }
 }
 
-/*Commentaire détail livre*/
+/* Détail livre : section commentaire*/
 
 .container-comments {
   width: 75%;
@@ -358,7 +359,7 @@ h2 {
   }
 }
 
-.card-comment, .no-comment {
+.card-comment, .no-comment, .card-comment-profile {
   border: 1px solid $lavender;
   margin: 1em;
   padding: 2em;
@@ -437,7 +438,7 @@ h2 {
 
 /* PROFIL */
 
-
+/* Profile: section information de l'utilisateur */
 .user-info {
   background-color: $background-color;
   color: white;
@@ -457,12 +458,12 @@ h2 {
   }
   .last-login {
     font-size: 1rem;
-    margin: 1em;
+    margin: 1.5em;
   }
 
   .intro {
     font-size: 1.1rem;
-    margin: 1em;
+    margin: 1.5em;
     word-spacing: 0.1rem;
     text-justify: inter-word;
 
@@ -494,6 +495,8 @@ h2 {
 
 }
 
+/* Profil : section liste de livre */
+
 .section-book-list {
 
   .book-list-card {
@@ -520,7 +523,7 @@ h2 {
         color: $yellow;
     }
 
-    .button-remove-book:hover {
+    .button-remove-book:hover, .button-delete-comment:hover {
       cursor: pointer;
       color: $background-color;
       background-color: $yellow;
@@ -530,6 +533,133 @@ h2 {
   }
 
 }
+/* profil : section commentaires*/
+
+.card-comment-profile {
+  position: relative;
+
+  .button-delete-comment {
+    padding: 0.3em;
+    display: block;
+    border-radius: 4%;
+    background-color: $background-color;
+    border-color: $background-color;
+    color: $yellow;
+    position: absolute;
+    right: 1.5em;
+    bottom: 1em;
+
+  }
+  .button-delete-comment:hover {
+    cursor: pointer;
+    color: $background-color;
+    background-color: $yellow;
+    border-color: $yellow;
+  }
+  .comment-content-profile {
+    padding-bottom: 1em;
+  }
+
+}
+
+/* PAGE UPDATE USER */
+
+ .account-settings {
+
+   h3 {
+     text-align: center;
+     font-size: 1.2rem;
+     margin: 1em;
+   }
+   .form-account-settings {
+     display: flex;
+     flex-direction: column;
+     width: 50%;;
+     margin: auto;
+     padding: 1.5em;
+     background: #8093ff;
+     background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+     border: 2px solid $lavender;
+     border-radius: 3%;
+     box-shadow: 1px 1px 1px $royal-blue;
+
+    label {
+      margin-left: 0.7em;
+    }
+     input, textarea, button {
+       width: 95%;
+       height: 2em;
+       margin: 0.7em;
+     }
+      textarea {
+        height: 4em;
+      }
+     button {
+         padding: 0.3em;
+         display: block;
+         border-radius: 4%;
+         background-color: $background-color;
+         border-color: $background-color;
+         color: $yellow;
+         right: 1.5em;
+         bottom: 1em;
+
+       }
+     button:hover {
+       cursor: pointer;
+       color: $background-color;
+       background-color: $yellow;
+       border-color: $yellow;
+     }
+     }
+ }
+
+ /* Page login */
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    width: 50%;;
+    margin: auto;
+    padding: 1.5em;
+    background: #8093ff;
+    background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+    border: 2px solid $lavender;
+    border-radius: 3%;
+    box-shadow: 1px 1px 1px $royal-blue;
+
+    label {
+      margin-left: 0.7em;
+    }
+    input, button {
+      width: 95%;
+      height: 2em;
+      margin: 0.7em;
+    }
+
+    button {
+      padding: 0.3em;
+      display: block;
+      border-radius: 4%;
+      background-color: $background-color;
+      border-color: $background-color;
+      color: $yellow;
+      right: 1.5em;
+      bottom: 1em;
+
+    }
+    button:hover {
+      cursor: pointer;
+      color: $background-color;
+      background-color: $yellow;
+      border-color: $yellow;
+    }
+  }
+
+
+
+
+
 
 
 

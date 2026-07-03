@@ -1,6 +1,8 @@
 
     export function fetchCoverL() {
-        let coverId = document.getElementById("cover-id").innerHTML;
+
+        console.log("readyState:", document.readyState);
+        let coverId = document.getElementById("cover-id-detail-book").innerHTML;
 
         let coverImg = document.createElement("img");
         coverImg.className = "cover-detail-book";
@@ -34,7 +36,7 @@
                             document.getElementById("error-container").innerText = data.message;
                         }
                     })
-                    .catch(error => {
+                    .catch(error => {console.error("Error adding book to list")
                     })
             })
     }
