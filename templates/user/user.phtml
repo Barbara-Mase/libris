@@ -20,26 +20,34 @@
                     } ?>
             </section>
             <section class="section-book-list">
-                <?php
-                if(isset($booksList)) {
-                    foreach ($booksList as $book) { ?>
-
-                        <div class="book-list-card">
-                            <div class="div-book-cover">
-                                <!--Ne pas oublier de cacher la div avec l'id du livre, cette div me permet de récupérer l'id du livre dans js pour interroger l'api-->
-                                <div id="cover-id"><?= $book->getCoverId()?></div>
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                    <?php
+                    if(isset($booksList)) {
+                        foreach ($booksList as $book) { ?>
+                            <div class="book-list-card swiper-slide">
+                                <?php if ($book->getCoverId()) { ?>
+                                <div class="div-book-cover swiper-slide">
+                                    <!--div qui permet de récupérer l'identifiant du livre pour interroger l'API-->
+                                    <div class="cover-id" hidden><?= $book->getCoverId()?></div>
+                                </div>
+                                <?php } ?>
+                                <h3 class="list-book-title"><?=$book->getTitle()?></h3>
+                                <p class="list-book-author"><?= $book->getAuthor()?></p>
+                                <?php if($_SESSION['user_id'] === $user->getId()) { ?>
+                                    <form method="post" action="index.php?route=remove-book-from-list&amp;id=<?= $book->getBookId() ?>">
+                                        <button type="submit" class="button-remove-book">Remove</button>
+                                    </form>
+                                <?php } ?>
                             </div>
-                            <h3 class="list-book-title"><?=$book->getTitle()?></h3>
-                            <p class="list-book-author"><?= $book->getAuthor()?></p>
-                            <?php if($_SESSION['user_id'] === $user->getId()) { ?>
-                                <form method="post" action="index.php?route=remove-book-from-list&amp;id=<?= $book->getBookId() ?>">
-                                    <button type="submit" class="button-remove-book">Remove</button>
-                                </form>
-                            <?php } ?>
-                        </div>
-                    <?php }
-                }?>
-                <?php } ?>
+                        <?php }
+                    }?>
+                    <?php } ?>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-scrollbar"></div>
+                </div>
             </section>
             <section class="section-user-comments">
                 <?php if(isset($comments)) {
@@ -59,7 +67,10 @@
                  <?php }
                     } ?>
             </section>
-
-
         </div>
 </main>
+
+<script type="application/javascript" src="src/api/fetch-cover-list.js"></script>
+<script type="application/javascript" src="assets/js/swiper.js"></script>
+
+

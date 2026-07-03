@@ -1,22 +1,20 @@
 
+const Swiper = require('../../node_modules/swiper/swiper-bundle');
 
+// configure Swiper to use modules
+Swiper.use([Navigation, Pagination]);
 window.addEventListener("DOMContentLoaded", () => {
 
-    const swipervar = document.querySelector('.swiper');
-
-    if (swipervar) {
-        const swiper = new Swiper('.swiper-todays-book', {
-            slidesPerView: 5,
-            slidesPerGroupSkip: 1,
-            slidesOffsetBefore: 50,
-            slidesOffsetAfter: 50,
-            normalizeSlideIndex: false,
-            effect: "coverflow",
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev"
-            }
-        });
-    }
-
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+        },
+        scrollbar: {
+            el: ".swiper-scrollbar",
+            draggable: true
+        }
+    });
 });
