@@ -14,6 +14,12 @@
   font-family: "K2D";
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .logo-libris {
   height: 6em;
   width: 5em;
@@ -76,77 +82,29 @@ h2 {
   width: 5em;
 }
 
-/* menu burger */
-#topnav-menu-burger {
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin: 0;
-  width: min(300px, 80vw);
-  z-index: 99;
-  transform-origin: 0% 0%;
-  transform: translate(100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-}
-#topnav-menu-burger ul li {
-  list-style: none;
-  padding: 1em;
-  text-align: center;
-  border: #F6E06E 1px solid;
-}
-#topnav-menu-burger ul li a {
-  text-decoration: none;
-  color: #F6E06E;
-}
-
-#topnav-hamburger-icon {
-  position: relative;
-  top: 1em;
-  display: block;
-  width: 3em;
-  height: 6em;
-}
-#topnav-hamburger-icon span {
-  display: block;
-  position: absolute;
-  height: 4px;
-  width: 100%;
-  margin-bottom: 5px;
-  background-color: #F6E06E;
-  border-radius: 3px;
-  z-index: 100;
-  opacity: 1;
-  left: 0;
-  transform: rotate(0deg);
-  transition: 0.25s ease-in-out;
-}
-
-#topnav-hamburger-icon span:nth-child(1) {
-  top: 0px;
-  transform-origin: left top;
-}
-
-#topnav-hamburger-icon span:nth-child(2) {
-  top: 12px;
-  transform-origin: left center;
-}
-
-#topnav-hamburger-icon span:nth-child(3) {
-  top: 24px;
-  transform-origin: left bottom;
-}
-
-#root {
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* and let's slide it in from the right */
-#topnav-menu-burger.open {
-  transform: none;
-  position: relative;
+/* FOOTER */
+footer {
   background-color: #0D0B2B;
+  color: #F6E06E;
+  margin-top: auto;
+  width: 100%;
+}
+footer .footer-content {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  margin: auto;
+  padding: 2em;
+}
+footer .footer-content p, footer .footer-content .social-medias {
+  margin: auto;
+  padding: 0.5em;
+}
+footer .footer-content .social-medias span {
+  padding: 0.3em;
+}
+footer .footer-content .social-medias span i {
+  font-size: 2rem;
 }
 
 /*HOME*/
@@ -170,7 +128,13 @@ h2 {
 #container-home .container-research-tool form {
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  margin: auto;
+  padding: 1.5em;
+  background: #8093ff;
+  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
+  border: 2px solid #A5A5c0;
+  border-radius: 3%;
+  box-shadow: 1px 1px 1px #321278;
 }
 #container-home .container-research-tool form input {
   width: 30em;
@@ -178,12 +142,23 @@ h2 {
   text-align: center;
   box-shadow: 2px 1px 1px #A5A5c0;
   border-radius: 5px;
+  margin-bottom: 1em;
 }
 #container-home .container-research-tool form button {
-  margin-top: 1em;
-  height: 3em;
-  box-shadow: 2px 1px 1px #A5A5c0;
-  border-radius: 5px;
+  padding: 0.3em;
+  display: block;
+  border-radius: 4%;
+  background-color: #0D0B2B;
+  border-color: #0D0B2B;
+  color: #F6E06E;
+  right: 1.5em;
+  bottom: 1em;
+}
+#container-home .container-research-tool form button:hover {
+  cursor: pointer;
+  color: #0D0B2B;
+  background-color: #F6E06E;
+  border-color: #F6E06E;
 }
 #container-home {
   /*Containers de résultat */
@@ -487,13 +462,14 @@ h2 {
   padding-bottom: 1em;
 }
 
-/* PAGE UPDATE USER */
+/* PAGES AUTHENTIFICATION */
 .account-settings h3 {
   text-align: center;
   font-size: 1.2rem;
   margin: 1em;
 }
-.account-settings .form-account-settings {
+
+.form-account-settings, .form-login, .form-register {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -505,18 +481,18 @@ h2 {
   border-radius: 3%;
   box-shadow: 1px 1px 1px #321278;
 }
-.account-settings .form-account-settings label {
+.form-account-settings label, .form-login label, .form-register label {
   margin-left: 0.7em;
 }
-.account-settings .form-account-settings input, .account-settings .form-account-settings textarea, .account-settings .form-account-settings button {
+.form-account-settings input, .form-account-settings textarea, .form-account-settings button, .form-login input, .form-login textarea, .form-login button, .form-register input, .form-register textarea, .form-register button {
   width: 95%;
   height: 2em;
   margin: 0.7em;
 }
-.account-settings .form-account-settings textarea {
+.form-account-settings textarea, .form-login textarea, .form-register textarea {
   height: 4em;
 }
-.account-settings .form-account-settings button {
+.form-account-settings button, .form-login button, .form-register button {
   padding: 0.3em;
   display: block;
   border-radius: 4%;
@@ -526,45 +502,7 @@ h2 {
   right: 1.5em;
   bottom: 1em;
 }
-.account-settings .form-account-settings button:hover {
-  cursor: pointer;
-  color: #0D0B2B;
-  background-color: #F6E06E;
-  border-color: #F6E06E;
-}
-
-/* Page login */
-.form-login {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin: auto;
-  padding: 1.5em;
-  background: #8093ff;
-  background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);
-  border: 2px solid #A5A5c0;
-  border-radius: 3%;
-  box-shadow: 1px 1px 1px #321278;
-}
-.form-login label {
-  margin-left: 0.7em;
-}
-.form-login input, .form-login button {
-  width: 95%;
-  height: 2em;
-  margin: 0.7em;
-}
-.form-login button {
-  padding: 0.3em;
-  display: block;
-  border-radius: 4%;
-  background-color: #0D0B2B;
-  border-color: #0D0B2B;
-  color: #F6E06E;
-  right: 1.5em;
-  bottom: 1em;
-}
-.form-login button:hover {
+.form-account-settings button:hover, .form-login button:hover, .form-register button:hover {
   cursor: pointer;
   color: #0D0B2B;
   background-color: #F6E06E;

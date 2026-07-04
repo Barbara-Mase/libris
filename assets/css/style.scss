@@ -20,6 +20,11 @@ $lavender: #A5A5c0;
   padding: 0;
   font-family: "K2D";
 }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 .logo-libris {
   height: 6em;
@@ -91,162 +96,508 @@ h2 {
     width: 5em;
   }
 }
-/* menu burger */
+    /* FOOTER */
 
-#topnav-menu-burger {
-  display : block;
-  position: absolute;
-  right   : 0;
-  top     : 0;
-  margin  : 0;
-  width: min(300px, 80vw);
-
-  z-index: 99;
-
-  transform-origin: 0% 0%;
-  transform: translate(100%, 0);
-
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-
-  ul li {
-    list-style: none;
-    padding: 1em;
-    text-align: center;
-    border: $yellow 1px solid;
-    a {
-      text-decoration: none;
+    footer {
+      background-color: $background-color;
       color: $yellow;
+      margin-top: auto;
+      width: 100%;
+
+      .footer-content {
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+        margin: auto;
+        padding: 2em;
+
+        p, .social-medias {
+          margin: auto;
+          padding: 0.5em;
+        }
+
+        .social-medias span {
+          padding: 0.3em;
+
+          i {
+            font-size: 2rem;
+          }
+        }
+      }
     }
-  }
-}
 
-#topnav-hamburger-icon {
-  position: relative;
-  top: 1em;
-  display: block;
-  width: 3em;
-  height: 6em;
+    /*HOME*/
 
-  span {
-    display: block;
-    position: absolute;
-    height: 4px;
-    width: 100%;
-    margin-bottom: 5px;
-    background-color: $yellow;
-    border-radius: 3px;
+    /* research tool */
 
-    z-index: 100;
-
-    opacity: 1;
-    left: 0;
-
-    transform: rotate(0deg);
-    transition: 0.25s ease-in-out;
-  }
-}
-
-
-#topnav-hamburger-icon span:nth-child(1) {
-  top: 0px;
-  transform-origin: left top;
-}
-#topnav-hamburger-icon span:nth-child(2) {
-  top: 12px;
-  transform-origin: left center;
-}
-#topnav-hamburger-icon span:nth-child(3) {
-  top: 24px;
-  transform-origin: left bottom;
-}
-
-#root {
-  position: relative;
-  overflow-x: hidden;
-}
-
-
-/* and let's slide it in from the right */
-#topnav-menu-burger.open {
-  transform: none;
-  position: relative;
-  background-color: $background-color;
-}
-
-/*HOME*/
-
-/* research tool */
-
-#container-home {
-  margin: auto;
-  padding: 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  .container-research-tool {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    h2 {
-      font-size: 4rem;
-    }
-    form {
+    #container-home {
+      margin: auto;
+      padding: 2em;
       display: flex;
       flex-direction: column;
-      padding: 1em;
+      align-items: center;
+      justify-content: center;
 
-      input {
-        width: 30em;
-        height: 2em;
-        text-align: center;
-        box-shadow: 2px 1px 1px $lavender;
-        border-radius: 5px;
+      .container-research-tool {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        h2 {
+          font-size: 4rem;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          margin: auto;
+          padding: 1.5em;
+          background: #8093ff;
+          background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+          border: 2px solid $lavender;
+          border-radius: 3%;
+          box-shadow: 1px 1px 1px $royal-blue;
+
+          input {
+            width: 30em;
+            height: 2em;
+            text-align: center;
+            box-shadow: 2px 1px 1px $lavender;
+            border-radius: 5px;
+            margin-bottom: 1em;
+          }
+
+          button {
+            padding: 0.3em;
+            display: block;
+            border-radius: 4%;
+            background-color: $background-color;
+            border-color: $background-color;
+            color: $yellow;
+            right: 1.5em;
+            bottom: 1em;
+
+          }
+
+          button:hover {
+            cursor: pointer;
+            color: $background-color;
+            background-color: $yellow;
+            border-color: $yellow;
+          }
+        }
+
       }
-      button {
-        margin-top: 1em;
-        height: 3em;
-        box-shadow: 2px 1px 1px $lavender;
-        border-radius: 5px;
 
+      /*Containers de résultat */
+
+      .result-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 2em;
+
+        .book-card {
+          border: 1px solid $background-color;
+          box-shadow: 8px 5px 5px $background-color;
+          border-radius: 5px;
+          width: 13em;
+          margin: 3em;
+
+          h3, p {
+            padding: 0.3em;
+          }
+
+          img {
+            width: 100%;
+            height: 18em;
+
+          }
+
+          button {
+            padding: 0.3em;
+            display: block;
+            margin: auto;
+            margin-bottom: 0.5em;
+            border-radius: 4%;
+            background-color: $background-color;
+            border-color: $background-color;
+            color: $yellow;
+          }
+
+          button:hover {
+            cursor: pointer;
+            color: $background-color;
+            background-color: $yellow;
+            border-color: $yellow;
+          }
+        }
       }
     }
 
-  }
-  /*Containers de résultat */
 
-  .result-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 2em;
+    /*detail d'un livre */
 
-    .book-card {
-      border: 1px solid $background-color;
-      box-shadow: 8px 5px 5px $background-color;
-      border-radius: 5px;
-      width: 13em;
-      margin: 3em;
 
-      h3, p {
-        padding: 0.3em;
-      }
+    #cover-id {
+      display: none;
+    }
 
-      img {
+    .container-book-detail {
+      margin: auto;
+      margin-top: 4em;
+      display: flex;
+      background-color: $background-color;
+      width: 70%;
+      border-radius: 2em;
+      box-shadow: 2px 2px 2px $yellow;
+      position: relative;
+
+      .div-book-detail {
         width: 100%;
-        height: 18em;
+
+        h3 {
+          color: $yellow;
+          font-family: "Expletus Sans";
+          margin-top: 1em;
+          margin-left: 0.8em;
+          font-size: 1.7rem;
+        }
+
+        p {
+          color: white;
+          margin-top: 1em;
+          margin-left: 1em;
+          font-size: 1.4rem;
+
+        }
+
+        .detail-book-year {
+          font-size: 1.2rem;
+          margin-top: 0.6em;
+        }
+
+        .div-button-add-to-list {
+          position: absolute;
+          right: 2em;
+          bottom: 2em;
+
+          #button-add-to-list {
+            overflow: hidden;
+            height: 2.6em;
+            width: 2.6em;
+            border-radius: 50%;
+            background-color: $background-color;
+            border-color: $background-color;
+
+
+            img {
+              object-fit: cover;
+              height: 100%;
+              width: 100%;
+            }
+
+            img:hover {
+              display: none;
+            }
+          }
+
+          #button-add-to-list:hover {
+            height: 3em;
+            width: 6em;
+            border-radius: 10%;
+            background-color: $yellow;
+            color: $background-color;
+            padding: 0.4em;
+            cursor: pointer;
+          }
+
+        }
+      }
+
+      .div-book-cover {
+        width: 23em;
+
+        .cover-detail-book {
+          border-top-left-radius: 2em;
+          border-bottom-left-radius: 2em;
+        }
+      }
+    }
+
+    /* Détail livre : section commentaire*/
+
+    .container-comments {
+      width: 75%;
+      margin: auto;
+    }
+
+    .no-comment {
+      text-align: center;
+
+      p {
+        font-size: 2.3rem;
+      }
+    }
+
+    .card-comment, .no-comment, .card-comment-profile {
+      border: 1px solid $lavender;
+      margin: 1em;
+      padding: 2em;
+      border-radius: 3%;
+      background: #8093ff;
+      background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+      box-shadow: 1px 1px 1px $royal-blue;
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1em;
+      }
+
+      p {
+        text-justify: inter-word;
+        margin-bottom: 1em;
+      }
+    }
+
+    .div-add-comment {
+      margin: 1em;
+
+      form {
+        margin-top: 1em;
+        background: #8093ff;
+        background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+        border: 2px solid $lavender;
+        border-radius: 3%;
+        box-shadow: 1px 1px 1px $royal-blue;
+
+        label {
+          margin-left: 1em;
+          font-size: 1.2rem;
+        }
+
+        input {
+          border: 1px solid $lavender;
+          border-radius: 2%;
+          margin: 1em;
+          padding: 0.5em;
+        }
+
+        textarea {
+          border: 1px solid $lavender;
+          margin: 1em;
+          padding: 0.5em;
+          height: 6em;
+          border-radius: 2%;
+        }
+
+        fieldset {
+          display: flex;
+          flex-direction: column;
+          padding: 1em;
+          border: none;
+          position: relative;
+          margin-bottom: 3em;
+        }
+
+        button {
+          width: 20%;
+          position: absolute;
+          right: 1.8em;
+          bottom: -1.3em;
+          padding: 0.5em;
+          border-radius: 4%;
+          background-color: $background-color;
+          border-color: $background-color;
+          color: $yellow;
+        }
+
+        button:hover {
+          cursor: pointer;
+          color: $background-color;
+          background-color: $yellow;
+          border-color: $yellow;
+        }
+      }
+    }
+
+    /* PROFIL */
+
+    /* Profile: section information de l'utilisateur */
+    .user-info {
+      background-color: $background-color;
+      color: white;
+      width: 70%;
+      margin: auto;
+      margin-top: 2em;
+      padding-bottom: 2em;
+      padding-right: 2em;
+      padding-left: 2em;
+      padding-top: 0.1em;
+      border-radius: 2em;
+      box-shadow: 2px 2px 2px $yellow;
+      position: relative;
+
+      h2 {
+        color: $yellow;
+      }
+
+      .last-login {
+        font-size: 1rem;
+        margin: 1.5em;
+      }
+
+      .intro {
+        font-size: 1.1rem;
+        margin: 1.5em;
+        word-spacing: 0.1rem;
+        text-justify: inter-word;
 
       }
-      button {
+
+      .button-update-profile {
+        position: absolute;
+        right: 1.5em;
+        bottom: 1em;
+        background-color: $yellow;
+        border-color: $yellow;
+        color: $background-color;
+        padding: 0.5em;
+        border-radius: 4%;
+
+        a:visited {
+          color: $background-color;
+        }
+      }
+
+      .button-update-profile:hover {
+        background-color: $background-color;
+        border-color: $background-color;
+        color: $yellow;
+      }
+
+      .button-update-profile:hover a:visited {
+        color: $yellow;
+      }
+
+    }
+
+    /* Profil : section liste de livre */
+
+    .section-book-list {
+
+      .book-list-card {
+        border: 1px solid $background-color;
+        box-shadow: 8px 5px 5px $background-color;
+        border-radius: 5px;
+        width: 13em;
+        margin: 3em;
+
+        img {
+          width: 100%;
+          height: 18em;
+
+        }
+
+        .button-remove-book {
+          padding: 0.3em;
+          display: block;
+          margin: auto;
+          margin-bottom: 0.5em;
+          border-radius: 4%;
+          background-color: $background-color;
+          border-color: $background-color;
+          color: $yellow;
+        }
+
+        .button-remove-book:hover, .button-delete-comment:hover {
+          cursor: pointer;
+          color: $background-color;
+          background-color: $yellow;
+          border-color: $yellow;
+        }
+
+      }
+
+    }
+
+    /* profil : section commentaires*/
+
+    .card-comment-profile {
+      position: relative;
+
+      .button-delete-comment {
         padding: 0.3em;
         display: block;
-        margin: auto;
-        margin-bottom: 0.5em;
         border-radius: 4%;
         background-color: $background-color;
         border-color: $background-color;
         color: $yellow;
+        position: absolute;
+        right: 1.5em;
+        bottom: 1em;
+
+      }
+
+      .button-delete-comment:hover {
+        cursor: pointer;
+        color: $background-color;
+        background-color: $yellow;
+        border-color: $yellow;
+      }
+
+      .comment-content-profile {
+        padding-bottom: 1em;
+      }
+
+    }
+
+    /* PAGES AUTHENTIFICATION */
+
+    .account-settings {
+
+      h3 {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 1em;
+      }
+    }
+
+    .form-account-settings, .form-login, .form-register {
+      display: flex;
+      flex-direction: column;
+      width: 50%;;
+      margin: auto;
+      padding: 1.5em;
+      background: #8093ff;
+      background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
+      border: 2px solid $lavender;
+      border-radius: 3%;
+      box-shadow: 1px 1px 1px $royal-blue;
+
+      label {
+        margin-left: 0.7em;
+      }
+
+      input, textarea, button {
+        width: 95%;
+        height: 2em;
+        margin: 0.7em;
+      }
+
+      textarea {
+        height: 4em;
+      }
+
+      button {
+        padding: 0.3em;
+        display: block;
+        border-radius: 4%;
+        background-color: $background-color;
+        border-color: $background-color;
+        color: $yellow;
+        right: 1.5em;
+        bottom: 1em;
+
       }
 
       button:hover {
@@ -256,406 +607,6 @@ h2 {
         border-color: $yellow;
       }
     }
-  }
-}
-
-
-/*detail d'un livre */
-
-
-#cover-id {
-  display: none;
-}
-
-.container-book-detail {
-  margin: auto;
-  margin-top: 4em;
-  display: flex;
-  background-color: $background-color;
-  width: 70%;
-  border-radius: 2em;
-  box-shadow: 2px 2px 2px $yellow;
-  position: relative;
-
-  .div-book-detail {
-    width: 100%;
-    h3 {
-      color: $yellow;
-      font-family: "Expletus Sans";
-      margin-top: 1em;
-      margin-left: 0.8em;
-      font-size: 1.7rem;
-    }
-
-    p {
-      color: white;
-      margin-top: 1em;
-      margin-left: 1em;
-      font-size: 1.4rem;
-
-    }
-
-    .detail-book-year {
-      font-size: 1.2rem;
-      margin-top: 0.6em;
-    }
-
-    .div-button-add-to-list {
-      position: absolute;
-      right: 2em;
-      bottom: 2em;
-
-      #button-add-to-list {
-        overflow: hidden;
-        height: 2.6em;
-        width: 2.6em;
-        border-radius: 50%;
-        background-color: $background-color;
-        border-color: $background-color;
-
-
-        img {
-          object-fit: cover;
-          height: 100%;
-          width: 100%;
-        }
-        img:hover {
-          display: none;
-        }
-      }
-      #button-add-to-list:hover {
-        height: 3em;
-        width: 6em;
-        border-radius: 10%;
-        background-color: $yellow;
-        color: $background-color;
-        padding: 0.4em;
-        cursor: pointer;
-      }
-
-    }
-  }
-  .div-book-cover {
-    width: 23em;
-
-    .cover-detail-book {
-      border-top-left-radius: 2em;
-      border-bottom-left-radius: 2em;
-    }
-  }
-}
-
-/* Détail livre : section commentaire*/
-
-.container-comments {
-  width: 75%;
-  margin: auto;
-}
-
-.no-comment {
-  text-align: center;
-  p {
-    font-size: 2.3rem;
-  }
-}
-
-.card-comment, .no-comment, .card-comment-profile {
-  border: 1px solid $lavender;
-  margin: 1em;
-  padding: 2em;
-  border-radius: 3%;
-  background: #8093ff;
-  background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
-  box-shadow: 1px 1px 1px $royal-blue;
-
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1em;
-  }
-  p {
-    text-justify: inter-word;
-    margin-bottom: 1em;
-  }
-}
-
-.div-add-comment {
-  margin: 1em;
-
-  form {
-    margin-top: 1em;
-    background: #8093ff;
-    background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
-    border: 2px solid $lavender;
-    border-radius: 3%;
-    box-shadow: 1px 1px 1px $royal-blue;
-
-    label {
-      margin-left: 1em;
-      font-size: 1.2rem;
-    }
-    input {
-      border: 1px solid $lavender;
-      border-radius: 2%;
-      margin: 1em;
-      padding: 0.5em;
-    }
-    textarea {
-      border: 1px solid $lavender;
-      margin: 1em;
-      padding: 0.5em;
-      height: 6em;
-      border-radius: 2%;
-    }
-
-    fieldset {
-      display: flex;
-      flex-direction: column;
-      padding: 1em;
-      border: none;
-      position: relative;
-      margin-bottom: 3em;
-    }
-
-    button {
-      width: 20%;
-      position: absolute;
-      right: 1.8em;
-      bottom: -1.3em;
-      padding: 0.5em;
-      border-radius: 4%;
-      background-color: $background-color;
-      border-color: $background-color;
-      color: $yellow;
-    }
-    button:hover {
-      cursor: pointer;
-      color: $background-color;
-      background-color: $yellow;
-      border-color: $yellow;
-    }
-  }
-}
-
-/* PROFIL */
-
-/* Profile: section information de l'utilisateur */
-.user-info {
-  background-color: $background-color;
-  color: white;
-  width: 70%;
-  margin: auto;
-  margin-top: 2em;
-  padding-bottom: 2em;
-  padding-right: 2em;
-  padding-left: 2em;
-  padding-top: 0.1em;
-  border-radius: 2em;
-  box-shadow: 2px 2px 2px $yellow;
-  position: relative;
-
-  h2 {
-    color: $yellow;
-  }
-  .last-login {
-    font-size: 1rem;
-    margin: 1.5em;
-  }
-
-  .intro {
-    font-size: 1.1rem;
-    margin: 1.5em;
-    word-spacing: 0.1rem;
-    text-justify: inter-word;
-
-  }
-
-  .button-update-profile {
-    position: absolute;
-    right: 1.5em;
-    bottom: 1em;
-    background-color: $yellow;
-    border-color: $yellow;
-    color: $background-color;
-    padding: 0.5em;
-    border-radius: 4%;
-
-    a:visited {
-      color: $background-color;
-    }
-  }
-  .button-update-profile:hover {
-    background-color: $background-color;
-    border-color: $background-color;
-    color: $yellow;
-  }
-
-  .button-update-profile:hover a:visited {
-    color: $yellow;
-  }
-
-}
-
-/* Profil : section liste de livre */
-
-.section-book-list {
-
-  .book-list-card {
-    border: 1px solid $background-color;
-    box-shadow: 8px 5px 5px $background-color;
-    border-radius: 5px;
-    width: 13em;
-    margin: 3em;
-
-    img {
-      width: 100%;
-      height: 18em;
-
-    }
-
-    .button-remove-book {
-        padding: 0.3em;
-        display: block;
-        margin: auto;
-        margin-bottom: 0.5em;
-        border-radius: 4%;
-        background-color: $background-color;
-        border-color: $background-color;
-        color: $yellow;
-    }
-
-    .button-remove-book:hover, .button-delete-comment:hover {
-      cursor: pointer;
-      color: $background-color;
-      background-color: $yellow;
-      border-color: $yellow;
-    }
-
-  }
-
-}
-/* profil : section commentaires*/
-
-.card-comment-profile {
-  position: relative;
-
-  .button-delete-comment {
-    padding: 0.3em;
-    display: block;
-    border-radius: 4%;
-    background-color: $background-color;
-    border-color: $background-color;
-    color: $yellow;
-    position: absolute;
-    right: 1.5em;
-    bottom: 1em;
-
-  }
-  .button-delete-comment:hover {
-    cursor: pointer;
-    color: $background-color;
-    background-color: $yellow;
-    border-color: $yellow;
-  }
-  .comment-content-profile {
-    padding-bottom: 1em;
-  }
-
-}
-
-/* PAGE UPDATE USER */
-
- .account-settings {
-
-   h3 {
-     text-align: center;
-     font-size: 1.2rem;
-     margin: 1em;
-   }
-   .form-account-settings {
-     display: flex;
-     flex-direction: column;
-     width: 50%;;
-     margin: auto;
-     padding: 1.5em;
-     background: #8093ff;
-     background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
-     border: 2px solid $lavender;
-     border-radius: 3%;
-     box-shadow: 1px 1px 1px $royal-blue;
-
-    label {
-      margin-left: 0.7em;
-    }
-     input, textarea, button {
-       width: 95%;
-       height: 2em;
-       margin: 0.7em;
-     }
-      textarea {
-        height: 4em;
-      }
-     button {
-         padding: 0.3em;
-         display: block;
-         border-radius: 4%;
-         background-color: $background-color;
-         border-color: $background-color;
-         color: $yellow;
-         right: 1.5em;
-         bottom: 1em;
-
-       }
-     button:hover {
-       cursor: pointer;
-       color: $background-color;
-       background-color: $yellow;
-       border-color: $yellow;
-     }
-     }
- }
-
- /* Page login */
-
-.form-login {
-    display: flex;
-    flex-direction: column;
-    width: 50%;;
-    margin: auto;
-    padding: 1.5em;
-    background: #8093ff;
-    background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
-    border: 2px solid $lavender;
-    border-radius: 3%;
-    box-shadow: 1px 1px 1px $royal-blue;
-
-    label {
-      margin-left: 0.7em;
-    }
-    input, button {
-      width: 95%;
-      height: 2em;
-      margin: 0.7em;
-    }
-
-    button {
-      padding: 0.3em;
-      display: block;
-      border-radius: 4%;
-      background-color: $background-color;
-      border-color: $background-color;
-      color: $yellow;
-      right: 1.5em;
-      bottom: 1em;
-
-    }
-    button:hover {
-      cursor: pointer;
-      color: $background-color;
-      background-color: $yellow;
-      border-color: $yellow;
-    }
-  }
-
 
 
 

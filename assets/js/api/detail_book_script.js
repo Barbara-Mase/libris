@@ -1,8 +1,7 @@
 
     export function fetchCoverL() {
 
-        console.log("readyState:", document.readyState);
-        let coverId = document.getElementById("cover-id-detail-book").innerHTML;
+        let coverId = document.getElementById("cover-id-detail-book")
 
         let coverImg = document.createElement("img");
         coverImg.className = "cover-detail-book";
@@ -18,7 +17,6 @@
                 .catch(error => console.error("Error fetching dynamic image:", error));
         }
         let divBookCover = document.getElementsByClassName("div-book-cover");
-
         for (let div of divBookCover) {
             div.appendChild(coverImg);
         }
