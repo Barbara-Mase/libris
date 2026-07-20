@@ -44,15 +44,15 @@ h2 {
 /*HEADER*/
 .header {
   background-color: #0D0B2B;
+  width: 100%;
   position: relative;
 }
 .header h1 {
   color: #F6E06E;
   font-size: 3rem;
   font-family: "Expletus Sans";
-  position: absolute;
-  top: 35%;
-  right: 50%;
+  margin: auto;
+  margin-top: 1em;
   transform: translateX(-50%);
   transform: translateY(-50%);
 }
@@ -72,14 +72,88 @@ h2 {
 .header .header-top-right {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  top: 50%;
-  right: 1%;
-  transform: translateY(-50%);
+  margin-right: 2%;
 }
 .header .switch-dark-mode {
   height: 3em;
   width: 5em;
+}
+
+/* menu burger */
+*, *::before, *:after {
+  box-sizing: border-box;
+}
+
+/*input[type="checkbox"]*/
+.menu_hamburger {
+  position: absolute;
+  left: -100vw;
+}
+
+.div-menu-burger label {
+  font-size: 0rem;
+}
+
+.menu_hamburger + label {
+  cursor: pointer;
+  position: relative;
+  margin: 5rem auto;
+  top: 1em;
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+
+.menu_hamburger + label span {
+  position: absolute;
+  top: 50%;
+  margin-top: -5px;
+  width: 80px;
+  height: 10px;
+  background-color: #F6E06E;
+  border-radius: 20px;
+}
+
+.menu_hamburger + label span::before {
+  position: absolute;
+  content: "";
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+  top: -20px;
+  border-radius: inherit;
+}
+
+.menu_hamburger + label span::after {
+  position: absolute;
+  content: "";
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+  bottom: -20px;
+  border-radius: inherit;
+}
+
+.menu_hamburger:checked + label span {
+  transform: rotate(45deg);
+}
+
+.menu_hamburger:checked + label span::before {
+  top: unset;
+}
+
+.menu_hamburger:checked + label span::after {
+  bottom: unset;
+  transform: rotate(-90deg);
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #F6E06E;
+  width: 10em;
+  display: none;
 }
 
 /* FOOTER */
@@ -264,10 +338,10 @@ footer .footer-content .social-medias span i {
   padding: 0.4em;
   cursor: pointer;
 }
-.container-book-detail .div-book-cover {
+.container-book-detail .div-detail-book-cover {
   width: 23em;
 }
-.container-book-detail .div-book-cover .cover-detail-book {
+.container-book-detail .div-detail-book-cover .cover-detail-book {
   border-top-left-radius: 2em;
   border-bottom-left-radius: 2em;
 }
@@ -474,6 +548,7 @@ footer .footer-content .social-medias span i {
   flex-direction: column;
   width: 50%;
   margin: auto;
+  margin-bottom: 2em;
   padding: 1.5em;
   background: #8093ff;
   background: linear-gradient(317deg, rgb(128, 147, 255) 0%, rgb(224, 224, 255) 22%, rgb(255, 255, 255) 100%);

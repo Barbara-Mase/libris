@@ -80,10 +80,9 @@ class CommentController extends AbstractController
         $comment = $cm->findCommentById($commentId);
 
         $userId = $_SESSION['user_id'];
-
-        //Ajouter la possibilité pour un admin de supprimer le commentaire
-
         if (isset($userId)) {
+            //On vérifie ici que l'identifiant d'utilisateur en session est le même que celui de l'auteur du commentaire
+            //Seul l'utilisateur auteur (et les administrateurs) peuvent supprimer un commentaire
             if($userId === $comment->getUserId()) {
                 $cm->delete($commentId);
                 $this->redirect("route=profile&id=" . $userId);

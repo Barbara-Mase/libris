@@ -9,9 +9,9 @@
     <?php if(isset($book)) { ?>
     <h2 class="want-to-read">Want to read it ? </h2>
         <section class="container-book-detail">
-                <div class="div-book-cover">
+                <div class="div-detail-book-cover">
                     <!--Ne pas oublier de cacher la div avec l'id du livre, cette div me permet de récupérer l'id du livre dans js pour interroger l'api-->
-                    <div id="cover-id-detail-book" hidden><?= $book->getCoverId()?></div>
+                    <div class="cover-id-detail-book" hidden><?= $book->getCoverId()?></div>
                 </div>
             <div class="div-book-detail">
                 <div class="div-book-info">

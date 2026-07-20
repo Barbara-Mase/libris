@@ -104,13 +104,10 @@ class UserController extends AbstractController {
         $um = new UserManager();
 
         if (!empty($_SESSION['user_id'])) {
-
+            //Vérification de la validité du token CSRF
             $tokenManager = new CSRFTokenManager();
-
             if ($_SESSION['csrf_token'] && $tokenManager->validateCSRFToken($_POST['csrf_token'])) {
-
                 if ($_SESSION['user_id'] === $id) {
-
                     if (!empty($_POST["username"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm-password"]) && !empty($_POST["intro"])) {
 
                         if ($_POST["password"] === $_POST["confirm-password"]) {

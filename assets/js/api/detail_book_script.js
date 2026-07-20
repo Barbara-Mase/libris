@@ -1,26 +1,31 @@
 
-    export function fetchCoverL() {
+export function fetchCoverL() {
+    const divDetailBookCovers = document.getElementsByClassName("div-detail-book-cover");
 
-        let coverId = document.getElementById("cover-id-detail-book")
+    for (let divDetailBookCover of divDetailBookCovers) {
 
+        let coverId = divDetailBookCover.querySelector(".cover-id-detail-book");
+        if (!coverId) {
+            console.warn("Error : cover-id not found");
+            continue;
+        }
+
+        let coverIdContent = coverId.innerHTML;
         let coverImg = document.createElement("img");
         coverImg.className = "cover-detail-book";
 
-        if (coverId) {
-            let url_cover = "https://covers.openlibrary.org/b/id/" + coverId + "-L.jpg";
+        let url_cover = "https://covers.openlibrary.org/b/id/" + coverIdContent + "-L.jpg";
 
-            fetch(url_cover)
-                .then(response => response.blob())
-                .then(blob => {
-                    coverImg.src = URL.createObjectURL(blob);
-                })
-                .catch(error => console.error("Error fetching dynamic image:", error));
-        }
-        let divBookCover = document.getElementsByClassName("div-book-cover");
-        for (let div of divBookCover) {
-            div.appendChild(coverImg);
-        }
+        fetch(url_cover)
+            .then(response => response.blob())
+            .then(blob => {
+                coverImg.src = URL.createObjectURL(blob);
+            })
+            .catch(error => console.error("Error fetching dynamic image:", error));
+
+        divDetailBookCover.appendChild(coverImg);
     }
+}
 
     export function addToList() {
 

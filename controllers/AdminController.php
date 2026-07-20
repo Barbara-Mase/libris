@@ -9,11 +9,13 @@ class AdminController extends AbstractController
     }
 
     public function adminHome() : void {
-
+        //Vérification que l'utilisateur est connecté, soit qu'un identifiant de session existe
         if (!empty($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
             $um = new UserManager();
+            //Recherche de l'utilisateur en base de données
             $user = $um->findById($user_id);
+            //Vérification du rôle de l'utilisateur
             if ($user->getRole() !== 'ADMIN') {
                 $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
                 $this->redirect('route=home');
@@ -22,17 +24,15 @@ class AdminController extends AbstractController
             $_SESSION['errors']['access_denied'] = 'You are not allowed to access this page';
             $this->redirect('route=home');
         }
-
-
         $errors = $_SESSION['errors'] ?? [];
         unset($_SESSION['errors']);
 
-
+        //Si aucune erreur n'est levée, l'administrateur peut accéder à la page d'accueil d'administration
         $this->adminRender('admin/admin-home', [
             'errors' => $errors,
         ]);
-
     }
+
 ///GESTION DES LIVRES///
     public function showAllBooks(): void {
 

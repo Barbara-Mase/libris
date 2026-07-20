@@ -52,16 +52,16 @@ h2 {
 .header {
 
     background-color: $background-color;
-    position: relative;
+    width: 100%;
+  position: relative;
 
 
     h1 {
       color: $yellow;
       font-size: 3rem;
       font-family: "Expletus Sans";
-      position: absolute;
-      top: 35%;
-      right: 50%;
+      margin: auto;
+      margin-top: 1em;
       transform: translateX(-50%);
       transform: translateY(-50%);
     }
@@ -85,10 +85,10 @@ h2 {
   .header-top-right {
     display: flex;
     flex-direction: row;
-    position: absolute;
-    top: 50%;
-    right: 1%;
-    transform: translateY(-50%);
+    //position: absolute;
+    //top: 9em;
+    margin-right: 2%;
+    //transform: translateY(-50%);
   }
 
   .switch-dark-mode {
@@ -96,7 +96,105 @@ h2 {
     width: 5em;
   }
 }
-    /* FOOTER */
+
+/* menu burger */
+
+
+
+
+*,*::before,*:after{box-sizing: border-box}
+
+/*input[type="checkbox"]*/.menu_hamburger {
+
+  position: absolute;
+                            left: -100vw;;
+
+                          }
+
+
+.div-menu-burger label {
+  font-size: 0rem;
+}
+
+.menu_hamburger+label{
+
+  cursor: pointer;
+  position: relative;
+  margin: 5rem auto;
+  top: 1em;
+  display: flex;
+  justify-content: center;
+  width: 80px;
+}
+
+
+.menu_hamburger+label span{
+
+  position: absolute;
+  top: 50%;
+  margin-top: -5px;
+  width: 80px;
+  height: 10px;
+  background-color: $yellow;
+  border-radius: 20px;
+
+}
+
+.menu_hamburger+label span::before {
+
+
+  position: absolute;
+  content: '';
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+  top: -20px;
+  border-radius: inherit;
+}
+
+.menu_hamburger+label span::after {
+
+
+  position: absolute;
+  content: '';
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+  bottom: -20px;
+  border-radius: inherit;
+}
+
+.menu_hamburger:checked+label span{
+
+  transform: rotate(45deg);
+
+}
+
+.menu_hamburger:checked+label span::before{
+
+  top:unset
+
+}
+
+.menu_hamburger:checked+label span::after{
+
+  bottom: unset;
+  transform: rotate(-90deg);
+
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: $yellow;
+  width: 10em;
+  display: none;
+}
+
+
+
+/* FOOTER */
 
     footer {
       background-color: $background-color;
@@ -314,7 +412,7 @@ h2 {
         }
       }
 
-      .div-book-cover {
+      .div-detail-book-cover {
         width: 23em;
 
         .cover-detail-book {
@@ -567,6 +665,7 @@ h2 {
       flex-direction: column;
       width: 50%;;
       margin: auto;
+      margin-bottom: 2em;
       padding: 1.5em;
       background: #8093ff;
       background: linear-gradient(317deg, rgba(128, 147, 255, 1) 0%, rgba(224, 224, 255, 1) 22%, rgba(255, 255, 255, 1) 100%);
