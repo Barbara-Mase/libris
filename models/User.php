@@ -2,7 +2,6 @@
 
 class User {
 
-    // DateTimeUmmitable ne peut pas être modifié
     private DateTime $registration_date;
     private DateTime $lastLogin;
 
@@ -12,11 +11,11 @@ class User {
     {
     }
 
-    public function getId() : int {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    public function setId(string $id) : void
+    public function setId(?int $id) : void
     {
         $this->id = $id;
     }

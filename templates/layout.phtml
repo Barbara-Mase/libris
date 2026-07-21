@@ -2,9 +2,11 @@
 
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="description" content="Libris est un site communautaire de découverte et partage autour de la littérature. Ici, vous pouvez chercher de nouvelle lecture grâce à notre moteur de recherche, ajouter des livres à vos favoris et partager vos impressions avec la communauté." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./assets/css/style.css" rel="stylesheet" />
     <link
             rel="stylesheet"
@@ -22,30 +24,23 @@
             <img class="logo-libris" alt="Logo de libris" src="./assets/img/logo.png"/>
             <h1>Libris</h1>
             <div class="header-top-right">
-                <img class="switch-dark-mode" alt="switch dark mode" src="./assets/img/switch-dark-mode.png"/>
-                <div class="div-menu-burger">
-                    <input class="menu_hamburger" type="checkbox" id="label-burger" aria-label="Open menu bar" >
-                    <label for="label-burger">
-                        <span></span>
-                    </label>
-                </div>
-                    <nav id="">
-                        <ul>
-                            <?php if(isset($sessionUserId)) { ?>
-                                <li>
-                                    <a href="index.php?route=profile&id=<?php { echo $sessionUserId; } ?>">Profile</a>
-                                </li>
-                            <?php } ?>
-                            <li><a href="index.php?route=login" class="login-logout">Login</a></li>
-                            <li><a href="index.php?route=logout" class="login-logout">Logout</a></li>
-                            <li><a href="index.php?route=create-user">Register</a></li>
-                            <li><a href="index.php?route=users-list">Users list</a></li>
-                        </ul>
-                    </nav>
             </div>
         </div>
         <div class="header-bottom">
            <a href="index.php?route=home">Home</a>
+            <nav class="nav-menu">
+                <ul>
+                    <?php if(isset($sessionUserId)) { ?>
+                        <li>
+                            <a href="index.php?route=profile&id=<?php { echo $sessionUserId; } ?>">Profile</a>
+                        </li>
+                    <?php } ?>
+                    <li><a href="index.php?route=login" class="login-logout">Login</a></li>
+                    <li><a href="index.php?route=logout" class="login-logout">Logout</a></li>
+                    <li><a href="index.php?route=create-user">Register</a></li>
+                    <li><a href="index.php?route=users-list">Users list</a></li>
+                </ul>
+            </nav>
         </div>
         <?php if (isset($isAdmin)) {
                     if($isAdmin === true) {?>
