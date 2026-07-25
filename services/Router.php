@@ -81,8 +81,6 @@ class Router {
             {
                 if (!empty($get["id"])) {
                     $this->uc->profile(intval($get['id']));
-                } else {
-                    $_SESSION['errors']['not_logged_in'] = 'You must be logged in to access this page.';
                 }
             }
             else if ($get['route'] === "users-list")

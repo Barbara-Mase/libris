@@ -83,9 +83,10 @@ class UserManager extends AbstractManager {
 
     public function create(User $user) : bool {
 
-        $query = $this->db->prepare("INSERT INTO users (username, email, password, intro, registration_date, last_login, role) VALUES (:username, :email, :password, :intro, :registration_date, :last_login, :role)");
-
-
+        $query = $this->db->prepare("INSERT INTO users 
+                                            (username, email, password, intro, registration_date, last_login, role) 
+                                            VALUES 
+                                            (:username, :email, :password, :intro, :registration_date, :last_login, :role)");
         $parameters = [
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
@@ -97,15 +98,12 @@ class UserManager extends AbstractManager {
         ];
 
         $result = $query->execute($parameters);
-
         if($result) {
             return true;
         } else {
             return false;
         }
     }
-
-    //A FINIR
     public function update(User $user) : bool
     {
         $query = $this->db->prepare("UPDATE users 
@@ -134,7 +132,6 @@ class UserManager extends AbstractManager {
     public function delete(int $userId) : void {
 
         try {
-
             $this->db->beginTransaction();
             $firstQuery = $this->db->prepare("DELETE FROM comments WHERE user_id = :user_id");
             $secondQuery = $this->db->prepare("DELETE FROM users WHERE user_id = :user_id");
@@ -143,17 +140,14 @@ class UserManager extends AbstractManager {
             $parameters = [
                 'user_id' => $userId
             ];
-
             $firstQuery->execute($parameters);
             $secondQuery->execute($parameters);
             $thirdQuery->execute($parameters);
 
             $this->db->commit();
-
         } catch(Exception $e) {
             $this->db->rollBack();
             throw $e;
-
         }
     }
 }

@@ -11,6 +11,7 @@ abstract class AbstractManager
         $this->db = new PDO(
             $connexion,
             $_ENV["DB_USER"],
+            $_ENV["DB_PASSWORD"]
         );
     }
 }

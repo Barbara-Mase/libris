@@ -55,24 +55,19 @@ function displayBooks(docs) {
 }
 
 function createBookCard(doc) {
-
     //Création du container des infos du livre
     let bookCard = document.createElement("article");
     bookCard.classList.add("book-card");
-
     //Création des balises
     let coverImg = document.createElement("img");
     if (doc.cover_i) {
         fetchCoverM(doc.cover_i, coverImg);
     }
-
     let titleBalise = document.createElement("h3");
     let authorBalise = document.createElement("p")
     let dateBalise = document.createElement("p")
 
-    //Récupération des infos renvoyés par le fetch
-
-
+    //Création du contenu des balises
     let nodeBookTitle = document.createTextNode(doc.title);
     let nodeAuthor = document.createTextNode(doc.author_name);
     //Puisque substring ne fonctionne que sur des chaines de caractères, on transforme les noeuds en string
@@ -80,26 +75,21 @@ function createBookCard(doc) {
     let strAuthor = nodeAuthor.textContent;
     // substring permet de tronquer des chaines de caractères
     let truncBookTitle = strBookTitle.substring(0, 20);
-    console.log(truncBookTitle)
     let truncAuthor = strAuthor.substring(0, 20);
-    console.log(truncAuthor)
     let publishYear = document.createTextNode(doc.first_publish_year)
-
-
     //ajout des infos dans les balises
-    // Conditions qui permet d'ajouter des points de suspension si le titre tronqué est long de 20 caractères
+    // Conditions qui permettent d'ajouter des points de suspension si le titre tronqué est long de 20 caractères
     if(truncBookTitle.length === 20) {
         titleBalise.textContent = truncBookTitle + "...";
     } else {
         titleBalise.textContent = truncBookTitle;
-    }
-    if(truncAuthor.length === 20) {
+    } if(truncAuthor.length === 20) {
         authorBalise.textContent = truncAuthor + "...";
     } else {
         authorBalise.textContent = truncAuthor;
     }
     dateBalise.appendChild(publishYear);
-
+    coverImg.alt = "Cover image of the book " + strBookTitle;
     //Ajout des balises dans le container
     bookCard.appendChild(coverImg)
     bookCard.appendChild(titleBalise)
@@ -137,9 +127,7 @@ function fetchCoverM(coverId, img) {
 }
 
 function addBookToDataBase(event) {
-
     const formData = new FormData();
-
     //Ajout dans le formData des infos récupérées depuis l'API
     formData.append("title", event.target.dataset.title);
     formData.append("author", event.target.dataset.author);

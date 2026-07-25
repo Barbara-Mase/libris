@@ -38,7 +38,6 @@ class BookController extends AbstractController {
 
     //à ajouter : une vérification des erreurs potentiels
     public function checkCreate() : void
-
     {
         // Ajouter une gestion d'erreur si possible
 
@@ -57,20 +56,22 @@ class BookController extends AbstractController {
         echo json_encode($book_id);
     }
 
+   //this function is requested by fetch in detail book web pages
     public function addToList() : void {
-
-        //Gérer les erreurs 'user not loggedin"
         $_SESSION['errors'] = [];
         $bm = new BookManager();
-
-
+        // Vcheck if a user_id exist in session
         if (!empty($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
+            // Check if a book_id exist in session
             if(!empty($_SESSION['book_id'])) {
                 $bookId = $_SESSION['book_id'];
+                //check if the book already exists in users's list
                 $book = $bm->findOneBookUser($bookId, $userId);
+                //if not, add the book to user's list
                 if($book === false) {
                     $bm->addBookUser($bookId, $userId);
+                    //send a success message to javascript
                     echo json_encode([
                         'success' => true,
                         'message' => 'Book added to your list'

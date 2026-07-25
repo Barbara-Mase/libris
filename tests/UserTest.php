@@ -4,7 +4,7 @@
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-//Useful if the case model User.php is modified
+//Useful ine case model User.php is modified
 //PHP is typed language so it's not useful to test invalid types. PHP will raise an exception on his own
 class UserTest extends TestCase {
     #[DataProvider('validUsernameProvider')]

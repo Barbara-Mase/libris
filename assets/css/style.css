@@ -19,6 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  letter-spacing: 0.07rem;
 }
 
 a {
@@ -739,6 +740,13 @@ footer .footer-content .social-medias span i {
   color: #0D0B2B;
   background-color: #F6E06E;
   border-color: #F6E06E;
+}
+.form-account-settings .checkbox-conditions, .form-login .checkbox-conditions, .form-register .checkbox-conditions {
+  display: flex;
+  border: 1px solid black;
+}
+.form-account-settings .checkbox-conditions input, .form-login .checkbox-conditions input, .form-register .checkbox-conditions input {
+  margin-left: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
